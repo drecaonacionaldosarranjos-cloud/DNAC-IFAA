@@ -3,11 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão Musical IFAA</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Sistema de Gestão Musical IFAA - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            animation: slideUp 0.5s ease;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .credentials-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .credentials-info p {
+            margin-bottom: 8px;
+        }
+
+        .credentials-info strong {
+            color: #667eea;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>🎵 IFAA</h1>
+            <p>Sistema de Gestão Musical</p>
+            <p style="font-size: 12px; margin-top: 10px; color: #999;">Direção Nacional dos Arranjos e Composição</p>
+        </div>
+        
+        <div id="errorMsg" class="error"></div>
+        <div id="successMsg" class="success"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>🔐 Selecione sua função:</label>
+                <select id="roleSelect" required>
+                    <option value="">-- Escolha uma função --</option>
+                    <option value="nacional">👔 Director Nacional</option>
+                    <option value="adjunto">👤 Director Adjunto</option>
+                    <option value="secretario">📋 Secretário</option>
+                    <option value="literatura">📚 Director da Correção de Literatura</option>
+                    <option value="compositor">🎼 Compositor</option>
+                    <option value="arranjador">🎹 Arranjador</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>🔑 Senha:</label>
+                <input type="password" id="passwordInput" placeholder="Digite a senha" required>
+            </div>
+
+            <button type="submit" class="btn-login">✅ Entrar no Sistema</button>
+        </form>
+
+        <div class="credentials-info">
+            <p><strong>📌 Credenciais de Demonstração:</strong></p>
+            <p>👉 Função: Qualquer uma acima</p>
+            <p>👉 Senha: <strong>1234</strong></p>
+        </div>
+    </div>
+
     <script src="app.js"></script>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const role = document.getElementById('roleSelect').value;
+            const password = document.getElementById('passwordInput').value;
+            
+            if (!role || !password) {
+                showError('Por favor, preencha todos os campos!');
+                return;
+            }
+
+            // Simular validação
+            if (password === '1234') {
+                localStorage.setItem('currentRole', role);
+                localStorage.setItem('isLoggedIn', 'true');
+                showSuccess('Login realizado com sucesso! Redirecionando...');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else {
+                showError('Senha incorreta! Tente novamente.');
+            }
+        }
+
+        function showError(msg) {
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.textContent = '❌ ' + msg;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(msg) {
+            const successDiv = document.getElementById('successMsg');
+            successDiv.textContent = '✅ ' + msg;
+            successDiv.style.display = 'block';
+        }
+    </script>
 </body>
 </html>
