@@ -28,7 +28,7 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             padding: 40px;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             animation: slideUp 0.5s ease;
         }
 
@@ -111,6 +111,17 @@
             text-align: center;
             font-size: 12px;
             color: #999;
+        }
+
+        .additional-fields {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .additional-fields.show {
+            display: block;
         }
 
         /* ===== DASHBOARD ===== */
@@ -314,6 +325,7 @@
             font-size: 13px;
             color: #666;
             margin-top: 8px;
+            flex-wrap: wrap;
         }
 
         .status-badge {
@@ -345,6 +357,12 @@
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
+        }
+
+        .form-section-title {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 15px;
         }
 
         .form-row {
@@ -560,6 +578,11 @@
             .form-row {
                 grid-template-columns: 1fr;
             }
+
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -577,7 +600,7 @@
         <form id="loginForm" onsubmit="handleLogin(event)">
             <div class="form-group">
                 <label>🔐 Selecione sua função:</label>
-                <select id="roleSelect" required>
+                <select id="roleSelect" required onchange="toggleAdditionalFields()">
                     <option value="">-- Escolha uma função --</option>
                     <option value="nacional">👔 Director Nacional</option>
                     <option value="adjunto">👤 Director Adjunto</option>
@@ -585,12 +608,43 @@
                     <option value="literatura">📚 Director da Correção de Literatura</option>
                     <option value="compositor">🎼 Compositor</option>
                     <option value="arranjador">🎹 Arranjador</option>
+                    <option value="tradutor">🌐 Tradutor</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>🔑 Senha:</label>
                 <input type="password" id="passwordInput" placeholder="Digite a senha" required>
+            </div>
+
+            <!-- Campos adicionais para Compositor, Arranjador e Tradutor -->
+            <div id="additionalFields" class="additional-fields">
+                <div class="form-group">
+                    <label>👤 Nome Completo *</label>
+                    <input type="text" id="userFullName" placeholder="Digite seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label>📍 Província *</label>
+                    <select id="userProvincia">
+                        <option value="">-- Selecione a Província --</option>
+                        <option value="Luanda">Luanda</option>
+                        <option value="Bengo">Bengo</option>
+                        <option value="Huila">Huila</option>
+                        <option value="Benguela">Benguela</option>
+                        <option value="Cabinda">Cabinda</option>
+                        <option value="Kwanza Norte">Kwanza Norte</option>
+                        <option value="Kwanza Sul">Kwanza Sul</option>
+                        <option value="Malanje">Malanje</option>
+                        <option value="Moxico">Moxico</option>
+                        <option value="Namibe">Namibe</option>
+                        <option value="Uige">Uige</option>
+                        <option value="Zaire">Zaire</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>🏙️ Município *</label>
+                    <input type="text" id="userMunicipio" placeholder="Digite seu município">
+                </div>
             </div>
 
             <button type="submit" class="btn-login">✅ Entrar no Sistema</button>
@@ -616,7 +670,7 @@
         </div>
 
         <div class="welcome-banner">
-            <h2>🙏 Seja bem-vindo ao Trabalho do Nosso Grande Deus</h2>
+            <h2>🙏 Tenha um Trabalho que Deus te Abençoe</h2>
             <p id="welcomeName"></p>
         </div>
 
@@ -636,6 +690,7 @@
         const appState = {
             currentUser: null,
             currentRole: null,
+            currentUserData: null,
             publications: [],
             messages: [],
             users: {
@@ -666,23 +721,30 @@
                     telefone: '+244 923 456 792',
                     provincia: 'Huila',
                     municipio: 'Lubango'
-                },
-                'compositor': { 
-                    name: 'João Silva', 
-                    role: 'Compositor',
-                    telefone: '+244 923 456 793',
-                    provincia: 'Luanda',
-                    municipio: 'Viana'
-                },
-                'arranjador': { 
-                    name: 'Maria Santos', 
-                    role: 'Arranjador',
-                    telefone: '+244 923 456 794',
-                    provincia: 'Bengo',
-                    municipio: 'Icolo e Bengo'
                 }
             }
         };
+
+        // ===== TOGGLE CAMPOS ADICIONAIS =====
+        function toggleAdditionalFields() {
+            const role = document.getElementById('roleSelect').value;
+            const additionalFields = document.getElementById('additionalFields');
+            const fullNameInput = document.getElementById('userFullName');
+            const provinciaInput = document.getElementById('userProvincia');
+            const municipioInput = document.getElementById('userMunicipio');
+
+            if (['compositor', 'arranjador', 'tradutor'].includes(role)) {
+                additionalFields.classList.add('show');
+                fullNameInput.required = true;
+                provinciaInput.required = true;
+                municipioInput.required = true;
+            } else {
+                additionalFields.classList.remove('show');
+                fullNameInput.required = false;
+                provinciaInput.required = false;
+                municipioInput.required = false;
+            }
+        }
 
         // ===== LOGIN =====
         function handleLogin(event) {
@@ -695,9 +757,31 @@
                 return;
             }
 
+            // Validar campos adicionais para Compositor, Arranjador e Tradutor
+            if (['compositor', 'arranjador', 'tradutor'].includes(role)) {
+                const fullName = document.getElementById('userFullName').value.trim();
+                const provincia = document.getElementById('userProvincia').value;
+                const municipio = document.getElementById('userMunicipio').value.trim();
+
+                if (!fullName || !provincia || !municipio) {
+                    showLoginError('Por favor, preencha todos os dados pessoais!');
+                    return;
+                }
+
+                // Armazenar dados do utilizador
+                appState.currentUserData = {
+                    name: fullName,
+                    provincia: provincia,
+                    municipio: municipio,
+                    role: role === 'compositor' ? 'Compositor' : role === 'arranjador' ? 'Arranjador' : 'Tradutor'
+                };
+            } else {
+                appState.currentUserData = appState.users[role];
+            }
+
             if (password === '1234') {
                 appState.currentRole = role;
-                appState.currentUser = appState.users[role].name;
+                appState.currentUser = appState.currentUserData.name;
                 showDashboard();
             } else {
                 showLoginError('Senha incorreta! Tente novamente.');
@@ -718,9 +802,9 @@
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('dashboardScreen').classList.add('active');
             
-            const user = appState.users[appState.currentRole];
-            document.getElementById('userRole').textContent = user.role;
-            document.getElementById('welcomeName').textContent = `👤 ${user.name} - ${user.role}`;
+            const roleDisplay = appState.currentUserData.role;
+            document.getElementById('userRole').textContent = roleDisplay;
+            document.getElementById('welcomeName').textContent = `👤 ${appState.currentUser} - ${roleDisplay}`;
 
             renderSidebar();
             renderContent('dashboard');
@@ -801,7 +885,7 @@
                 } else if (page === 'chat') {
                     html = `<h2 class="section-title">💬 Chat em Tempo Real</h2>${renderChat()}`;
                 } else if (page === 'relatorios') {
-                    html = `<h2 class="section-title">📋 Relatórios</h2><p>Funcionalidade de relatórios para Secretário.</p>`;
+                    html = `<h2 class="section-title">📋 Relatórios</h2><p style="color: #666;">Funcionalidade de relatórios para Secretário.</p>`;
                 }
             } else if (appState.currentRole === 'literatura') {
                 if (page === 'dashboard') {
@@ -826,10 +910,10 @@
         }
 
         function renderPerfilCompositorArranjador() {
-            const user = appState.users[appState.currentRole];
+            const user = appState.currentUserData;
             return `
                 <div class="form-section">
-                    <h3 style="color: #667eea; margin-bottom: 15px;">👤 Dados Pessoais</h3>
+                    <div class="form-section-title">👤 Dados Pessoais</div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Nome Completo</label>
@@ -842,15 +926,9 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Telefone</label>
-                            <input type="tel" value="${user.telefone}" disabled style="background: #e9ecef;">
-                        </div>
-                        <div class="form-group">
                             <label>Província</label>
                             <input type="text" value="${user.provincia}" disabled style="background: #e9ecef;">
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group">
                             <label>Município</label>
                             <input type="text" value="${user.municipio}" disabled style="background: #e9ecef;">
@@ -863,7 +941,7 @@
         function renderFormularioEnvio() {
             return `
                 <div class="form-section">
-                    <h3 style="color: #667eea; margin-bottom: 15px;">📤 Enviar Contribuição</h3>
+                    <div class="form-section-title">📤 Enviar Contribuição</div>
                     <form onsubmit="submitPublicacao(event)">
                         <div class="form-row full">
                             <div class="form-group">
@@ -1103,9 +1181,11 @@
         function logout() {
             appState.currentUser = null;
             appState.currentRole = null;
+            appState.currentUserData = null;
             document.getElementById('dashboardScreen').classList.remove('active');
             document.getElementById('loginScreen').style.display = 'block';
             document.getElementById('loginForm').reset();
+            document.getElementById('additionalFields').classList.remove('show');
         }
     </script>
 </body>
