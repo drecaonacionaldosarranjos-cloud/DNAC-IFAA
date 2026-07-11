@@ -21,6 +21,40 @@
             padding: 20px;
         }
 
+        /* ===== NOTIFICAÇÃO ===== */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            animation: slideInRight 0.5s ease;
+            max-width: 350px;
+        }
+
+        .notification.error {
+            background: #dc3545;
+        }
+
+        .notification.info {
+            background: #17a2b8;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         /* ===== LOGIN ===== */
         .login-container {
             background: white;
@@ -141,6 +175,27 @@
             color: white;
             padding: 20px 30px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 10px;
+            right: 100px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .notification-badge.hidden {
+            display: none;
         }
 
         .header-content {
@@ -254,6 +309,7 @@
             cursor: pointer;
             border-left: 3px solid transparent;
             font-size: 13px;
+            position: relative;
         }
 
         .nav-link:hover,
@@ -261,6 +317,21 @@
             background: #f0f4ff;
             color: #667eea;
             border-left-color: #667eea;
+        }
+
+        .nav-link-badge {
+            position: absolute;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
         }
 
         .content-area {
@@ -355,6 +426,11 @@
         .status-rejected {
             background: #f8d7da;
             color: #721c24;
+        }
+
+        .status-published {
+            background: #cfe2ff;
+            color: #084298;
         }
 
         .form-section {
@@ -475,6 +551,15 @@
 
         .btn-danger:hover {
             background: #c82333;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #138496;
         }
 
         .btn-block {
@@ -602,12 +687,6 @@
             gap: 8px;
         }
 
-        .grid-2col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -628,10 +707,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .grid-2col {
-                grid-template-columns: 1fr;
-            }
-
             .header-content {
                 flex-direction: column;
                 gap: 10px;
@@ -649,36 +724,103 @@
             padding: 40px;
         }
 
-        .file-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
         .file-item {
             background: white;
             border: 1px solid #e0e0e0;
-            padding: 8px 12px;
+            padding: 10px 12px;
             border-radius: 6px;
             font-size: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
+            margin: 5px 0;
         }
 
-        .file-item-remove {
-            background: #f8d7da;
-            color: #721c24;
+        .file-item-actions {
+            display: flex;
+            gap: 5px;
+            margin-left: auto;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f4ff;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .close {
+            background: none;
             border: none;
-            border-radius: 3px;
-            padding: 2px 6px;
+            font-size: 28px;
+            color: #aaa;
             cursor: pointer;
-            font-size: 11px;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- MODAL PARA VISUALIZAR ARQUIVOS -->
+    <div id="fileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="fileModalTitle">Visualizar Arquivo</h2>
+                <button class="close" onclick="closeFileModal()">&times;</button>
+            </div>
+            <div id="fileModalBody"></div>
+        </div>
+    </div>
+
     <!-- LOGIN SCREEN -->
     <div id="loginScreen" class="login-container">
         <div class="login-header">
@@ -751,6 +893,7 @@
     <!-- DASHBOARD SCREEN -->
     <div id="dashboardScreen" class="dashboard-wrapper">
         <div class="header">
+            <div class="notification-badge" id="notificationBadge"></div>
             <div class="header-content">
                 <div class="header-title">🎶 Direção Nacional dos Arranjos e Composição da Igreja Fé Apostólica Americana em Angola</div>
                 <div class="header-user">
@@ -761,7 +904,7 @@
         </div>
 
         <div class="welcome-banner">
-            <h2>🙏 Tenha um Trabalho que Deus te Abençoe</h2>
+            <h2>🙏 Seja Muito Bem Vindo à Ceara, que Deus te Abençoe</h2>
             <p id="welcomeName"></p>
         </div>
 
@@ -784,6 +927,7 @@
             currentUserData: null,
             publications: [],
             messages: [],
+            notifications: [],
             hinarios: [],
             traducoes: [],
             reunioes: [],
@@ -797,6 +941,32 @@
                 'literatura': { name: 'Bozzy Supia', role: 'Director da Correção de Literatura' }
             }
         };
+
+        function showNotification(message, type = 'success') {
+            const notif = document.createElement('div');
+            notif.className = `notification ${type}`;
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.remove();
+            }, 4000);
+
+            if (type === 'success' || type === 'info') {
+                appState.notifications.push({ message, time: new Date(), read: false });
+                updateNotificationBadge();
+            }
+        }
+
+        function updateNotificationBadge() {
+            const badge = document.getElementById('notificationBadge');
+            const unread = appState.notifications.filter(n => !n.read).length;
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
 
         function toggleAdditionalFields() {
             const role = document.getElementById('roleSelect').value;
@@ -872,6 +1042,7 @@
             document.getElementById('welcomeName').textContent = `👤 ${appState.currentUser} - ${roleDisplay}`;
             renderSidebar();
             renderContent('dashboard');
+            updateNotificationBadge();
         }
 
         function renderSidebar() {
@@ -888,7 +1059,7 @@
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('reunioes')"><span>📅</span> Reuniões</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('licoes')"><span>📚</span> Lições</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('partitures')"><span>🎼</span> Partituras</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="renderContent('tarefas')"><span>✓</span> Tarefas</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('tarefas')"><span>✓</span> Tarefas <span class="nav-link-badge" id="tarefasBadge" style="display: none;"></span></a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('chat')"><span>💬</span> Chat</a></li>
                     ${appState.currentRole === 'secretario' ? '<li class="nav-item"><a class="nav-link" onclick="renderContent(\'relatorios\')"><span>📋</span> Relatórios</a></li>' : ''}
                 `;
@@ -902,6 +1073,7 @@
                 menuHTML += `
                     <li class="nav-item"><a class="nav-link active" onclick="renderContent('dashboard')"><span>📊</span> Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('minhascontribuicoes')"><span>📤</span> Minhas Contribuições</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('minhastarefas')"><span>✓</span> Minhas Tarefas <span class="nav-link-badge" id="minhastarefasBadge" style="display: none;"></span></a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('chat')"><span>💬</span> Chat</a></li>
                 `;
             }
@@ -915,6 +1087,29 @@
                     link.classList.add('active');
                 });
             });
+
+            updateTaskBadges();
+        }
+
+        function updateTaskBadges() {
+            const tarefasBadge = document.getElementById('tarefasBadge');
+            const minhastarefasBadge = document.getElementById('minhastarefasBadge');
+
+            if (tarefasBadge) {
+                const tarefasCount = appState.tarefas.length;
+                if (tarefasCount > 0) {
+                    tarefasBadge.textContent = tarefasCount;
+                    tarefasBadge.style.display = 'flex';
+                }
+            }
+
+            if (minhastarefasBadge) {
+                const minhasCount = appState.tarefas.filter(t => t.atribuido === appState.currentUser).length;
+                if (minhasCount > 0) {
+                    minhastarefasBadge.textContent = minhasCount;
+                    minhastarefasBadge.style.display = 'flex';
+                }
+            }
         }
 
         function renderContent(page) {
@@ -936,7 +1131,7 @@
                             </div>
                             <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
                                 <h3 id="totalAprovados">0</h3>
-                                <p>Aprovados</p>
+                                <p>Publicados</p>
                             </div>
                         </div>
                         <h3 style="color: #333; margin-top: 30px; margin-bottom: 15px;">📚 Publicações Recentes</h3>
@@ -974,6 +1169,8 @@
                     html = `<h2 class="section-title">👤 Meu Perfil</h2>${renderPerfilCompositorArranjador()}`;
                 } else if (page === 'minhascontribuicoes') {
                     html = `<h2 class="section-title">📤 Minhas Contribuições</h2>${renderFormularioEnvio()}${renderMinhasPublications()}`;
+                } else if (page === 'minhastarefas') {
+                    html = `<h2 class="section-title">✓ Minhas Tarefas</h2>${renderMinhasTarefas()}`;
                 } else if (page === 'chat') {
                     html = `<h2 class="section-title">💬 Chat em Tempo Real</h2>${renderChat()}`;
                 }
@@ -1038,7 +1235,7 @@
                                 <div style="font-size: 32px; margin-bottom: 10px;">📄</div>
                                 <div>Clique para selecionar ou arraste</div>
                             </div>
-                            <input type="file" id="sheetInput" class="file-input">
+                            <input type="file" id="sheetInput" class="file-input" accept=".pdf,.doc,.docx,.jpg,.png">
                             <div id="sheetPreview"></div>
                         </div>
 
@@ -1111,6 +1308,7 @@
                         <div class="editable-item-header">
                             <span class="editable-item-title">📖 ${item.titulo}</span>
                             <div class="editable-item-actions">
+                                <button class="btn btn-sm btn-info" onclick="viewFile(${idx}, 'hinarios')">👁️ Ver</button>
                                 <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'hinarios')">Deletar</button>
                             </div>
                         </div>
@@ -1173,6 +1371,7 @@
                     html += `<div class="editable-item">
                         <div class="editable-item-header">
                             <span class="editable-item-title">🌐 ${item.titulo}</span>
+                            <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'traducoes')">Deletar</button>
                         </div>
                         <p style="font-size: 12px; color: #667eea;"><strong>${item.original} → ${item.destino}</strong></p>
                     </div>`;
@@ -1304,7 +1503,10 @@
                     html += `<div class="editable-item">
                         <div class="editable-item-header">
                             <span class="editable-item-title">🎼 ${item.titulo}</span>
-                            <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'partitures')">Deletar</button>
+                            <div class="editable-item-actions">
+                                <button class="btn btn-sm btn-info" onclick="viewFile(${idx}, 'partitures')">👁️ Ver</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'partitures')">Deletar</button>
+                            </div>
                         </div>
                         <p style="font-size: 13px; color: #666;">Compositor: ${item.compositor} | Tom: ${item.tom}</p>
                     </div>`;
@@ -1343,6 +1545,34 @@
                             <input type="date" id="tarefaVencimento">
                         </div>
                     </div>
+
+                    <div class="divider"></div>
+                    <div class="form-section-title">📎 Anexar Arquivos (Opcional)</div>
+                    
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>PDF/Imagem</label>
+                            <div class="upload-area" onclick="document.getElementById('tarefaFileInput').click();">
+                                <div style="font-size: 32px;">📄</div>
+                                <div>Carregar Arquivo</div>
+                            </div>
+                            <input type="file" id="tarefaFileInput" class="file-input" accept=".pdf,.jpg,.png,.doc,.docx">
+                            <div id="tarefaFilePreview"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Áudio</label>
+                            <div class="upload-area" onclick="document.getElementById('tarefaAudioInput').click();">
+                                <div style="font-size: 32px;">🎵</div>
+                                <div>Carregar Áudio</div>
+                            </div>
+                            <input type="file" id="tarefaAudioInput" class="file-input" accept="audio/*">
+                            <div id="tarefaAudioPreview"></div>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-primary btn-block">Criar Tarefa</button>
                 </form>
             </div>`;
@@ -1357,9 +1587,37 @@
                             <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'tarefas')">Deletar</button>
                         </div>
                         <p style="font-size: 13px; color: #666;">👤 ${item.atribuido} | <span style="color: ${prioridadeColor}; font-weight: 600;">Prioridade: ${item.prioridade}</span></p>
+                        ${item.fileData || item.audioData ? `<div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            ${item.fileData ? `<button class="btn btn-sm btn-info" onclick="openFile('${item.fileData}', '${item.fileName}')">👁️ Ver Arquivo</button>` : ''}
+                            ${item.audioData ? `<button class="btn btn-sm btn-info" onclick="playAudio('${item.audioData}')">🎵 Ouvir</button>` : ''}
+                        </div>` : ''}
                     </div>`;
                 });
             }
+            return html;
+        }
+
+        function renderMinhasTarefas() {
+            const minhastarefas = appState.tarefas.filter(t => t.atribuido === appState.currentUser);
+            
+            if (minhastarefas.length === 0) {
+                return '<p class="empty-state">Você não tem tarefas atribuídas.</p>';
+            }
+
+            let html = '';
+            minhastarefas.forEach((item, idx) => {
+                const prioridadeColor = item.prioridade === 'Alta' ? '#dc3545' : item.prioridade === 'Média' ? '#ffc107' : '#28a745';
+                html += `<div class="editable-item">
+                    <div class="editable-item-header">
+                        <span class="editable-item-title">✓ ${item.descricao}</span>
+                    </div>
+                    <p style="font-size: 13px; color: #666;"><span style="color: ${prioridadeColor}; font-weight: 600;">Prioridade: ${item.prioridade}</span> | 📅 Vencimento: ${item.vencimento}</p>
+                    ${item.fileData || item.audioData ? `<div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        ${item.fileData ? `<button class="btn btn-sm btn-info" onclick="openFile('${item.fileData}', '${item.fileName}')">👁️ Ver Arquivo</button>` : ''}
+                        ${item.audioData ? `<button class="btn btn-sm btn-info" onclick="playAudio('${item.audioData}')">🎵 Ouvir</button>` : ''}
+                    </div>` : ''}
+                </div>`;
+            });
             return html;
         }
 
@@ -1367,15 +1625,13 @@
             if (appState.publications.length === 0) {
                 return '<p class="empty-state">Nenhuma publicação registrada.</p>';
             }
-            return appState.publications.map(pub => `
+            return appState.publications.filter(p => p.status === 'published').map(pub => `
                 <div class="publication-card">
                     <div class="publication-title">🎵 ${pub.title}</div>
                     <div class="publication-meta">
                         <span>👤 ${pub.author}</span>
                         <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
-                        <span class="status-badge ${pub.status === 'approved' ? 'status-approved' : pub.status === 'rejected' ? 'status-rejected' : 'status-pending'}">
-                            ${pub.status === 'approved' ? '✅ Aprovado' : pub.status === 'rejected' ? '❌ Rejeitado' : '⏳ Pendente'}
-                        </span>
+                        <span class="status-badge status-published">📢 Publicado</span>
                     </div>
                     <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${pub.workPerson}</p>
                     ${pub.audio ? `<div class="audio-player"><audio controls><source src="${pub.audio}" type="audio/mpeg"></audio></div>` : ''}
@@ -1399,6 +1655,7 @@
                         <textarea id="revision_${idx}" placeholder="Digite sua revisão..." style="width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 6px; min-height: 100px;"></textarea>
                     </div>
                     ${pub.audio ? `<div class="audio-player"><audio controls><source src="${pub.audio}" type="audio/mpeg"></audio></div>` : ''}
+                    ${pub.fileData ? `<div style="margin-top: 15px;"><button class="btn btn-sm btn-info" onclick="openFile('${pub.fileData}', '${pub.fileName}')">👁️ Ver Partitura</button></div>` : ''}
                     <div style="display: flex; gap: 10px; margin-top: 15px;">
                         <button class="btn btn-success" onclick="approveWithRevision(${idx})">✅ Aprovar</button>
                         <button class="btn btn-danger" onclick="rejectRevision(${idx})">❌ Rejeitar</button>
@@ -1415,8 +1672,8 @@
                     <div class="publication-title">🎵 ${pub.title}</div>
                     <div class="publication-meta">
                         <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
-                        <span class="status-badge ${pub.status === 'approved' ? 'status-approved' : pub.status === 'rejected' ? 'status-rejected' : 'status-pending'}">
-                            ${pub.status === 'approved' ? '✅ Aprovado' : pub.status === 'rejected' ? '❌ Rejeitado' : '⏳ Pendente'}
+                        <span class="status-badge ${pub.status === 'published' ? 'status-published' : pub.status === 'approved' ? 'status-approved' : pub.status === 'rejected' ? 'status-rejected' : 'status-pending'}">
+                            ${pub.status === 'published' ? '📢 Publicado' : pub.status === 'approved' ? '✅ Aprovado' : pub.status === 'rejected' ? '❌ Rejeitado' : '⏳ Pendente'}
                         </span>
                     </div>
                     <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${pub.workPerson}</p>
@@ -1451,59 +1708,142 @@
             const lyrics = document.getElementById('lyrics').value;
             const observations = document.getElementById('observations').value;
             const audioInput = document.getElementById('audioInput');
+            const sheetInput = document.getElementById('sheetInput');
 
             if (!title || !workPerson) {
-                alert('❌ Preencha os campos obrigatórios!');
+                showNotification('Preencha os campos obrigatórios!', 'error');
                 return;
             }
 
-            if (audioInput.files.length > 0) {
+            let fileData = null;
+            let fileName = null;
+
+            if (sheetInput.files.length > 0) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
+                    fileData = e.target.result;
+                    fileName = sheetInput.files[0].name;
+                    processAudio();
+                };
+                reader.readAsDataURL(sheetInput.files[0]);
+            } else {
+                processAudio();
+            }
+
+            function processAudio() {
+                if (audioInput.files.length > 0) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        appState.publications.push({
+                            title, workPerson, author: appState.currentUser,
+                            audio: e.target.result, lyrics, observations,
+                            fileData: fileData, fileName: fileName,
+                            date: new Date(), status: 'pending'
+                        });
+                        showNotification('✅ Contribuição enviada com sucesso!', 'success');
+                        event.target.reset();
+                        renderContent('minhascontribuicoes');
+                    };
+                    reader.readAsDataURL(audioInput.files[0]);
+                } else {
                     appState.publications.push({
                         title, workPerson, author: appState.currentUser,
-                        audio: e.target.result, lyrics, observations,
+                        audio: null, lyrics, observations,
+                        fileData: fileData, fileName: fileName,
                         date: new Date(), status: 'pending'
                     });
-                    alert('✅ Contribuição enviada!');
+                    showNotification('✅ Contribuição enviada com sucesso!', 'success');
                     event.target.reset();
                     renderContent('minhascontribuicoes');
-                };
-                reader.readAsDataURL(audioInput.files[0]);
-            } else {
-                appState.publications.push({
-                    title, workPerson, author: appState.currentUser,
-                    audio: null, lyrics, observations,
-                    date: new Date(), status: 'pending'
-                });
-                alert('✅ Contribuição enviada!');
-                event.target.reset();
-                renderContent('minhascontribuicoes');
+                }
             }
         }
 
         function approveWithRevision(idx) {
             const revision = document.getElementById(`revision_${idx}`).value;
             if (!revision.trim()) {
-                alert('❌ Digite a revisão!');
+                showNotification('Digite a revisão!', 'error');
                 return;
             }
             appState.publications[idx].literatureComment = revision;
-            appState.publications[idx].status = 'reviewing';
-            alert('✅ Revisão enviada!');
+            appState.publications[idx].status = 'approved';
+            showNotification('✅ Revisão enviada!', 'success');
+            
+            const author = appState.publications[idx].author;
+            sendNotificationToUser(author, `Sua composição "${appState.publications[idx].title}" foi revisada. Aguardando aprovação final.`);
+            
             renderContent('minhasrevisoes');
         }
 
         function rejectRevision(idx) {
             appState.publications[idx].status = 'rejected';
-            alert('❌ Rejeitado.');
+            const author = appState.publications[idx].author;
+            sendNotificationToUser(author, `Sua composição "${appState.publications[idx].title}" foi rejeitada.`);
+            showNotification('❌ Publicação rejeitada.', 'info');
             renderContent('minhasrevisoes');
         }
 
         function addItem(event, type) {
             event.preventDefault();
             let item = {};
+            let fileData = null;
+            let audioData = null;
+            let fileName = null;
             
+            if (type === 'tarefas') {
+                const tarefaFileInput = document.getElementById('tarefaFileInput');
+                const tarefaAudioInput = document.getElementById('tarefaAudioInput');
+
+                const processFiles = () => {
+                    item = {
+                        descricao: document.getElementById('tarefaDescricao').value,
+                        atribuido: document.getElementById('tarefaAtribuido').value,
+                        prioridade: document.getElementById('tarefaPrioridade').value,
+                        vencimento: document.getElementById('tarefaVencimento').value,
+                        fileData: fileData,
+                        audioData: audioData,
+                        fileName: fileName
+                    };
+
+                    appState.tarefas.push(item);
+                    showNotification('✅ Tarefa criada e notificação enviada!', 'success');
+                    
+                    const atribuido = document.getElementById('tarefaAtribuido').value;
+                    sendNotificationToUser(atribuido, `Nova tarefa: "${item.descricao}". Prioridade: ${item.prioridade}`);
+                    updateTaskBadges();
+                    
+                    document.getElementById('tarefaDescricao').value = '';
+                    document.getElementById('tarefaAtribuido').value = '';
+                    renderContent('tarefas');
+                };
+
+                if (tarefaFileInput.files.length > 0) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        fileData = e.target.result;
+                        fileName = tarefaFileInput.files[0].name;
+                        processAudioForTask();
+                    };
+                    reader.readAsDataURL(tarefaFileInput.files[0]);
+                } else {
+                    processAudioForTask();
+                }
+
+                function processAudioForTask() {
+                    if (tarefaAudioInput.files.length > 0) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            audioData = e.target.result;
+                            processFiles();
+                        };
+                        reader.readAsDataURL(tarefaAudioInput.files[0]);
+                    } else {
+                        processFiles();
+                    }
+                }
+                return;
+            }
+
             if (type === 'hinarios') {
                 item = { titulo: document.getElementById('hinarioTitle').value, descricao: document.getElementById('hinarioDesc').value };
                 document.getElementById('hinarioTitle').value = '';
@@ -1538,25 +1878,17 @@
                     tom: document.getElementById('partituraTom').value
                 };
                 document.getElementById('partituraTitulo').value = '';
-            } else if (type === 'tarefas') {
-                item = {
-                    descricao: document.getElementById('tarefaDescricao').value,
-                    atribuido: document.getElementById('tarefaAtribuido').value,
-                    prioridade: document.getElementById('tarefaPrioridade').value,
-                    vencimento: document.getElementById('tarefaVencimento').value
-                };
-                document.getElementById('tarefaDescricao').value = '';
-                document.getElementById('tarefaAtribuido').value = '';
             }
             
             appState[type].push(item);
-            alert('✅ Item adicionado!');
-            renderContent(type === 'hinarios' ? 'hinario' : type === 'reunioes' ? 'reunioes' : type === 'licoes' ? 'licoes' : type === 'partitures' ? 'partitures' : type === 'tarefas' ? 'tarefas' : type);
+            showNotification('✅ Item adicionado!', 'success');
+            const pageMap = { hinarios: 'hinario', traducoes: 'traducoes', reunioes: 'reunioes', licoes: 'licoes', partitures: 'partitures' };
+            renderContent(pageMap[type] || type);
         }
 
         function deleteItem(idx, type) {
             appState[type].splice(idx, 1);
-            alert('✅ Item removido!');
+            showNotification('✅ Item removido!', 'success');
             const pageMap = { hinarios: 'hinario', traducoes: 'traducoes', reunioes: 'reunioes', licoes: 'licoes', partitures: 'partitures', tarefas: 'tarefas' };
             renderContent(pageMap[type] || type);
         }
@@ -1565,14 +1897,69 @@
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
             if (text) {
-                appState.messages.push({ sender: appState.currentUser, text });
+                appState.messages.push({ sender: appState.currentUser, text, time: new Date() });
                 input.value = '';
+                showNotification(`💬 Mensagem enviada por ${appState.currentUser}`, 'info');
                 renderContent('chat');
                 setTimeout(() => {
                     const chatMessages = document.getElementById('chatMessages');
                     if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
                 }, 100);
             }
+        }
+
+        function sendNotificationToUser(userName, message) {
+            appState.notifications.push({ 
+                message: `${message}`, 
+                for: userName,
+                time: new Date(), 
+                read: false 
+            });
+            updateNotificationBadge();
+        }
+
+        function openFile(fileData, fileName) {
+            const modal = document.getElementById('fileModal');
+            const modalBody = document.getElementById('fileModalBody');
+            const modalTitle = document.getElementById('fileModalTitle');
+            
+            modalTitle.textContent = `Visualizar: ${fileName}`;
+            
+            if (fileName.endsWith('.pdf')) {
+                modalBody.innerHTML = `<embed src="${fileData}" type="application/pdf" width="100%" height="600px" />`;
+            } else if (fileName.endsWith('.jpg') || fileName.endsWith('.png')) {
+                modalBody.innerHTML = `<img src="${fileData}" style="width: 100%; border-radius: 8px;" />`;
+            } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
+                modalBody.innerHTML = `<p>📄 ${fileName} - Arquivo do Word</p><p style="color: #999; font-size: 13px;">Download recomendado para visualização completa.</p><a href="${fileData}" download="${fileName}" class="btn btn-primary">📥 Download</a>`;
+            } else {
+                modalBody.innerHTML = `<p>📄 ${fileName}</p><a href="${fileData}" download="${fileName}" class="btn btn-primary">📥 Download</a>`;
+            }
+            
+            modal.classList.add('show');
+        }
+
+        function playAudio(audioData) {
+            const modal = document.getElementById('fileModal');
+            const modalBody = document.getElementById('fileModalBody');
+            const modalTitle = document.getElementById('fileModalTitle');
+            
+            modalTitle.textContent = 'Reproduzir Áudio';
+            modalBody.innerHTML = `<div class="audio-player"><audio controls style="width: 100%;"><source src="${audioData}" type="audio/mpeg"></audio></div>`;
+            
+            modal.classList.add('show');
+        }
+
+        function viewFile(idx, type) {
+            let item = appState[type][idx];
+            if (item.fileData) {
+                openFile(item.fileData, item.fileName || `${item.titulo}.pdf`);
+            } else {
+                showNotification('Nenhum arquivo associado', 'info');
+            }
+        }
+
+        function closeFileModal() {
+            document.getElementById('fileModal').classList.remove('show');
         }
 
         function updateStats() {
@@ -1582,7 +1969,7 @@
 
             if (totalArranjos) totalArranjos.textContent = appState.publications.length;
             if (totalComposicoes) totalComposicoes.textContent = appState.publications.length;
-            if (totalAprovados) totalAprovados.textContent = appState.publications.filter(p => p.status === 'approved').length;
+            if (totalAprovados) totalAprovados.textContent = appState.publications.filter(p => p.status === 'published').length;
         }
 
         function logout() {
@@ -1594,6 +1981,14 @@
             document.getElementById('loginForm').reset();
             document.getElementById('additionalFields').classList.remove('show');
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('fileModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('fileModal')) {
+                    closeFileModal();
+                }
+            });
+        });
     </script>
 </body>
 </html>
