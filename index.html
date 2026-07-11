@@ -221,6 +221,8 @@
             height: fit-content;
             position: sticky;
             top: 20px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .sidebar-title {
@@ -251,6 +253,7 @@
             transition: all 0.3s;
             cursor: pointer;
             border-left: 3px solid transparent;
+            font-size: 13px;
         }
 
         .nav-link:hover,
@@ -265,6 +268,8 @@
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow-y: auto;
+            max-height: 85vh;
         }
 
         .section-title {
@@ -363,6 +368,7 @@
             color: #667eea;
             font-weight: 700;
             margin-bottom: 15px;
+            font-size: 15px;
         }
 
         .form-row {
@@ -476,13 +482,18 @@
             margin-top: 10px;
         }
 
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
         .chat-container {
             background: white;
             border: 1px solid #e0e0e0;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
-            height: 500px;
+            height: 600px;
         }
 
         .chat-messages {
@@ -502,6 +513,13 @@
 
         .message.sent {
             justify-content: flex-end;
+        }
+
+        .message-sender {
+            font-size: 12px;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
         .message-bubble {
@@ -559,6 +577,37 @@
             display: block;
         }
 
+        .editable-item {
+            background: #f9fafb;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .editable-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .editable-item-title {
+            font-weight: 700;
+            color: #333;
+        }
+
+        .editable-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -579,10 +628,53 @@
                 grid-template-columns: 1fr;
             }
 
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+
             .header-content {
                 flex-direction: column;
                 gap: 10px;
             }
+        }
+
+        .divider {
+            border-top: 1px solid #e0e0e0;
+            margin: 20px 0;
+        }
+
+        .empty-state {
+            color: #999;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .file-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .file-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-item-remove {
+            background: #f8d7da;
+            color: #721c24;
+            border: none;
+            border-radius: 3px;
+            padding: 2px 6px;
+            cursor: pointer;
+            font-size: 11px;
         }
     </style>
 </head>
@@ -617,7 +709,6 @@
                 <input type="password" id="passwordInput" placeholder="Digite a senha" required>
             </div>
 
-            <!-- Campos adicionais para Compositor, Arranjador e Tradutor -->
             <div id="additionalFields" class="additional-fields">
                 <div class="form-group">
                     <label>👤 Nome Completo *</label>
@@ -693,39 +784,20 @@
             currentUserData: null,
             publications: [],
             messages: [],
+            hinarios: [],
+            traducoes: [],
+            reunioes: [],
+            licoes: [],
+            partitures: [],
+            tarefas: [],
             users: {
-                'nacional': { 
-                    name: 'Director Emiliano Cupaia Lumbungululo', 
-                    role: 'Director Nacional',
-                    telefone: '+244 923 456 789',
-                    provincia: 'Luanda',
-                    municipio: 'Viana'
-                },
-                'adjunto': { 
-                    name: 'Mimoso Kambungo', 
-                    role: 'Director Adjunto',
-                    telefone: '+244 923 456 790',
-                    provincia: 'Bengo',
-                    municipio: 'Icolo e Bengo'
-                },
-                'secretario': { 
-                    name: 'Eduardo Ngongoyove Gabriel', 
-                    role: 'Secretário',
-                    telefone: '+244 923 456 791',
-                    provincia: 'Luanda',
-                    municipio: 'Maianga'
-                },
-                'literatura': { 
-                    name: 'Bozzy Supia', 
-                    role: 'Director da Correção de Literatura',
-                    telefone: '+244 923 456 792',
-                    provincia: 'Huila',
-                    municipio: 'Lubango'
-                }
+                'nacional': { name: 'Director Emiliano Cupaia Lumbungululo', role: 'Director Nacional' },
+                'adjunto': { name: 'Mimoso Kambungo', role: 'Director Adjunto' },
+                'secretario': { name: 'Eduardo Ngongoyove Gabriel', role: 'Secretário' },
+                'literatura': { name: 'Bozzy Supia', role: 'Director da Correção de Literatura' }
             }
         };
 
-        // ===== TOGGLE CAMPOS ADICIONAIS =====
         function toggleAdditionalFields() {
             const role = document.getElementById('roleSelect').value;
             const additionalFields = document.getElementById('additionalFields');
@@ -746,7 +818,6 @@
             }
         }
 
-        // ===== LOGIN =====
         function handleLogin(event) {
             event.preventDefault();
             const role = document.getElementById('roleSelect').value;
@@ -757,7 +828,6 @@
                 return;
             }
 
-            // Validar campos adicionais para Compositor, Arranjador e Tradutor
             if (['compositor', 'arranjador', 'tradutor'].includes(role)) {
                 const fullName = document.getElementById('userFullName').value.trim();
                 const provincia = document.getElementById('userProvincia').value;
@@ -768,7 +838,6 @@
                     return;
                 }
 
-                // Armazenar dados do utilizador
                 appState.currentUserData = {
                     name: fullName,
                     provincia: provincia,
@@ -792,20 +861,15 @@
             const errorDiv = document.getElementById('errorMsg');
             errorDiv.textContent = '❌ ' + msg;
             errorDiv.style.display = 'block';
-            setTimeout(() => {
-                errorDiv.style.display = 'none';
-            }, 5000);
+            setTimeout(() => { errorDiv.style.display = 'none'; }, 5000);
         }
 
-        // ===== DASHBOARD =====
         function showDashboard() {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('dashboardScreen').classList.add('active');
-            
             const roleDisplay = appState.currentUserData.role;
             document.getElementById('userRole').textContent = roleDisplay;
             document.getElementById('welcomeName').textContent = `👤 ${appState.currentUser} - ${roleDisplay}`;
-
             renderSidebar();
             renderContent('dashboard');
         }
@@ -819,8 +883,12 @@
                     <li class="nav-item"><a class="nav-link active" onclick="renderContent('dashboard')"><span>📊</span> Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('arranjos')"><span>🎼</span> Arranjos</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('composicoes')"><span>✏️</span> Composições</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="renderContent('revisao')"><span>📝</span> Revisão</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="renderContent('aprovacao')"><span>✅</span> Aprovação</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('hinario')"><span>📖</span> Hinário</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('traducoes')"><span>🌐</span> Traduções</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('reunioes')"><span>📅</span> Reuniões</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('licoes')"><span>📚</span> Lições</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('partitures')"><span>🎼</span> Partituras</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('tarefas')"><span>✓</span> Tarefas</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('chat')"><span>💬</span> Chat</a></li>
                     ${appState.currentRole === 'secretario' ? '<li class="nav-item"><a class="nav-link" onclick="renderContent(\'relatorios\')"><span>📋</span> Relatórios</a></li>' : ''}
                 `;
@@ -860,11 +928,11 @@
                         <div class="stats-grid">
                             <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                                 <h3 id="totalArranjos">0</h3>
-                                <p>Total de Arranjos</p>
+                                <p>Arranjos</p>
                             </div>
                             <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                                 <h3 id="totalComposicoes">0</h3>
-                                <p>Total de Composições</p>
+                                <p>Composições</p>
                             </div>
                             <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
                                 <h3 id="totalAprovados">0</h3>
@@ -878,14 +946,20 @@
                     html = `<h2 class="section-title">🎼 Arranjos</h2>${renderAllPublications()}`;
                 } else if (page === 'composicoes') {
                     html = `<h2 class="section-title">✏️ Composições</h2>${renderAllPublications()}`;
-                } else if (page === 'revisao') {
-                    html = `<h2 class="section-title">📝 Revisão da Letra</h2>${renderAllPublications()}`;
-                } else if (page === 'aprovacao') {
-                    html = `<h2 class="section-title">✅ Aprovação da Composição</h2>${renderAllPublications()}`;
+                } else if (page === 'hinario') {
+                    html = `<h2 class="section-title">📖 Hinário Fé Apostólica</h2>${renderHinario()}`;
+                } else if (page === 'traducoes') {
+                    html = `<h2 class="section-title">🌐 Tradução de Letras</h2>${renderTraducoes()}`;
+                } else if (page === 'reunioes') {
+                    html = `<h2 class="section-title">📅 Agenda de Reuniões</h2>${renderReunioes()}`;
+                } else if (page === 'licoes') {
+                    html = `<h2 class="section-title">📚 Lições da Semana</h2>${renderLicoes()}`;
+                } else if (page === 'partitures') {
+                    html = `<h2 class="section-title">🎼 Biblioteca de Partituras</h2>${renderPartitures()}`;
+                } else if (page === 'tarefas') {
+                    html = `<h2 class="section-title">✓ Distribuição de Tarefas</h2>${renderTarefas()}`;
                 } else if (page === 'chat') {
                     html = `<h2 class="section-title">💬 Chat em Tempo Real</h2>${renderChat()}`;
-                } else if (page === 'relatorios') {
-                    html = `<h2 class="section-title">📋 Relatórios</h2><p style="color: #666;">Funcionalidade de relatórios para Secretário.</p>`;
                 }
             } else if (appState.currentRole === 'literatura') {
                 if (page === 'dashboard') {
@@ -957,25 +1031,40 @@
                             </div>
                         </div>
                         
+                        <div class="divider"></div>
+                        <div class="form-section-title">📄 Pauta (PDF, Word ou Imagem)</div>
+                        <div class="form-row full">
+                            <div class="upload-area" onclick="document.getElementById('sheetInput').click();">
+                                <div style="font-size: 32px; margin-bottom: 10px;">📄</div>
+                                <div>Clique para selecionar ou arraste</div>
+                            </div>
+                            <input type="file" id="sheetInput" class="file-input">
+                            <div id="sheetPreview"></div>
+                        </div>
+
+                        <div class="divider"></div>
+                        <div class="form-section-title">🎵 Áudio</div>
+                        <div class="form-row full">
+                            <div class="upload-area" onclick="document.getElementById('audioInput').click();">
+                                <div style="font-size: 32px; margin-bottom: 10px;">🎵</div>
+                                <div>Clique para selecionar ou arraste</div>
+                            </div>
+                            <input type="file" id="audioInput" class="file-input" accept="audio/*">
+                            <div id="audioPreview"></div>
+                        </div>
+
+                        <div class="divider"></div>
+                        <div class="form-section-title">📝 Letra e Observações</div>
                         <div class="form-row full">
                             <div class="form-group">
-                                <label>📄 Pauta (PDF, Word ou Imagem)</label>
-                                <div class="upload-area" onclick="document.getElementById('sheetInput').click();">
-                                    <div style="font-size: 32px; margin-bottom: 10px;">📄</div>
-                                    <div>Clique para selecionar ou arraste</div>
-                                </div>
-                                <input type="file" id="sheetInput" class="file-input">
+                                <label>Letra da Canção</label>
+                                <textarea id="lyrics" placeholder="Digite ou cole a letra aqui..."></textarea>
                             </div>
                         </div>
-                        
                         <div class="form-row full">
                             <div class="form-group">
-                                <label>🎵 Áudio</label>
-                                <div class="upload-area" onclick="document.getElementById('audioInput').click();">
-                                    <div style="font-size: 32px; margin-bottom: 10px;">🎵</div>
-                                    <div>Clique para selecionar ou arraste</div>
-                                </div>
-                                <input type="file" id="audioInput" class="file-input" accept="audio/*">
+                                <label>Observações</label>
+                                <textarea id="observations" placeholder="Adicione observações relevantes..."></textarea>
                             </div>
                         </div>
 
@@ -988,80 +1077,296 @@
             `;
         }
 
-        function renderRevisaoLiteratura() {
-            const pendentes = appState.publications.filter(p => p.status === 'pending');
-            if (pendentes.length === 0) {
-                return '<p style="color: #999; text-align: center; padding: 40px;">Nenhuma publicação pendente de revisão.</p>';
-            }
-            
-            return pendentes.map((pub, idx) => `
-                <div class="publication-card">
-                    <div class="publication-title">🎵 ${pub.title}</div>
-                    <div class="publication-meta">
-                        <span>👤 ${pub.author}</span>
-                        <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
-                        <span class="status-badge status-pending">⏳ Pendente</span>
-                    </div>
-                    <div style="margin-top: 15px;">
-                        <label>Minha Revisão:</label>
-                        <textarea id="revision_${idx}" placeholder="Digite sua revisão..." style="width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 6px; min-height: 100px;"></textarea>
-                    </div>
-                    ${pub.audio ? `
-                    <div style="margin-top: 15px;">
-                        <strong>🎵 Áudio:</strong>
-                        <div class="audio-player">
-                            <audio controls>
-                                <source src="${pub.audio}" type="audio/mpeg">
-                                Seu navegador não suporta áudio.
-                            </audio>
+        function renderHinario() {
+            let html = `<div class="form-section">
+                <div class="form-section-title">➕ Adicionar Hinário</div>
+                <form onsubmit="addItem(event, 'hinarios')">
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Título *</label>
+                            <input type="text" id="hinarioTitle" placeholder="Título do Hinário" required>
                         </div>
                     </div>
-                    ` : ''}
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="btn btn-success" onclick="approveWithRevision(${idx})">✅ Aprovar</button>
-                        <button class="btn btn-danger" onclick="rejectRevision(${idx})">❌ Rejeitar</button>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <textarea id="hinarioDesc" placeholder="Descrição..."></textarea>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                    <div class="form-row full">
+                        <div class="upload-area" onclick="document.getElementById('hinarioFile').click();">
+                            <div style="font-size: 32px;">📄</div>
+                            <div>Carregar Arquivo</div>
+                        </div>
+                        <input type="file" id="hinarioFile" class="file-input" accept=".pdf,.doc,.docx,.txt">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Salvar Hinário</button>
+                </form>
+            </div>`;
+            
+            if (appState.hinarios.length > 0) {
+                html += '<h3 style="color: #333; margin: 20px 0;">Hinários Registrados</h3>';
+                appState.hinarios.forEach((item, idx) => {
+                    html += `<div class="editable-item">
+                        <div class="editable-item-header">
+                            <span class="editable-item-title">📖 ${item.titulo}</span>
+                            <div class="editable-item-actions">
+                                <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'hinarios')">Deletar</button>
+                            </div>
+                        </div>
+                        <p style="color: #666; font-size: 13px;">${item.descricao}</p>
+                    </div>`;
+                });
+            }
+            return html;
         }
 
-        function renderMinhasPublications() {
-            const minhas = appState.publications.filter(p => p.author === appState.currentUser);
-            if (minhas.length === 0) {
-                return '<p style="color: #999; text-align: center; padding: 40px;">Você ainda não enviou nenhuma contribuição.</p>';
-            }
-            
-            return `<hr style="margin: 30px 0; border: none; border-top: 1px solid #e0e0e0;">
-                <h3 style="color: #333; margin: 20px 0;">📌 Minhas Publicações</h3>` + minhas.map(pub => `
-                <div class="publication-card">
-                    <div class="publication-title">🎵 ${pub.title}</div>
-                    <div class="publication-meta">
-                        <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
-                        <span class="status-badge ${pub.status === 'approved' ? 'status-approved' : pub.status === 'rejected' ? 'status-rejected' : 'status-pending'}">
-                            ${pub.status === 'approved' ? '✅ Aprovado' : pub.status === 'rejected' ? '❌ Rejeitado' : '⏳ Pendente'}
-                        </span>
-                    </div>
-                    <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${pub.workPerson}</p>
-                    ${pub.audio ? `
-                    <div style="margin-top: 15px;">
-                        <strong>🎵 Áudio:</strong>
-                        <div class="audio-player">
-                            <audio controls>
-                                <source src="${pub.audio}" type="audio/mpeg">
-                                Seu navegador não suporta áudio.
-                            </audio>
+        function renderTraducoes() {
+            let html = `<div class="form-section">
+                <div class="form-section-title">➕ Adicionar Tradução</div>
+                <form onsubmit="addItem(event, 'traducoes')">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Língua Original *</label>
+                            <select id="traducaoOriginal" required>
+                                <option>Português</option>
+                                <option>Inglês</option>
+                                <option>Francês</option>
+                                <option>Espanhol</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Língua Tradução *</label>
+                            <select id="traducaoDestino" required>
+                                <option>Português</option>
+                                <option>Inglês</option>
+                                <option>Francês</option>
+                                <option>Espanhol</option>
+                            </select>
                         </div>
                     </div>
-                    ` : ''}
-                </div>
-            `).join('');
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Título da Letra *</label>
+                            <input type="text" id="traducaoTitulo" required>
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Texto Original</label>
+                            <textarea id="traducaoTextoOriginal" placeholder="Cole o texto original..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Texto Traduzido</label>
+                            <textarea id="traducaoTextoTraduzido" placeholder="Cole o texto traduzido..."></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Salvar Tradução</button>
+                </form>
+            </div>`;
+            
+            if (appState.traducoes.length > 0) {
+                html += '<h3 style="color: #333; margin: 20px 0;">Traduções Registradas</h3>';
+                appState.traducoes.forEach((item, idx) => {
+                    html += `<div class="editable-item">
+                        <div class="editable-item-header">
+                            <span class="editable-item-title">🌐 ${item.titulo}</span>
+                        </div>
+                        <p style="font-size: 12px; color: #667eea;"><strong>${item.original} → ${item.destino}</strong></p>
+                    </div>`;
+                });
+            }
+            return html;
+        }
+
+        function renderReunioes() {
+            let html = `<div class="form-section">
+                <div class="form-section-title">➕ Agendar Reunião</div>
+                <form onsubmit="addItem(event, 'reunioes')">
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Assunto *</label>
+                            <input type="text" id="reuniaoAssunto" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data *</label>
+                            <input type="date" id="reuniaoData" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Hora *</label>
+                            <input type="time" id="reuniaoHora" required>
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Local/Plataforma</label>
+                            <input type="text" id="reuniaoLocal" placeholder="Zoom, Presencial, etc">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Agendar Reunião</button>
+                </form>
+            </div>`;
+            
+            if (appState.reunioes.length > 0) {
+                html += '<h3 style="color: #333; margin: 20px 0;">Reuniões Agendadas</h3>';
+                appState.reunioes.forEach((item, idx) => {
+                    html += `<div class="editable-item">
+                        <div class="editable-item-header">
+                            <span class="editable-item-title">📅 ${item.assunto}</span>
+                            <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'reunioes')">Deletar</button>
+                        </div>
+                        <p style="font-size: 13px; color: #666;">📅 ${item.data} às ${item.hora} | 📍 ${item.local}</p>
+                    </div>`;
+                });
+            }
+            return html;
+        }
+
+        function renderLicoes() {
+            let html = `<div class="form-section">
+                <div class="form-section-title">➕ Adicionar Lição</div>
+                <form onsubmit="addItem(event, 'licoes')">
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Título *</label>
+                            <input type="text" id="licaoTitulo" required>
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Conteúdo</label>
+                            <textarea id="licaoConteudo" placeholder="Descreva a lição..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" id="licaoData">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Salvar Lição</button>
+                </form>
+            </div>`;
+            
+            if (appState.licoes.length > 0) {
+                html += '<h3 style="color: #333; margin: 20px 0;">Lições da Semana</h3>';
+                appState.licoes.forEach((item, idx) => {
+                    html += `<div class="editable-item">
+                        <div class="editable-item-header">
+                            <span class="editable-item-title">📚 ${item.titulo}</span>
+                            <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'licoes')">Deletar</button>
+                        </div>
+                        <p style="font-size: 13px; color: #666;">${item.conteudo}</p>
+                    </div>`;
+                });
+            }
+            return html;
+        }
+
+        function renderPartitures() {
+            let html = `<div class="form-section">
+                <div class="form-section-title">➕ Adicionar Partitura</div>
+                <form onsubmit="addItem(event, 'partitures')">
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Título *</label>
+                            <input type="text" id="partituraTitulo" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Compositor</label>
+                            <input type="text" id="partituraCompositor">
+                        </div>
+                        <div class="form-group">
+                            <label>Tom</label>
+                            <input type="text" id="partituraTom">
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="upload-area" onclick="document.getElementById('partituraFile').click();">
+                            <div style="font-size: 32px;">🎼</div>
+                            <div>Carregar Partitura</div>
+                        </div>
+                        <input type="file" id="partituraFile" class="file-input" accept=".pdf,.jpg,.png">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Salvar Partitura</button>
+                </form>
+            </div>`;
+            
+            if (appState.partitures.length > 0) {
+                html += '<h3 style="color: #333; margin: 20px 0;">Partituras na Biblioteca</h3>';
+                appState.partitures.forEach((item, idx) => {
+                    html += `<div class="editable-item">
+                        <div class="editable-item-header">
+                            <span class="editable-item-title">🎼 ${item.titulo}</span>
+                            <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'partitures')">Deletar</button>
+                        </div>
+                        <p style="font-size: 13px; color: #666;">Compositor: ${item.compositor} | Tom: ${item.tom}</p>
+                    </div>`;
+                });
+            }
+            return html;
+        }
+
+        function renderTarefas() {
+            let html = `<div class="form-section">
+                <div class="form-section-title">➕ Distribuir Tarefa</div>
+                <form onsubmit="addItem(event, 'tarefas')">
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Descrição da Tarefa *</label>
+                            <input type="text" id="tarefaDescricao" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Atribuído a *</label>
+                            <input type="text" id="tarefaAtribuido" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Prioridade</label>
+                            <select id="tarefaPrioridade">
+                                <option>Baixa</option>
+                                <option>Média</option>
+                                <option selected>Alta</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data de Vencimento</label>
+                            <input type="date" id="tarefaVencimento">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Criar Tarefa</button>
+                </form>
+            </div>`;
+            
+            if (appState.tarefas.length > 0) {
+                html += '<h3 style="color: #333; margin: 20px 0;">Tarefas Distribuídas</h3>';
+                appState.tarefas.forEach((item, idx) => {
+                    const prioridadeColor = item.prioridade === 'Alta' ? '#dc3545' : item.prioridade === 'Média' ? '#ffc107' : '#28a745';
+                    html += `<div class="editable-item">
+                        <div class="editable-item-header">
+                            <span class="editable-item-title">✓ ${item.descricao}</span>
+                            <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'tarefas')">Deletar</button>
+                        </div>
+                        <p style="font-size: 13px; color: #666;">👤 ${item.atribuido} | <span style="color: ${prioridadeColor}; font-weight: 600;">Prioridade: ${item.prioridade}</span></p>
+                    </div>`;
+                });
+            }
+            return html;
         }
 
         function renderAllPublications() {
             if (appState.publications.length === 0) {
-                return '<p style="color: #999; text-align: center; padding: 40px;">Nenhuma publicação registrada no momento.</p>';
+                return '<p class="empty-state">Nenhuma publicação registrada.</p>';
             }
-            
             return appState.publications.map(pub => `
                 <div class="publication-card">
                     <div class="publication-title">🎵 ${pub.title}</div>
@@ -1073,17 +1378,49 @@
                         </span>
                     </div>
                     <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${pub.workPerson}</p>
-                    ${pub.audio ? `
-                    <div style="margin-top: 15px;">
-                        <strong>🎵 Áudio:</strong>
-                        <div class="audio-player">
-                            <audio controls>
-                                <source src="${pub.audio}" type="audio/mpeg">
-                                Seu navegador não suporta áudio.
-                            </audio>
-                        </div>
+                    ${pub.audio ? `<div class="audio-player"><audio controls><source src="${pub.audio}" type="audio/mpeg"></audio></div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function renderRevisaoLiteratura() {
+            const pendentes = appState.publications.filter(p => p.status === 'pending');
+            if (pendentes.length === 0) return '<p class="empty-state">Nenhuma publicação pendente.</p>';
+            return pendentes.map((pub, idx) => `
+                <div class="publication-card">
+                    <div class="publication-title">🎵 ${pub.title}</div>
+                    <div class="publication-meta">
+                        <span>👤 ${pub.author}</span>
+                        <span class="status-badge status-pending">⏳ Pendente</span>
                     </div>
-                    ` : ''}
+                    ${pub.lyrics ? `<div style="margin-top: 15px;"><strong>Letra:</strong><p style="background: #f9fafb; padding: 10px; border-radius: 6px; margin-top: 8px; font-size: 13px; white-space: pre-wrap;">${pub.lyrics}</p></div>` : ''}
+                    <div style="margin-top: 15px;">
+                        <label>Minha Revisão:</label>
+                        <textarea id="revision_${idx}" placeholder="Digite sua revisão..." style="width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 6px; min-height: 100px;"></textarea>
+                    </div>
+                    ${pub.audio ? `<div class="audio-player"><audio controls><source src="${pub.audio}" type="audio/mpeg"></audio></div>` : ''}
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="btn btn-success" onclick="approveWithRevision(${idx})">✅ Aprovar</button>
+                        <button class="btn btn-danger" onclick="rejectRevision(${idx})">❌ Rejeitar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMinhasPublications() {
+            const minhas = appState.publications.filter(p => p.author === appState.currentUser);
+            if (minhas.length === 0) return '<p class="empty-state">Você ainda não enviou nenhuma contribuição.</p>';
+            return '<hr><h3 style="color: #333; margin: 20px 0;">📌 Minhas Publicações</h3>' + minhas.map(pub => `
+                <div class="publication-card">
+                    <div class="publication-title">🎵 ${pub.title}</div>
+                    <div class="publication-meta">
+                        <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
+                        <span class="status-badge ${pub.status === 'approved' ? 'status-approved' : pub.status === 'rejected' ? 'status-rejected' : 'status-pending'}">
+                            ${pub.status === 'approved' ? '✅ Aprovado' : pub.status === 'rejected' ? '❌ Rejeitado' : '⏳ Pendente'}
+                        </span>
+                    </div>
+                    <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${pub.workPerson}</p>
+                    ${pub.audio ? `<div class="audio-player"><audio controls><source src="${pub.audio}" type="audio/mpeg"></audio></div>` : ''}
                 </div>
             `).join('');
         }
@@ -1094,9 +1431,10 @@
                     <div class="chat-messages" id="chatMessages">
                         ${appState.messages.map(msg => `
                             <div class="message ${msg.sender === appState.currentUser ? 'sent' : 'received'}">
+                                <div class="message-sender" style="text-align: ${msg.sender === appState.currentUser ? 'right' : 'left'};">${msg.sender}</div>
                                 <div class="message-bubble">${msg.text}</div>
                             </div>
-                        `).join('') || '<p style="text-align: center; color: #999; margin-top: 20px;">Nenhuma mensagem ainda. Comece uma conversa!</p>'}
+                        `).join('') || '<p style="text-align: center; color: #999; margin-top: 20px;">Nenhuma mensagem ainda!</p>'}
                     </div>
                     <div class="chat-input">
                         <input type="text" id="chatInput" placeholder="Digite sua mensagem..." onkeypress="if(event.key==='Enter') sendChatMessage();">
@@ -1110,10 +1448,12 @@
             event.preventDefault();
             const title = document.getElementById('songTitle').value;
             const workPerson = document.getElementById('workPerson').value;
+            const lyrics = document.getElementById('lyrics').value;
+            const observations = document.getElementById('observations').value;
             const audioInput = document.getElementById('audioInput');
 
             if (!title || !workPerson) {
-                alert('❌ Por favor, preencha todos os campos obrigatórios!');
+                alert('❌ Preencha os campos obrigatórios!');
                 return;
             }
 
@@ -1122,9 +1462,10 @@
                 reader.onload = (e) => {
                     appState.publications.push({
                         title, workPerson, author: appState.currentUser,
-                        audio: e.target.result, date: new Date(), status: 'pending'
+                        audio: e.target.result, lyrics, observations,
+                        date: new Date(), status: 'pending'
                     });
-                    alert('✅ Contribuição enviada com sucesso!');
+                    alert('✅ Contribuição enviada!');
                     event.target.reset();
                     renderContent('minhascontribuicoes');
                 };
@@ -1132,9 +1473,10 @@
             } else {
                 appState.publications.push({
                     title, workPerson, author: appState.currentUser,
-                    audio: null, date: new Date(), status: 'pending'
+                    audio: null, lyrics, observations,
+                    date: new Date(), status: 'pending'
                 });
-                alert('✅ Contribuição enviada com sucesso!');
+                alert('✅ Contribuição enviada!');
                 event.target.reset();
                 renderContent('minhascontribuicoes');
             }
@@ -1154,8 +1496,69 @@
 
         function rejectRevision(idx) {
             appState.publications[idx].status = 'rejected';
-            alert('❌ Publicação rejeitada.');
+            alert('❌ Rejeitado.');
             renderContent('minhasrevisoes');
+        }
+
+        function addItem(event, type) {
+            event.preventDefault();
+            let item = {};
+            
+            if (type === 'hinarios') {
+                item = { titulo: document.getElementById('hinarioTitle').value, descricao: document.getElementById('hinarioDesc').value };
+                document.getElementById('hinarioTitle').value = '';
+                document.getElementById('hinarioDesc').value = '';
+            } else if (type === 'traducoes') {
+                item = { 
+                    titulo: document.getElementById('traducaoTitulo').value,
+                    original: document.getElementById('traducaoOriginal').value,
+                    destino: document.getElementById('traducaoDestino').value
+                };
+                document.getElementById('traducaoTitulo').value = '';
+            } else if (type === 'reunioes') {
+                item = {
+                    assunto: document.getElementById('reuniaoAssunto').value,
+                    data: document.getElementById('reuniaoData').value,
+                    hora: document.getElementById('reuniaoHora').value,
+                    local: document.getElementById('reuniaoLocal').value
+                };
+                document.getElementById('reuniaoAssunto').value = '';
+            } else if (type === 'licoes') {
+                item = {
+                    titulo: document.getElementById('licaoTitulo').value,
+                    conteudo: document.getElementById('licaoConteudo').value,
+                    data: document.getElementById('licaoData').value
+                };
+                document.getElementById('licaoTitulo').value = '';
+                document.getElementById('licaoConteudo').value = '';
+            } else if (type === 'partitures') {
+                item = {
+                    titulo: document.getElementById('partituraTitulo').value,
+                    compositor: document.getElementById('partituraCompositor').value,
+                    tom: document.getElementById('partituraTom').value
+                };
+                document.getElementById('partituraTitulo').value = '';
+            } else if (type === 'tarefas') {
+                item = {
+                    descricao: document.getElementById('tarefaDescricao').value,
+                    atribuido: document.getElementById('tarefaAtribuido').value,
+                    prioridade: document.getElementById('tarefaPrioridade').value,
+                    vencimento: document.getElementById('tarefaVencimento').value
+                };
+                document.getElementById('tarefaDescricao').value = '';
+                document.getElementById('tarefaAtribuido').value = '';
+            }
+            
+            appState[type].push(item);
+            alert('✅ Item adicionado!');
+            renderContent(type === 'hinarios' ? 'hinario' : type === 'reunioes' ? 'reunioes' : type === 'licoes' ? 'licoes' : type === 'partitures' ? 'partitures' : type === 'tarefas' ? 'tarefas' : type);
+        }
+
+        function deleteItem(idx, type) {
+            appState[type].splice(idx, 1);
+            alert('✅ Item removido!');
+            const pageMap = { hinarios: 'hinario', traducoes: 'traducoes', reunioes: 'reunioes', licoes: 'licoes', partitures: 'partitures', tarefas: 'tarefas' };
+            renderContent(pageMap[type] || type);
         }
 
         function sendChatMessage() {
@@ -1165,6 +1568,10 @@
                 appState.messages.push({ sender: appState.currentUser, text });
                 input.value = '';
                 renderContent('chat');
+                setTimeout(() => {
+                    const chatMessages = document.getElementById('chatMessages');
+                    if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 100);
             }
         }
 
