@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestão Musical IFAA</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
@@ -20,8 +15,6 @@
             align-items: center;
             padding: 20px;
         }
-
-        /* ===== NOTIFICAÇÃO ===== */
         .notification {
             position: fixed;
             top: 20px;
@@ -35,32 +28,12 @@
             animation: slideInRight 0.5s ease;
             max-width: 350px;
         }
-
-        .notification.error {
-            background: #dc3545;
-        }
-
-        .notification.info {
-            background: #17a2b8;
-        }
-
-        .notification.warning {
-            background: #ffc107;
-            color: #333;
-        }
-
+        .notification.error { background: #dc3545; }
+        .notification.info { background: #17a2b8; }
         @keyframes slideInRight {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
-
-        /* ===== LOGIN ===== */
         .login-container {
             background: white;
             border-radius: 15px;
@@ -70,27 +43,10 @@
             max-width: 500px;
             animation: slideUp 0.5s ease;
         }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .login-header h1 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .login-header p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        .login-header { text-align: center; margin-bottom: 30px; }
+        .login-header h1 { color: #333; font-size: 28px; margin-bottom: 10px; }
+        .login-header p { color: #666; font-size: 14px; }
+        .form-group { margin-bottom: 20px; }
         .form-group label {
             display: block;
             margin-bottom: 8px;
@@ -98,32 +54,19 @@
             font-weight: 600;
             font-size: 14px;
         }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 12px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 14px;
             transition: border-color 0.3s;
-            font-family: inherit;
         }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: #888888;
             box-shadow: 0 0 0 3px rgba(100, 100, 100, 0.2);
         }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
         .btn-login {
             width: 100%;
             padding: 12px;
@@ -136,12 +79,10 @@
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-
         .btn-login:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
-
         .error {
             background: #f8d7da;
             color: #721c24;
@@ -150,30 +91,20 @@
             margin-bottom: 15px;
             display: none;
         }
-
         .additional-fields {
             display: none;
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #e0e0e0;
         }
-
-        .additional-fields.show {
-            display: block;
-        }
-
-        /* ===== DASHBOARD ===== */
+        .additional-fields.show { display: block; }
         .dashboard-wrapper {
             width: 100%;
             min-height: 100vh;
             background: #f5f7fa;
             display: none;
         }
-
-        .dashboard-wrapper.active {
-            display: block;
-        }
-
+        .dashboard-wrapper.active { display: block; }
         .header {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
             color: white;
@@ -181,7 +112,6 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: relative;
         }
-
         .notification-badge {
             position: absolute;
             top: 10px;
@@ -197,11 +127,7 @@
             font-weight: 700;
             font-size: 12px;
         }
-
-        .notification-badge.hidden {
-            display: none;
-        }
-
+        .notification-badge.hidden { display: none; }
         .header-content {
             display: flex;
             justify-content: space-between;
@@ -209,27 +135,23 @@
             max-width: 1400px;
             margin: 0 auto;
         }
-
         .header-title {
             font-size: 16px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
         .header-user {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-
         .user-badge {
             background: rgba(255, 255, 255, 0.2);
             padding: 8px 12px;
             border-radius: 6px;
             font-size: 13px;
         }
-
         .btn-logout {
             background: rgba(255, 255, 255, 0.3);
             color: white;
@@ -239,11 +161,7 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-
-        .btn-logout:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
+        .btn-logout:hover { background: rgba(255, 255, 255, 0.5); }
         .welcome-banner {
             background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
             color: white;
@@ -253,25 +171,18 @@
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
-        .welcome-banner h2 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
+        .welcome-banner h2 { font-size: 18px; margin-bottom: 10px; }
         .main-content {
             max-width: 1400px;
             margin: 0 auto;
             padding: 30px;
         }
-
         .dashboard-layout {
             display: grid;
             grid-template-columns: 250px 1fr;
             gap: 20px;
             min-height: calc(100vh - 200px);
         }
-
         .sidebar {
             background: white;
             border-radius: 10px;
@@ -283,7 +194,6 @@
             max-height: 85vh;
             overflow-y: auto;
         }
-
         .sidebar-title {
             font-size: 13px;
             font-weight: 700;
@@ -292,15 +202,8 @@
             margin-bottom: 15px;
             letter-spacing: 0.5px;
         }
-
-        .nav-menu {
-            list-style: none;
-        }
-
-        .nav-item {
-            margin-bottom: 8px;
-        }
-
+        .nav-menu { list-style: none; }
+        .nav-item { margin-bottom: 8px; }
         .nav-link {
             display: flex;
             align-items: center;
@@ -315,14 +218,11 @@
             font-size: 13px;
             position: relative;
         }
-
-        .nav-link:hover,
-        .nav-link.active {
+        .nav-link:hover, .nav-link.active {
             background: #1a1a1a;
             color: #888888;
             border-left-color: #888888;
         }
-
         .nav-link-badge {
             position: absolute;
             right: 10px;
@@ -337,7 +237,6 @@
             font-size: 11px;
             font-weight: 700;
         }
-
         .content-area {
             background: white;
             border-radius: 10px;
@@ -346,7 +245,6 @@
             overflow-y: auto;
             max-height: 85vh;
         }
-
         .section-title {
             font-size: 24px;
             color: #333;
@@ -354,31 +252,20 @@
             padding-bottom: 15px;
             border-bottom: 2px solid #f0f4ff;
         }
-
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-
         .stat-card {
             padding: 20px;
             border-radius: 10px;
             text-align: center;
             color: white;
         }
-
-        .stat-card h3 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .stat-card p {
-            font-size: 13px;
-            opacity: 0.9;
-        }
-
+        .stat-card h3 { font-size: 32px; margin-bottom: 10px; }
+        .stat-card p { font-size: 13px; opacity: 0.9; }
         .publication-card {
             background: #f9fafb;
             border: 2px solid #e0e0e0;
@@ -387,18 +274,15 @@
             margin-bottom: 20px;
             transition: all 0.3s;
         }
-
         .publication-card:hover {
             border-color: #888888;
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
         }
-
         .publication-title {
             font-size: 16px;
             font-weight: 700;
             color: #333;
         }
-
         .publication-meta {
             display: flex;
             gap: 15px;
@@ -407,7 +291,6 @@
             margin-top: 8px;
             flex-wrap: wrap;
         }
-
         .status-badge {
             display: inline-block;
             padding: 6px 12px;
@@ -416,60 +299,31 @@
             font-weight: 600;
             text-transform: uppercase;
         }
-
-        .status-pending {
-            background: #fef3cd;
-            color: #856404;
-        }
-
-        .status-approved {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-rejected {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .status-published {
-            background: #cfe2ff;
-            color: #084298;
-        }
-
-        .status-literature {
-            background: #e8f5e9;
-            color: #155724;
-        }
-
+        .status-pending { background: #fef3cd; color: #856404; }
+        .status-approved { background: #d4edda; color: #155724; }
+        .status-rejected { background: #f8d7da; color: #721c24; }
+        .status-published { background: #cfe2ff; color: #084298; }
+        .status-literature_review { background: #e0e7ff; color: #3730a3; }
         .form-section {
             background: #f9fafb;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
-
         .form-section-title {
             color: #888888;
             font-weight: 700;
             margin-bottom: 15px;
             font-size: 15px;
         }
-
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 15px;
         }
-
-        .form-row.full {
-            grid-template-columns: 1fr;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-row.full { grid-template-columns: 1fr; }
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid #e0e0e0;
@@ -477,12 +331,10 @@
             font-size: 13px;
             font-family: inherit;
         }
-
         .form-group textarea {
             resize: vertical;
             min-height: 100px;
         }
-
         .upload-area {
             border: 2px dashed #555555;
             border-radius: 10px;
@@ -493,33 +345,18 @@
             margin-bottom: 20px;
             background: #1a1a1a;
         }
-
         .upload-area:hover {
             background: #2a2a2a;
-            border-color: #777777;
-        }
-
-        .upload-area.dragover {
-            background: #0f2f1f;
             border-color: #28a745;
         }
-
-        .file-input {
-            display: none;
-        }
-
+        .file-input { display: none; }
         .audio-player {
             background: #f9fafb;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 15px;
         }
-
-        audio {
-            width: 100%;
-            height: 40px;
-        }
-
+        audio { width: 100%; height: 40px; }
         .btn {
             padding: 10px 20px;
             border: none;
@@ -529,72 +366,26 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-
         .btn-primary {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
             color: white;
         }
-
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-
-        .btn-secondary {
-            background: #e0e0e0;
-            color: #333;
-        }
-
-        .btn-secondary:hover {
-            background: #d0d0d0;
-        }
-
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #218838;
-        }
-
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c82333;
-        }
-
-        .btn-info {
-            background: #17a2b8;
-            color: white;
-        }
-
-        .btn-info:hover {
-            background: #138496;
-        }
-
-        .btn-warning {
-            background: #ffc107;
-            color: #333;
-        }
-
-        .btn-warning:hover {
-            background: #e0a800;
-        }
-
-        .btn-block {
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 12px;
-        }
-
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn-secondary:hover { background: #d0d0d0; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #218838; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-danger:hover { background: #c82333; }
+        .btn-info { background: #17a2b8; color: white; }
+        .btn-info:hover { background: #138496; }
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-warning:hover { background: #e0a800; }
+        .btn-block { width: 100%; margin-top: 10px; }
+        .btn-sm { padding: 6px 12px; font-size: 12px; }
         .chat-container {
             background: white;
             border: 1px solid #e0e0e0;
@@ -603,7 +394,6 @@
             flex-direction: column;
             height: 600px;
         }
-
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -612,24 +402,18 @@
             flex-direction: column;
             gap: 15px;
         }
-
         .message {
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
         }
-
-        .message.sent {
-            justify-content: flex-end;
-        }
-
+        .message.sent { justify-content: flex-end; }
         .message-sender {
             font-size: 12px;
             color: #888888;
             font-weight: 600;
             margin-bottom: 4px;
         }
-
         .message-bubble {
             max-width: 70%;
             padding: 12px 15px;
@@ -637,24 +421,14 @@
             font-size: 14px;
             word-wrap: break-word;
         }
-
-        .message.received .message-bubble {
-            background: #e9ecef;
-            color: #333;
-        }
-
-        .message.sent .message-bubble {
-            background: #444444;
-            color: white;
-        }
-
+        .message.received .message-bubble { background: #e9ecef; color: #333; }
+        .message.sent .message-bubble { background: #444444; color: white; }
         .chat-input {
             padding: 15px;
             border-top: 1px solid #e0e0e0;
             display: flex;
             gap: 10px;
         }
-
         .chat-input input {
             flex: 1;
             padding: 10px 12px;
@@ -662,7 +436,6 @@
             border-radius: 6px;
             font-size: 14px;
         }
-
         .chat-input button {
             background: #444444;
             color: white;
@@ -672,19 +445,7 @@
             cursor: pointer;
             font-weight: 600;
         }
-
-        .chat-input button:hover {
-            background: #222222;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
+        .chat-input button:hover { background: #222222; }
         .editable-item {
             background: #f9fafb;
             border: 1px solid #e0e0e0;
@@ -692,61 +453,25 @@
             padding: 15px;
             margin-bottom: 15px;
         }
-
         .editable-item-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-
-        .editable-item-title {
-            font-weight: 700;
-            color: #333;
-        }
-
-        .editable-item-actions {
-            display: flex;
-            gap: 8px;
-        }
-
+        .editable-item-title { font-weight: 700; color: #333; }
+        .editable-item-actions { display: flex; gap: 8px; }
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
         @media (max-width: 768px) {
-            .dashboard-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 10px;
-            }
+            .dashboard-layout { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .header-content { flex-direction: column; gap: 10px; }
         }
-
-        .divider {
-            border-top: 1px solid #e0e0e0;
-            margin: 20px 0;
-        }
-
-        .empty-state {
-            color: #999;
-            text-align: center;
-            padding: 40px;
-        }
-
+        .divider { border-top: 1px solid #e0e0e0; margin: 20px 0; }
+        .empty-state { color: #999; text-align: center; padding: 40px; }
         .file-item {
             background: white;
             border: 1px solid #e0e0e0;
@@ -758,13 +483,7 @@
             gap: 8px;
             margin: 5px 0;
         }
-
-        .file-item-actions {
-            display: flex;
-            gap: 5px;
-            margin-left: auto;
-        }
-
+        .file-item-actions { display: flex; gap: 5px; margin-left: auto; }
         .modal {
             display: none;
             position: fixed;
@@ -776,13 +495,11 @@
             background-color: rgba(0, 0, 0, 0.4);
             animation: fadeIn 0.3s;
         }
-
         .modal.show {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
         .modal-content {
             background-color: white;
             padding: 30px;
@@ -793,7 +510,6 @@
             max-height: 80vh;
             overflow-y: auto;
         }
-
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -802,13 +518,7 @@
             padding-bottom: 15px;
             border-bottom: 2px solid #f0f4ff;
         }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-        }
-
+        .modal-title { font-size: 18px; font-weight: 700; color: #333; }
         .close {
             background: none;
             border: none;
@@ -817,21 +527,11 @@
             cursor: pointer;
             transition: color 0.3s;
         }
-
-        .close:hover {
-            color: #000;
-        }
-
+        .close:hover { color: #000; }
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-
-        /* Preview de arquivos */
         .preview-container {
             background: #1a1a1a;
             border: 2px solid #444444;
@@ -839,19 +539,13 @@
             padding: 15px;
             margin-top: 10px;
         }
-
         .preview-header {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 10px;
         }
-
-        .preview-audio {
-            width: 100%;
-            border-radius: 8px;
-        }
-
+        .preview-audio { width: 100%; border-radius: 8px; }
         .preview-image {
             max-width: 100%;
             max-height: 400px;
@@ -859,291 +553,354 @@
             display: block;
             margin: 0 auto;
         }
-
         .preview-pdf {
             width: 100%;
             height: 500px;
             border-radius: 8px;
             border: 1px solid #e0e0e0;
         }
-
-        /* Tabela de relatórios */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table th, table td {
-            border: 1px solid #e0e0e0;
-        }
-
-        table tbody tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        table tbody tr:hover {
-            background: #1a1a1a;
-        }
-
-        /* Animação de sucesso */
+        table { width: 100%; border-collapse: collapse; }
+        table th, table td { border: 1px solid #e0e0e0; }
+        table tbody tr:nth-child(even) { background: #f9fafb; }
+        table tbody tr:hover { background: #1a1a1a; }
         @keyframes successPulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
+        .success-animation { animation: successPulse 0.5s ease; }
 
-        .success-animation {
-            animation: successPulse 0.5s ease;
-        }
-
-        /* ===== SUGESTÃO DE HINOS - ESTILO MURAL ===== */
-        .suggestion-post {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-
-        .suggestion-post:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .suggestion-post-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .suggestion-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .suggestion-post-info h4 {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 3px;
-        }
-
-        .suggestion-post-info p {
-            font-size: 12px;
-            color: #888;
-        }
-
-        .suggestion-post-body {
-            margin-bottom: 15px;
-        }
-
-        .suggestion-post-body h5 {
-            font-size: 15px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .suggestion-files {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        .suggestion-file-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            background: #f5f7fa;
-            border: 1px solid #e0e0e0;
-            border-radius: 20px;
-            font-size: 12px;
-            color: #555;
+        /* ===== NOVOS ESTILOS ===== */
+        .upload-zone {
+            border: 2px dashed #555555;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            background: #1a1a1a;
+            margin-bottom: 15px;
         }
-
-        .suggestion-file-btn:hover {
-            background: #e8f5e9;
+        .upload-zone:hover {
+            background: #2a2a2a;
             border-color: #28a745;
         }
-
-        .suggestion-comments {
-            background: #f9fafb;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
+        .upload-zone.dragover {
+            background: #0f2f1f;
+            border-color: #28a745;
         }
-
-        .suggestion-comment {
-            padding: 10px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .suggestion-comment:last-child {
-            border-bottom: none;
-        }
-
-        .suggestion-comment-author {
-            font-size: 12px;
-            font-weight: 700;
-            color: #555;
-            margin-bottom: 4px;
-        }
-
-        .suggestion-comment-text {
-            font-size: 13px;
-            color: #666;
-        }
-
-        .suggestion-comment-input {
+        .upload-zone-content {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .suggestion-comment-input input {
-            flex: 1;
-            padding: 10px 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            font-size: 13px;
-        }
-
-        /* ===== POPUP DE CONFIRMAÇÃO ===== */
-        .success-popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            z-index: 10000;
+            gap: 10px;
         }
-
-        .success-popup.show {
-            display: flex;
+        .upload-zone-icon { font-size: 40px; }
+        .upload-zone-text {
+            font-size: 14px;
+            color: #ccc;
+            font-weight: 600;
         }
-
-        .success-popup-content {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            animation: slideUp 0.5s ease;
-        }
-
-        .success-popup-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-        }
-
-        .success-popup h2 {
-            color: #28a745;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        .success-popup p {
-            color: #666;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        /* ===== SUBMISSÃO FORM UNIFICADO ===== */
-        .submission-preview-box {
+        .upload-zone-hint { font-size: 12px; color: #888; }
+        .file-preview-card {
             background: #1a1a1a;
-            border: 2px solid #444;
+            border: 2px solid #444444;
             border-radius: 10px;
             padding: 20px;
             margin-top: 15px;
+            animation: slideUp 0.3s ease;
         }
-
-        .submission-preview-box h4 {
-            color: #fff;
-            font-size: 14px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #444;
-        }
-
-        .preview-item {
+        .file-preview-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background: #2a2a2a;
-            border-radius: 6px;
-            margin-bottom: 8px;
+            gap: 15px;
+            margin-bottom: 15px;
         }
-
-        .preview-item-icon {
-            font-size: 20px;
-        }
-
-        .preview-item-info {
-            flex: 1;
-        }
-
-        .preview-item-info strong {
-            color: #fff;
-            font-size: 13px;
-        }
-
-        .preview-item-info span {
-            color: #999;
-            font-size: 11px;
-        }
-
-        .preview-item-remove {
+        .file-preview-icon { font-size: 32px; }
+        .file-preview-info { flex: 1; }
+        .file-preview-name { color: #fff; font-size: 16px; font-weight: 600; }
+        .file-preview-size { color: #999; font-size: 12px; }
+        .file-preview-remove {
             background: #dc3545;
             color: white;
             border: none;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            cursor: pointer;
-        }
-
-        .lyrics-preview {
-            background: #2a2a2a;
+            padding: 6px 12px;
             border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .file-preview-remove:hover { background: #c82333; }
+        .file-preview-content { margin-top: 10px; }
+        .file-preview-content img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+        }
+        .file-preview-content embed {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+        }
+        .file-preview-content audio {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .preview-section { margin-bottom: 25px; }
+        .preview-section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .preview-section-content {
+            background: #f9fafb;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .preview-section-content audio { width: 100%; }
+        .preview-section-content embed {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+        }
+        .preview-section-content img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+        }
+        .preview-section-content pre {
+            white-space: pre-wrap;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+        }
+        .review-panel {
+            background: #f8f9fa;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .review-panel-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #155724;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .review-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            min-height: 120px;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.6;
+            background: white;
+            resize: vertical;
+        }
+        .review-textarea:focus {
+            outline: none;
+            border-color: #1e7e34;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+        }
+        .review-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .review-actions .btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 15px;
+        }
+        .contribution-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        .contribution-card:hover {
+            border-color: #888888;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        .contribution-card.status-literature_review { border-left: 4px solid #3730a3; }
+        .contribution-card.status-pending { border-left: 4px solid #ffc107; }
+        .contribution-card.status-approved { border-left: 4px solid #28a745; }
+        .contribution-card.status-rejected { border-left: 4px solid #dc3545; }
+        .contribution-card.status-published { border-left: 4px solid #084298; }
+        .contribution-files {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .contribution-files .btn { font-size: 12px; }
+        .lyrics-display {
+            background: #f9fafb;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
             padding: 15px;
             margin-top: 10px;
-            max-height: 200px;
+            max-height: 300px;
             overflow-y: auto;
         }
-
-        .lyrics-preview pre {
-            color: #ddd;
-            font-family: inherit;
-            font-size: 13px;
-            line-height: 1.6;
+        .lyrics-display pre {
             white-space: pre-wrap;
-            word-wrap: break-word;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+            margin: 0;
         }
+        .lyrics-editor {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #444444;
+            border-radius: 8px;
+            min-height: 200px;
+            font-family: inherit;
+            font-size: 15px;
+            line-height: 1.8;
+            background: white;
+            resize: vertical;
+        }
+        .lyrics-editor:focus {
+            outline: none;
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+        }
+        .observation-box {
+            background: #fff8e1;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        .observation-box-title {
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .observation-box-content {
+            font-size: 14px;
+            color: #856404;
+            line-height: 1.6;
+        }
+        .director-observation-box {
+            background: #e8f5e9;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        .director-observation-box-title {
+            font-weight: 700;
+            color: #155724;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .director-observation-box-content {
+            font-size: 14px;
+            color: #155724;
+            line-height: 1.6;
+        }
+        .review-status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .review-status-badge.reviewed { background: #d4edda; color: #155724; }
+        .review-status-badge.pending { background: #fef3cd; color: #856404; }
+        .review-status-badge.rejected { background: #f8d7da; color: #721c24; }
+        .review-status-badge.published { background: #cfe2ff; color: #084298; }
+        .review-status-badge.literature_review { background: #e0e7ff; color: #3730a3; }
+        .success-screen {
+            text-align: center;
+            padding: 60px 20px;
+            animation: slideUp 0.5s ease;
+        }
+        .success-screen-icon { font-size: 80px; margin-bottom: 20px; }
+        .success-screen-title {
+            color: #28a745;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        .success-screen-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .success-screen-hint {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 30px;
+        }
+        .success-screen-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .success-screen-actions .btn {
+            padding: 12px 30px;
+            font-size: 15px;
+        }
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat-summary-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stat-summary-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+        .stat-summary-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #888888;
+            margin-bottom: 5px;
+        }
+        .stat-summary-label { font-size: 13px; color: #666; }
     </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
+
     <!-- MODAL PARA VISUALIZAR ARQUIVOS -->
     <div id="fileModal" class="modal">
         <div class="modal-content">
@@ -1152,16 +909,6 @@
                 <button class="close" onclick="closeFileModal()">&times;</button>
             </div>
             <div id="fileModalBody"></div>
-        </div>
-    </div>
-
-    <!-- POPUP DE CONFIRMAÇÃO DE SUGESTÃO -->
-    <div id="successPopup" class="success-popup">
-        <div class="success-popup-content">
-            <div class="success-popup-icon">🙏</div>
-            <h2>Que Deus o(a) abençoe!</h2>
-            <p>A DNAC recebeu com sucesso a sua sugestão. Prometemos trabalhar nesta obra o mais breve possível. Obrigado pelo seu contributo!</p>
-            <button class="btn btn-success" onclick="closeSuccessPopup()" style="padding: 12px 30px; font-size: 15px;">✅ Entendido</button>
         </div>
     </div>
 
@@ -1184,15 +931,16 @@
                     <option value="adjunto">👤 Director Adjunto</option>
                     <option value="secretario">📋 Secretário Nacional</option>
                     <option value="literatura">📚 Director da Correção de Literatura</option>
-                    <option value="compositor">🎼 Compositor/Arranjador/Tradutor</option>
-                    <option value="sugeridor">💡 Sugerir Pauta/Música (Acesso Público)</option>
+                    <option value="compositor">🎼 Compositor</option>
+                    <option value="arranjador">🎹 Arranjador</option>
+                    <option value="tradutor">🌐 Tradutor</option>
                 </select>
             </div>
 
             <div class="form-group" id="directorPasswordGroup">
                 <label>🔑 Senha de Acesso:</label>
-                <input type="password" id="passwordInput" placeholder="Digite a senha de acesso">
-                <p style="font-size: 11px; color: #999; margin-top: 5px;">Senhas: Nacional(2025) | Adjunto(2025) | Secretário(2025) | Literatura(2025) | Compositor(musica2025)</p>
+                <input type="password" id="passwordInput" placeholder="Digite a senha de acesso" required>
+                <p style="font-size: 11px; color: #999; margin-top: 5px;">Senhas: Nacional(2025) | Adjunto(2025) | Secretário(2025) | Literatura(2025)</p>
             </div>
 
             <div id="additionalFields" class="additional-fields">
@@ -1221,11 +969,11 @@
                         <option value="Zaire">Zaire</option>
                     </select>
                 </div>
-                <div class="form-group" id="municipioGroup">
+                <div class="form-group">
                     <label>🏙️ Município *</label>
                     <input type="text" id="userMunicipio" placeholder="Digite seu município">
                 </div>
-                <div class="form-group" id="userPasswordGroup">
+                <div class="form-group">
                     <label>🔑 Senha Única (Compositor/Arranjador/Tradutor):</label>
                     <input type="password" id="userPassword" placeholder="Digite a senha única">
                     <p style="font-size: 11px; color: #999; margin-top: 5px;">Senha única: <strong>musica2025</strong></p>
@@ -1281,12 +1029,7 @@
             licoes: [],
             partitures: [],
             tarefas: [],
-            suggestions: [],
-            userFiles: {
-                pdf: [],
-                images: [],
-                audios: []
-            },
+            userFiles: { pdf: [], images: [], audios: [] },
             users: {
                 'nacional': { name: 'Director Emiliano Cupaia Lumbungululo', role: 'Supervisor Nacional' },
                 'adjunto': { name: 'Mimoso Kambungo', role: 'Director Adjunto' },
@@ -1295,16 +1038,58 @@
             }
         };
 
+        // ===== DADOS DE EXEMPLO PARA TESTE =====
+        function loadDemoData() {
+            appState.publications = [
+                {
+                    id: 1,
+                    title: 'Aleluia ao Senhor',
+                    author: 'João Manuel',
+                    workPerson: 'João Manuel',
+                    date: new Date('2026-07-10'),
+                    status: 'literature_review',
+                    lyrics: 'Aleluia, aleluia\nAo Senhor cantemos glória\nPois Ele é digno de louvor\nPara sempre o seu nome é santo',
+                    observations: 'Esta é uma composição original para o culto dominical.',
+                    fileData: null, fileName: null,
+                    imageData: null, imageName: null,
+                    audio: null, audioName: null,
+                    literatureComment: '',
+                    literatureReviewer: '',
+                    literatureReviewDate: null,
+                    finalApprover: '',
+                    finalApprovalDate: null,
+                    directorObservations: ''
+                },
+                {
+                    id: 2,
+                    title: 'Vem Espírito Santo',
+                    author: 'Maria Fernandes',
+                    workPerson: 'Maria Fernandes',
+                    date: new Date('2026-07-08'),
+                    status: 'pending',
+                    lyrics: 'Vem, Espírito Santo\nEnche este lugar\nCom a tua presença\nE o teu poder',
+                    observations: 'Canção para momento de adoração.',
+                    fileData: null, fileName: null,
+                    imageData: null, imageName: null,
+                    audio: null, audioName: null,
+                    literatureComment: '',
+                    literatureReviewer: '',
+                    literatureReviewDate: null,
+                    finalApprover: '',
+                    finalApprovalDate: null,
+                    directorObservations: ''
+                }
+            ];
+        }
+        loadDemoData();
+
         // ===== NOTIFICAÇÕES =====
         function showNotification(message, type = 'success') {
             const notif = document.createElement('div');
             notif.className = `notification ${type}`;
             notif.textContent = message;
             document.body.appendChild(notif);
-            setTimeout(() => {
-                notif.remove();
-            }, 4000);
-
+            setTimeout(() => { notif.remove(); }, 4000);
             if (type === 'success' || type === 'info') {
                 appState.notifications.push({ message, time: new Date(), read: false });
                 updateNotificationBadge();
@@ -1332,41 +1117,21 @@
             const municipioInput = document.getElementById('userMunicipio');
             const userPassword = document.getElementById('userPassword');
             const passwordInput = document.getElementById('passwordInput');
-            const municipioGroup = document.getElementById('municipioGroup');
-            const userPasswordGroup = document.getElementById('userPasswordGroup');
 
-            if (role === 'sugeridor') {
-                // Acesso público - só precisa de nome e província, SEM senha
-                additionalFields.classList.add('show');
-                fullNameInput.required = true;
-                provinciaInput.required = true;
-                municipioInput.required = false;
-                if (municipioGroup) municipioGroup.style.display = 'none';
-                if (userPassword) userPassword.required = false;
-                if (userPasswordGroup) userPasswordGroup.style.display = 'none';
-                directorPasswordGroup.style.display = 'none';
-                passwordInput.required = false;
-                passwordInput.value = ''; // limpar qualquer senha digitada
-            } else if (role === 'compositor') {
+            if (['compositor', 'arranjador', 'tradutor'].includes(role)) {
                 additionalFields.classList.add('show');
                 fullNameInput.required = true;
                 provinciaInput.required = true;
                 municipioInput.required = true;
-                if (municipioGroup) municipioGroup.style.display = 'block';
-                if (userPassword) userPassword.required = true;
-                if (userPasswordGroup) userPasswordGroup.style.display = 'block';
+                userPassword.required = true;
                 directorPasswordGroup.style.display = 'none';
                 passwordInput.required = false;
-            } else if (['nacional', 'adjunto', 'secretario', 'literatura'].includes(role)) {
+            } else {
                 additionalFields.classList.remove('show');
                 fullNameInput.required = false;
                 provinciaInput.required = false;
                 municipioInput.required = false;
-                if (userPassword) userPassword.required = false;
-                directorPasswordGroup.style.display = 'block';
-                passwordInput.required = true;
-            } else {
-                additionalFields.classList.remove('show');
+                userPassword.required = false;
                 directorPasswordGroup.style.display = 'block';
                 passwordInput.required = true;
             }
@@ -1375,89 +1140,36 @@
         function handleLogin(event) {
             event.preventDefault();
             const role = document.getElementById('roleSelect').value;
+            if (!role) { showLoginError('Por favor, selecione uma função!'); return; }
 
-            if (!role) {
-                showLoginError('Por favor, selecione uma função!');
-                return;
-            }
-
-            if (role === 'sugeridor') {
-                const fullName = document.getElementById('userFullName').value.trim();
-                const provincia = document.getElementById('userProvincia').value;
-
-                if (!fullName) {
-                    showLoginError('Por favor, digite o seu nome completo!');
-                    return;
-                }
-                if (!provincia) {
-                    showLoginError('Por favor, selecione a sua província!');
-                    return;
-                }
-
-                appState.currentUserData = {
-                    name: fullName,
-                    provincia: provincia,
-                    role: 'Sugeridor'
-                };
-                appState.currentRole = 'sugeridor';
-                appState.currentUser = fullName;
-                showDashboard();
-                return;
-            } else if (role === 'compositor') {
+            if (['compositor', 'arranjador', 'tradutor'].includes(role)) {
                 const fullName = document.getElementById('userFullName').value.trim();
                 const provincia = document.getElementById('userProvincia').value;
                 const municipio = document.getElementById('userMunicipio').value.trim();
                 const userPassword = document.getElementById('userPassword').value;
-
                 if (!fullName || !provincia || !municipio) {
-                    showLoginError('Por favor, preencha todos os dados pessoais!');
-                    return;
+                    showLoginError('Por favor, preencha todos os dados pessoais!'); return;
                 }
-
                 if (userPassword !== 'musica2025') {
-                    showLoginError('Senha única incorreta! Use: musica2025');
-                    return;
+                    showLoginError('Senha única incorreta! Use: musica2025'); return;
                 }
-
                 appState.currentUserData = {
-                    name: fullName,
-                    provincia: provincia,
-                    municipio: municipio,
-                    role: 'Compositor/Arranjador/Tradutor'
+                    name: fullName, provincia: provincia, municipio: municipio,
+                    role: role === 'compositor' ? 'Compositor' : role === 'arranjador' ? 'Arranjador' : 'Tradutor'
                 };
-                appState.currentRole = 'compositor';
+                appState.currentRole = role;
                 appState.currentUser = fullName;
                 showDashboard();
             } else {
                 const password = document.getElementById('passwordInput').value;
-
-                if (!password) {
-                    showLoginError('Por favor, digite a senha de acesso!');
-                    return;
-                }
-
-                if (role === 'nacional' && password === '2025') {
-                    appState.currentUserData = appState.users[role];
-                    appState.currentRole = role;
-                    appState.currentUser = appState.currentUserData.name;
-                    showDashboard();
-                } else if (role === 'adjunto' && password === '2025') {
-                    appState.currentUserData = appState.users[role];
-                    appState.currentRole = role;
-                    appState.currentUser = appState.currentUserData.name;
-                    showDashboard();
-                } else if (role === 'secretario' && password === '2025') {
-                    appState.currentUserData = appState.users[role];
-                    appState.currentRole = role;
-                    appState.currentUser = appState.currentUserData.name;
-                    showDashboard();
-                } else if (role === 'literatura' && password === '2025') {
+                if (!password) { showLoginError('Por favor, digite a senha de acesso!'); return; }
+                if ((role === 'nacional' || role === 'adjunto' || role === 'secretario' || role === 'literatura') && password === '2025') {
                     appState.currentUserData = appState.users[role];
                     appState.currentRole = role;
                     appState.currentUser = appState.currentUserData.name;
                     showDashboard();
                 } else {
-                    showLoginError('Senha de acesso incorreta!');
+                    showLoginError('Senha de acesso incorreta! Use: 2025');
                 }
             }
         }
@@ -1472,9 +1184,8 @@
         function showDashboard() {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('dashboardScreen').classList.add('active');
-            const roleDisplay = appState.currentUserData.role;
-            document.getElementById('userRole').textContent = roleDisplay;
-            document.getElementById('welcomeName').textContent = `👤 ${appState.currentUser} - ${roleDisplay}`;
+            document.getElementById('userRole').textContent = appState.currentUserData.role;
+            document.getElementById('welcomeName').textContent = `👤 ${appState.currentUser} - ${appState.currentUserData.role}`;
             renderSidebar();
             renderContent('dashboard');
             updateNotificationBadge();
@@ -1488,7 +1199,6 @@
             if (['nacional', 'adjunto', 'secretario'].includes(appState.currentRole)) {
                 menuHTML += `
                     <li class="nav-item"><a class="nav-link active" onclick="renderContent('dashboard')"><span>📊</span> Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="renderContent('sugestoes')"><span>💡</span> Sugestões de Obras <span class="nav-link-badge" id="sugestoesBadge" style="display: none;"></span></a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('arranjos')"><span>🎼</span> Arranjos</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('composicoes')"><span>✏️</span> Composições</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('hinario')"><span>📖</span> Hinário</a></li>
@@ -1503,24 +1213,17 @@
             } else if (appState.currentRole === 'literatura') {
                 menuHTML += `
                     <li class="nav-item"><a class="nav-link active" onclick="renderContent('dashboard')"><span>📊</span> Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="renderContent('revisoes')"><span>📝</span> Revisões Pendentes <span class="nav-link-badge" id="revisoesBadge" style="display: none;"></span></a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="renderContent('sugestoes')"><span>💡</span> Sugestões de Obras</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('revisoespendentes')"><span>📝</span> Revisões Pendentes <span class="nav-link-badge" id="revisoesBadge" style="display: none;"></span></a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('chat')"><span>💬</span> Chat</a></li>
                 `;
-            } else if (appState.currentRole === 'compositor') {
+            } else if (['compositor', 'arranjador', 'tradutor'].includes(appState.currentRole)) {
                 menuHTML += `
                     <li class="nav-item"><a class="nav-link active" onclick="renderContent('dashboard')"><span>📊</span> Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('submeter')"><span>📤</span> Submeter Nova Obra</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="renderContent('minhascontribuicoes')"><span>📋</span> Meus Contributos</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('meuscontributos')"><span>📋</span> Meus Contributos</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('chat')"><span>💬</span> Chat</a></li>
                 `;
-            } else if (appState.currentRole === 'sugeridor') {
-                menuHTML += `
-                    <li class="nav-item"><a class="nav-link active" onclick="renderContent('dashboard')"><span>📊</span> Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="renderContent('sugerir')"><span>💡</span> Sugerir Pauta/Música</a></li>
-                `;
             }
-
             menuHTML += '</ul>';
             sidebar.innerHTML = menuHTML;
 
@@ -1530,15 +1233,11 @@
                     link.classList.add('active');
                 });
             });
-
             updateBadges();
         }
 
         function updateBadges() {
             const tarefasBadge = document.getElementById('tarefasBadge');
-            const revisoesBadge = document.getElementById('revisoesBadge');
-            const sugestoesBadge = document.getElementById('sugestoesBadge');
-
             if (tarefasBadge) {
                 const tarefasCount = appState.tarefas.length;
                 if (tarefasCount > 0) {
@@ -1546,20 +1245,12 @@
                     tarefasBadge.style.display = 'flex';
                 }
             }
-
+            const revisoesBadge = document.getElementById('revisoesBadge');
             if (revisoesBadge) {
                 const revisoesCount = appState.publications.filter(p => p.status === 'pending').length;
                 if (revisoesCount > 0) {
                     revisoesBadge.textContent = revisoesCount;
                     revisoesBadge.style.display = 'flex';
-                }
-            }
-
-            if (sugestoesBadge) {
-                const sugestoesCount = appState.suggestions.length;
-                if (sugestoesCount > 0) {
-                    sugestoesBadge.textContent = sugestoesCount;
-                    sugestoesBadge.style.display = 'flex';
                 }
             }
         }
@@ -1571,9 +1262,20 @@
 
             if (['nacional', 'adjunto', 'secretario'].includes(appState.currentRole)) {
                 if (page === 'dashboard') {
-                    html = renderDirectorDashboard();
-                } else if (page === 'sugestoes') {
-                    html = renderSugestoesPainel();
+                    html = `<h2 class="section-title">📊 Dashboard de Controle</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);">
+                                <h3 id="totalArranjos">0</h3><p>Arranjos</p>
+                            </div>
+                            <div class="stat-card" style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);">
+                                <h3 id="totalComposicoes">0</h3><p>Composições</p>
+                            </div>
+                            <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <h3 id="totalAprovados">0</h3><p>Publicados</p>
+                            </div>
+                        </div>
+                        <h3 style="color: #333; margin-top: 30px; margin-bottom: 15px;">📚 Publicações Recentes</h3>
+                        ${renderAllPublications()}`;
                 } else if (page === 'arranjos') {
                     html = `<h2 class="section-title">🎼 Arranjos</h2>${renderAllPublications()}`;
                 } else if (page === 'composicoes') {
@@ -1597,1082 +1299,719 @@
                 }
             } else if (appState.currentRole === 'literatura') {
                 if (page === 'dashboard') {
-                    html = renderLiteraturaDashboard();
-                } else if (page === 'revisoes') {
+                    html = renderLiteratureDashboard();
+                } else if (page === 'revisoespendentes') {
                     html = `<h2 class="section-title">📝 Revisões Pendentes</h2>${renderRevisoesPendentes()}`;
-                } else if (page === 'sugestoes') {
-                    html = renderSugestoesPainel();
                 } else if (page === 'chat') {
                     html = `<h2 class="section-title">💬 Chat em Tempo Real</h2>${renderChat()}`;
                 }
-            } else if (appState.currentRole === 'compositor') {
+            } else if (['compositor', 'arranjador', 'tradutor'].includes(appState.currentRole)) {
                 if (page === 'dashboard') {
-                    html = renderCompositorDashboard();
+                    html = renderCreatorDashboard();
                 } else if (page === 'submeter') {
-                    html = renderFormularioSubmissao();
-                } else if (page === 'minhascontribuicoes') {
-                    html = `<h2 class="section-title">📋 Meus Contributos</h2>${renderMinhasContribuicoes()}`;
+                    html = `<h2 class="section-title">📤 Submeter Nova Obra</h2>${renderUnifiedSubmissionForm()}`;
+                } else if (page === 'meuscontributos') {
+                    html = `<h2 class="section-title">📋 Meus Contributos</h2>${renderMeusContributos()}`;
                 } else if (page === 'chat') {
                     html = `<h2 class="section-title">💬 Chat em Tempo Real</h2>${renderChat()}`;
-                }
-            } else if (appState.currentRole === 'sugeridor') {
-                if (page === 'dashboard') {
-                    html = renderSugeridorDashboard();
-                } else if (page === 'sugerir') {
-                    html = renderFormularioSugestao();
                 }
             }
-
             contentArea.innerHTML = html;
             updateStats();
         }
 
-        // ===== DASHBOARDS POR PERFIL =====
-        function renderDirectorDashboard() {
-            const pendentes = appState.publications.filter(p => p.status === 'pending').length;
-            const literatureApproved = appState.publications.filter(p => p.status === 'literature_approved').length;
-            const publicados = appState.publications.filter(p => p.status === 'published').length;
-            const totalSugestoes = appState.suggestions.length;
+        // ===== DASHBOARD DO CRIADOR =====
+        function renderCreatorDashboard() {
+            const minhasObras = appState.publications.filter(p => p.author === appState.currentUser);
+            const pendentes = minhasObras.filter(p => p.status === 'pending' || p.status === 'literature_review').length;
+            const aprovados = minhasObras.filter(p => p.status === 'approved' || p.status === 'published').length;
+            const rejeitados = minhasObras.filter(p => p.status === 'rejected').length;
 
-            return `
-                <h2 class="section-title">📊 Dashboard de Controle - Director</h2>
-                <div class="stats-grid">
-                    <div class="stat-card" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">
-                        <h3>${pendentes}</h3>
-                        <p>Em Revisão Literária</p>
+            return `<h2 class="section-title">👤 Meu Painel - ${appState.currentUserData.role}</h2>
+                <div class="stats-summary">
+                    <div class="stat-summary-item">
+                        <div class="stat-summary-value">${minhasObras.length}</div>
+                        <div class="stat-summary-label">Total de Obras</div>
                     </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
-                        <h3>${literatureApproved}</h3>
-                        <p>Aprovações Pendentes (DNAC)</p>
+                    <div class="stat-summary-item">
+                        <div class="stat-summary-value" style="color: #ffc107;">${pendentes}</div>
+                        <div class="stat-summary-label">Em Revisão</div>
                     </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #17a2b8 0%, #4facfe 100%);">
-                        <h3>${publicados}</h3>
-                        <p>Pautas Publicadas</p>
+                    <div class="stat-summary-item">
+                        <div class="stat-summary-value" style="color: #28a745;">${aprovados}</div>
+                        <div class="stat-summary-label">Aprovadas</div>
                     </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #6f42c1 0%, #8e44ad 100%);">
-                        <h3>${totalSugestoes}</h3>
-                        <p>Sugestões Recebidas</p>
+                    <div class="stat-summary-item">
+                        <div class="stat-summary-value" style="color: #dc3545;">${rejeitados}</div>
+                        <div class="stat-summary-label">Rejeitadas</div>
                     </div>
                 </div>
-                <h3 style="color: #333; margin-top: 30px; margin-bottom: 15px;">📚 Obras Aguardando Aprovação Final</h3>
-                ${renderObrasAprovacaoFinal()}
-            `;
-        }
-
-        function renderLiteraturaDashboard() {
-            const pendentes = appState.publications.filter(p => p.status === 'pending').length;
-            const revisados = appState.publications.filter(p => p.status === 'literature_approved' || p.status === 'published' || p.status === 'rejected').length;
-
-            return `
-                <h2 class="section-title">📊 Dashboard - Director de Literatura</h2>
-                <div class="stats-grid">
-                    <div class="stat-card" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">
-                        <h3>${pendentes}</h3>
-                        <p>Revisões Pendentes</p>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
-                        <h3>${revisados}</h3>
-                        <p>Obras Revisadas</p>
-                    </div>
-                </div>
-                <h3 style="color: #333; margin-top: 30px; margin-bottom: 15px;">📝 Revisões Pendentes</h3>
-                ${renderRevisoesPendentes()}
-            `;
-        }
-
-        function renderCompositorDashboard() {
-            const minhas = appState.publications.filter(p => p.author === appState.currentUser);
-            const pendentes = minhas.filter(p => p.status === 'pending').length;
-            const literature = minhas.filter(p => p.status === 'literature_approved').length;
-            const publicados = minhas.filter(p => p.status === 'published').length;
-            const rejeitados = minhas.filter(p => p.status === 'rejected').length;
-
-            return `
-                <h2 class="section-title">👤 Meu Painel - ${appState.currentUserData.role}</h2>
-                ${renderPerfilCompositor()}
-                <div class="stats-grid" style="margin-top: 20px;">
-                    <div class="stat-card" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">
-                        <h3>${pendentes}</h3>
-                        <p>Em Revisão Literária</p>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #17a2b8 0%, #4facfe 100%);">
-                        <h3>${literature}</h3>
-                        <p>Aguardando DNAC</p>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
-                        <h3>${publicados}</h3>
-                        <p>Publicados</p>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #dc3545 0%, #f5576c 100%);">
-                        <h3>${rejeitados}</h3>
-                        <p>Rejeitados</p>
-                    </div>
-                </div>
-                <h3 style="color: #333; margin-top: 30px; margin-bottom: 15px;">📌 Minhas Obras Recentes</h3>
-                ${renderMinhasContribuicoes()}
-            `;
-        }
-
-        function renderSugeridorDashboard() {
-            return `
-                <h2 class="section-title">💡 Bem-vindo, ${appState.currentUser}!</h2>
-                <div style="text-align: center; padding: 40px;">
-                    <div style="font-size: 64px; margin-bottom: 20px;">🎵</div>
-                    <h3 style="color: #333; margin-bottom: 15px;">Obrigado pelo seu interesse em contribuir!</h3>
-                    <p style="color: #666; font-size: 15px; margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto;">
-                        A DNAC agradece a sua vontade de ajudar no trabalho do Senhor. 
-                        Clique em "Sugerir Pauta/Música" no menu lateral para submeter a sua sugestão.
-                    </p>
-                    <button class="btn btn-primary" onclick="renderContent('sugerir')" style="padding: 15px 40px; font-size: 16px;">
-                        💡 Sugerir Nova Pauta/Música
+                ${renderPerfilCompositorArranjador()}
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="renderContent('submeter')" style="padding: 15px 40px; font-size: 16px;">
+                        📤 Submeter Nova Obra
                     </button>
                 </div>
-            `;
+                ${minhasObras.length > 0 ? `<h3 style="color: #333; margin: 30px 0 15px;">📌 Últimas Obras</h3>` + minhasObras.slice(-3).map((pub, idx) => renderContributionCard(pub, appState.publications.indexOf(pub))).join('') : ''}`;
         }
 
-        function renderPerfilCompositor() {
-            const user = appState.currentUserData;
-            return `
-                <div class="form-section">
-                    <div class="form-section-title">👤 Dados Pessoais</div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Nome Completo</label>
-                            <input type="text" value="${user.name}" disabled style="background: #e9ecef;">
-                        </div>
-                        <div class="form-group">
-                            <label>Função</label>
-                            <input type="text" value="${user.role}" disabled style="background: #e9ecef;">
-                        </div>
+        // ===== DASHBOARD DO DIRETOR DE LITERATURA =====
+        function renderLiteratureDashboard() {
+            const pendentes = appState.publications.filter(p => p.status === 'pending');
+            const emRevisao = appState.publications.filter(p => p.status === 'literature_review');
+            const totalParaRevisar = pendentes.length + emRevisao.length;
+
+            return `<h2 class="section-title">📊 Painel do Director de Literatura</h2>
+                <div class="stats-summary">
+                    <div class="stat-summary-item">
+                        <div class="stat-summary-value" style="color: #ffc107;">${pendentes.length}</div>
+                        <div class="stat-summary-label">Pendentes</div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Província</label>
-                            <input type="text" value="${user.provincia}" disabled style="background: #e9ecef;">
-                        </div>
-                        <div class="form-group">
-                            <label>Município</label>
-                            <input type="text" value="${user.municipio || 'N/A'}" disabled style="background: #e9ecef;">
-                        </div>
+                    <div class="stat-summary-item">
+                        <div class="stat-summary-value" style="color: #3730a3;">${emRevisao.length}</div>
+                        <div class="stat-summary-label">Em Revisão</div>
+                    </div>
+                    <div class="stat-summary-item">
+                        <div class="stat-summary-value" style="color: #28a745;">${appState.publications.filter(p => p.status === 'approved' || p.status === 'published').length}</div>
+                        <div class="stat-summary-label">Aprovadas</div>
+                    </div>
+                    <div class="stat-summary-item">
+                        <div class="stat-summary-value">${appState.publications.length}</div>
+                        <div class="stat-summary-label">Total de Obras</div>
                     </div>
                 </div>
-            `;
+                ${totalParaRevisar > 0 ? `
+                    <div style="text-align: center; margin: 30px 0;">
+                        <button class="btn btn-primary" onclick="renderContent('revisoespendentes')" style="padding: 15px 40px; font-size: 16px;">
+                            📝 Ver Revisões Pendentes (${totalParaRevisar})
+                        </button>
+                    </div>
+                ` : ''}
+                <h3 style="color: #333; margin: 20px 0 15px;">📌 Obras Recentes</h3>
+                ${renderAllPublications()}`;
         }
 
-        // ===== FORMULÁRIO DE SUBMISSÃO UNIFICADO (COMPOSITOR/ARRANJADOR/TRADUTOR) =====
-        let submissionData = {
-            pdf: null,
-            image: null,
-            audio: null,
-            title: '',
-            workPerson: '',
-            lyrics: '',
-            observations: ''
-        };
-
-        function renderFormularioSubmissao() {
-            return `
-                <h2 class="section-title">📤 Submeter Nova Obra</h2>
-                <div class="form-section">
-                    <div class="form-section-title">📌 Informações da Obra</div>
+        // ===== FORMULÁRIO UNIFICADO DE SUBMISSÃO =====
+        function renderUnifiedSubmissionForm() {
+            return `<div class="form-section">
+                <div class="form-section-title">📤 Nova Obra</div>
+                <form id="submissionForm" onsubmit="handleUnifiedSubmit(event)">
                     <div class="form-row full">
                         <div class="form-group">
-                            <label>Título da Canção *</label>
-                            <input type="text" id="subTitle" placeholder="Digite o título da canção" required onchange="updateSubmissionPreview()">
+                            <label>📌 Título da Obra *</label>
+                            <input type="text" id="submitTitle" placeholder="Digite o título da obra" required>
                         </div>
                     </div>
                     <div class="form-row full">
                         <div class="form-group">
                             <label>👤 Pessoa que Trabalhou a Pauta *</label>
-                            <input type="text" id="subWorkPerson" placeholder="Nome da pessoa" required onchange="updateSubmissionPreview()">
+                            <input type="text" id="submitWorkPerson" placeholder="Nome da pessoa" required>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-section">
+                    <div class="divider"></div>
                     <div class="form-section-title">📄 Pauta (PDF)</div>
-                    <div class="upload-area" id="subPdfArea" onclick="document.getElementById('subPdfInput').click();" ondragover="handleDragOver(event, 'subPdfArea')" ondragleave="handleDragLeave(event, 'subPdfArea')" ondrop="handleDrop(event, 'pdf')">
-                        <div style="font-size: 48px; margin-bottom: 15px;">📄</div>
-                        <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Clique ou arraste o ficheiro PDF aqui</div>
-                        <div style="font-size: 12px; color: #999;">Formato aceito: .pdf</div>
+                    <div class="upload-zone" id="pdfUploadZone" onclick="document.getElementById('submitPdf').click();"
+                        ondragover="handleDragOver(event, 'pdfUploadZone')"
+                        ondragleave="handleDragLeave(event, 'pdfUploadZone')"
+                        ondrop="handleDrop(event, 'pdf')">
+                        <div class="upload-zone-content">
+                            <div class="upload-zone-icon">📄</div>
+                            <div class="upload-zone-text">Clique ou arraste o PDF aqui</div>
+                            <div class="upload-zone-hint">Formato aceito: .pdf</div>
+                        </div>
                     </div>
-                    <input type="file" id="subPdfInput" class="file-input" accept=".pdf" onchange="handleSubmissionFile(this, 'pdf')">
-                    <div id="subPdfPreview"></div>
-                </div>
+                    <input type="file" id="submitPdf" class="file-input" accept=".pdf" onchange="handleSubmitFile(this, 'pdf')">
+                    <div id="pdfPreview"></div>
 
-                <div class="form-section">
-                    <div class="form-section-title">🖼️ Imagem (Opcional)</div>
-                    <div class="upload-area" id="subImgArea" onclick="document.getElementById('subImgInput').click();" ondragover="handleDragOver(event, 'subImgArea')" ondragleave="handleDragLeave(event, 'subImgArea')" ondrop="handleDrop(event, 'image')">
-                        <div style="font-size: 48px; margin-bottom: 15px;">🖼️</div>
-                        <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Clique ou arraste a imagem aqui</div>
-                        <div style="font-size: 12px; color: #999;">Formatos: .jpg, .jpeg, .png, .gif, .webp</div>
+                    <div class="divider"></div>
+                    <div class="form-section-title">🖼️ Imagem (Pauta/Partitura)</div>
+                    <div class="upload-zone" id="imgUploadZone" onclick="document.getElementById('submitImage').click();"
+                        ondragover="handleDragOver(event, 'imgUploadZone')"
+                        ondragleave="handleDragLeave(event, 'imgUploadZone')"
+                        ondrop="handleDrop(event, 'image')">
+                        <div class="upload-zone-content">
+                            <div class="upload-zone-icon">🖼️</div>
+                            <div class="upload-zone-text">Clique ou arraste a imagem aqui</div>
+                            <div class="upload-zone-hint">Formatos aceitos: .jpg, .jpeg, .png, .gif, .webp</div>
+                        </div>
                     </div>
-                    <input type="file" id="subImgInput" class="file-input" accept="image/*" onchange="handleSubmissionFile(this, 'image')">
-                    <div id="subImgPreview"></div>
-                </div>
+                    <input type="file" id="submitImage" class="file-input" accept="image/*" onchange="handleSubmitFile(this, 'image')">
+                    <div id="imagePreview"></div>
 
-                <div class="form-section">
+                    <div class="divider"></div>
                     <div class="form-section-title">🎵 Áudio (Guia/Ensaio)</div>
-                    <div class="upload-area" id="subAudioArea" onclick="document.getElementById('subAudioInput').click();" ondragover="handleDragOver(event, 'subAudioArea')" ondragleave="handleDragLeave(event, 'subAudioArea')" ondrop="handleDrop(event, 'audio')">
-                        <div style="font-size: 48px; margin-bottom: 15px;">🎵</div>
-                        <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Clique ou arraste o ficheiro de áudio aqui</div>
-                        <div style="font-size: 12px; color: #999;">Formatos: .mp3, .wav, .ogg, .m4a</div>
+                    <div class="upload-zone" id="audioUploadZone" onclick="document.getElementById('submitAudio').click();"
+                        ondragover="handleDragOver(event, 'audioUploadZone')"
+                        ondragleave="handleDragLeave(event, 'audioUploadZone')"
+                        ondrop="handleDrop(event, 'audio')">
+                        <div class="upload-zone-content">
+                            <div class="upload-zone-icon">🎵</div>
+                            <div class="upload-zone-text">Clique ou arraste o áudio aqui</div>
+                            <div class="upload-zone-hint">Formatos aceitos: .mp3, .wav, .ogg, .m4a</div>
+                        </div>
                     </div>
-                    <input type="file" id="subAudioInput" class="file-input" accept="audio/*" onchange="handleSubmissionFile(this, 'audio')">
-                    <div id="subAudioPreview"></div>
-                </div>
+                    <input type="file" id="submitAudio" class="file-input" accept="audio/*" onchange="handleSubmitFile(this, 'audio')">
+                    <div id="audioPreview"></div>
 
-                <div class="form-section">
+                    <div class="divider"></div>
                     <div class="form-section-title">📝 Letra da Canção</div>
                     <div class="form-row full">
                         <div class="form-group">
-                            <textarea id="subLyrics" placeholder="Digite ou cole a letra aqui..." rows="8" onchange="updateSubmissionPreview()"></textarea>
+                            <textarea id="submitLyrics" placeholder="Digite ou cole a letra aqui..." style="min-height: 150px;"></textarea>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-section">
+                    <div class="divider"></div>
                     <div class="form-section-title">💬 Observações</div>
                     <div class="form-row full">
                         <div class="form-group">
-                            <textarea id="subObservations" placeholder="Adicione observações relevantes..." rows="4" onchange="updateSubmissionPreview()"></textarea>
+                            <textarea id="submitObservations" placeholder="Adicione observações relevantes..."></textarea>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-section">
-                    <div class="form-section-title">👁️ Pré-visualização antes de Submeter</div>
-                    <div id="submissionPreviewBox" class="submission-preview-box" style="display: none;">
-                        <h4>📋 Resumo da Obra</h4>
-                        <div id="submissionPreviewContent"></div>
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1; padding: 14px; font-size: 16px;">📤 Submeter Obra</button>
+                        <button type="button" class="btn btn-secondary" style="flex: 1; padding: 14px; font-size: 16px;" onclick="renderContent('dashboard')">❌ Cancelar</button>
                     </div>
-                </div>
-
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button type="button" class="btn btn-success" style="flex: 1; padding: 14px; font-size: 16px;" onclick="submitObra()">
-                        ✅ Submeter Obra
-                    </button>
-                    <button type="button" class="btn btn-secondary" style="flex: 1; padding: 14px; font-size: 16px;" onclick="limparFormularioSubmissao()">
-                        🔄 Limpar
-                    </button>
-                </div>
-            `;
+                </form>
+            </div>`;
         }
 
-        function handleSubmissionFile(input, type) {
-            if (input.files && input.files.length > 0) {
-                processSubmissionFile(input.files[0], type);
+        // Variáveis temporárias para o formulário de submissão
+        let submitTempFiles = { pdf: null, image: null, audio: null };
+
+        function handleDragOver(event, zoneId) {
+            event.preventDefault();
+            document.getElementById(zoneId).classList.add('dragover');
+        }
+
+        function handleDragLeave(event, zoneId) {
+            event.preventDefault();
+            document.getElementById(zoneId).classList.remove('dragover');
+        }
+
+        function handleDrop(event, type) {
+            event.preventDefault();
+            const zoneMap = { pdf: 'pdfUploadZone', image: 'imgUploadZone', audio: 'audioUploadZone' };
+            document.getElementById(zoneMap[type]).classList.remove('dragover');
+            const files = event.dataTransfer.files;
+            if (files.length > 0) {
+                processSubmitFile(files[0], type);
             }
         }
 
-        function processSubmissionFile(file, type) {
+        function handleSubmitFile(input, type) {
+            if (input.files && input.files.length > 0) {
+                processSubmitFile(input.files[0], type);
+            }
+        }
+
+        function processSubmitFile(file, type) {
             const validTypes = {
                 pdf: ['application/pdf'],
                 image: ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'],
                 audio: ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3', 'audio/x-m4a', 'audio/m4a']
             };
-
             const validExts = {
                 pdf: ['.pdf'],
                 image: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
                 audio: ['.mp3', '.wav', '.ogg', '.m4a']
             };
-
             const fileExt = '.' + file.name.split('.').pop().toLowerCase();
             const isValidType = validTypes[type].includes(file.type) || validExts[type].includes(fileExt);
-
             if (!isValidType) {
                 showNotification('❌ Tipo de ficheiro não suportado!', 'error');
                 return;
             }
-
             if (file.size > 50 * 1024 * 1024) {
                 showNotification('❌ Ficheiro muito grande! Máximo 50MB.', 'error');
                 return;
             }
-
             const reader = new FileReader();
             reader.onload = function(e) {
-                submissionData[type] = {
+                submitTempFiles[type] = {
                     name: file.name,
                     type: file.type,
                     size: file.size,
                     data: e.target.result
                 };
-                exibirPreviewSubmissao(type);
-                updateSubmissionPreview();
+                showSubmitPreview(type);
             };
             reader.readAsDataURL(file);
         }
 
-        function exibirPreviewSubmissao(type) {
-            const data = submissionData[type];
+        function showSubmitPreview(type) {
+            const data = submitTempFiles[type];
             if (!data) return;
-
-            const containerMap = { pdf: 'subPdfPreview', image: 'subImgPreview', audio: 'subAudioPreview' };
+            const containerMap = { pdf: 'pdfPreview', image: 'imagePreview', audio: 'audioPreview' };
             const container = document.getElementById(containerMap[type]);
-
-            let html = `<div style="background: #1a1a1a; border: 2px solid #28a745; border-radius: 10px; padding: 15px; margin-top: 10px; animation: slideUp 0.3s ease;">`;
-            html += `<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">`;
-            html += `<span style="font-size: 28px;">${type === 'pdf' ? '📄' : type === 'image' ? '🖼️' : '🎵'}</span>`;
-            html += `<div style="flex: 1;"><strong style="color: #fff; font-size: 14px;">${data.name}</strong><br><span style="font-size: 12px; color: #999;">${(data.size / 1024).toFixed(1)} KB</span></div>`;
-            html += `<button type="button" class="btn btn-sm btn-danger" onclick="removerArquivoSubmissao('${type}')">❌ Remover</button>`;
-            html += `</div>`;
-
+            let html = `<div class="file-preview-card">
+                <div class="file-preview-header">
+                    <span class="file-preview-icon">${type === 'pdf' ? '📄' : type === 'image' ? '🖼️' : '🎵'}</span>
+                    <div class="file-preview-info">
+                        <div class="file-preview-name">${data.name}</div>
+                        <div class="file-preview-size">${(data.size / 1024).toFixed(1)} KB</div>
+                    </div>
+                    <button type="button" class="file-preview-remove" onclick="removeSubmitFile('${type}')">❌ Remover</button>
+                </div>
+                <div class="file-preview-content">`;
             if (type === 'pdf') {
-                html += `<embed src="${data.data}" type="application/pdf" width="100%" height="300px" style="border-radius: 8px;">`;
+                html += `<embed src="${data.data}" type="application/pdf" width="100%" height="400px" style="border-radius: 8px;">`;
             } else if (type === 'image') {
-                html += `<img src="${data.data}" style="max-width: 100%; max-height: 300px; border-radius: 8px; display: block; margin: 0 auto;">`;
+                html += `<img src="${data.data}" style="max-width: 100%; max-height: 350px; border-radius: 8px; display: block; margin: 0 auto;">`;
             } else if (type === 'audio') {
                 html += `<audio controls style="width: 100%; border-radius: 8px;"><source src="${data.data}" type="${data.type}"></audio>`;
             }
-
-            html += `</div>`;
+            html += `</div></div>`;
             container.innerHTML = html;
         }
 
-        function removerArquivoSubmissao(type) {
-            submissionData[type] = null;
-            const containerMap = { pdf: 'subPdfPreview', image: 'subImgPreview', audio: 'subAudioPreview' };
-            const inputMap = { pdf: 'subPdfInput', image: 'subImgInput', audio: 'subAudioInput' };
+        function removeSubmitFile(type) {
+            submitTempFiles[type] = null;
+            const containerMap = { pdf: 'pdfPreview', image: 'imagePreview', audio: 'audioPreview' };
+            const inputMap = { pdf: 'submitPdf', image: 'submitImage', audio: 'submitAudio' };
             document.getElementById(containerMap[type]).innerHTML = '';
             document.getElementById(inputMap[type]).value = '';
-            updateSubmissionPreview();
         }
 
-        function updateSubmissionPreview() {
-            const title = document.getElementById('subTitle')?.value || '';
-            const workPerson = document.getElementById('subWorkPerson')?.value || '';
-            const lyrics = document.getElementById('subLyrics')?.value || '';
-            const observations = document.getElementById('subObservations')?.value || '';
-
-            submissionData.title = title;
-            submissionData.workPerson = workPerson;
-            submissionData.lyrics = lyrics;
-            submissionData.observations = observations;
-
-            const previewBox = document.getElementById('submissionPreviewBox');
-            const previewContent = document.getElementById('submissionPreviewContent');
-
-            if (!title && !workPerson && !submissionData.pdf && !submissionData.image && !submissionData.audio && !lyrics) {
-                previewBox.style.display = 'none';
-                return;
-            }
-
-            previewBox.style.display = 'block';
-
-            let html = '';
-            if (title) html += `<div class="preview-item"><span class="preview-item-icon">🎵</span><div class="preview-item-info"><strong>Título:</strong><span>${title}</span></div></div>`;
-            if (workPerson) html += `<div class="preview-item"><span class="preview-item-icon">👤</span><div class="preview-item-info"><strong>Pauta por:</strong><span>${workPerson}</span></div></div>`;
-            if (submissionData.pdf) html += `<div class="preview-item"><span class="preview-item-icon">📄</span><div class="preview-item-info"><strong>PDF:</strong><span>${submissionData.pdf.name}</span></div></div>`;
-            if (submissionData.image) html += `<div class="preview-item"><span class="preview-item-icon">🖼️</span><div class="preview-item-info"><strong>Imagem:</strong><span>${submissionData.image.name}</span></div></div>`;
-            if (submissionData.audio) html += `<div class="preview-item"><span class="preview-item-icon">🎵</span><div class="preview-item-info"><strong>Áudio:</strong><span>${submissionData.audio.name}</span></div></div>`;
-            if (lyrics) html += `<div class="preview-item" style="align-items: flex-start;"><span class="preview-item-icon">📝</span><div class="preview-item-info"><strong>Letra:</strong><div class="lyrics-preview"><pre>${lyrics}</pre></div></div></div>`;
-            if (observations) html += `<div class="preview-item"><span class="preview-item-icon">💬</span><div class="preview-item-info"><strong>Observações:</strong><span>${observations}</span></div></div>`;
-
-            previewContent.innerHTML = html;
-        }
-
-        function submitObra() {
-            const title = document.getElementById('subTitle').value.trim();
-            const workPerson = document.getElementById('subWorkPerson').value.trim();
-            const lyrics = document.getElementById('subLyrics').value.trim();
-            const observations = document.getElementById('subObservations').value.trim();
+        function handleUnifiedSubmit(event) {
+            event.preventDefault();
+            const title = document.getElementById('submitTitle').value.trim();
+            const workPerson = document.getElementById('submitWorkPerson').value.trim();
+            const lyrics = document.getElementById('submitLyrics').value.trim();
+            const observations = document.getElementById('submitObservations').value.trim();
 
             if (!title || !workPerson) {
-                showNotification('❌ Preencha o título e a pessoa que trabalhou a pauta!', 'error');
+                showNotification('Preencha os campos obrigatórios!', 'error');
                 return;
             }
 
-            const obra = {
+            const newPub = {
                 id: Date.now(),
                 title: title,
-                workPerson: workPerson,
                 author: appState.currentUser,
-                authorData: { ...appState.currentUserData },
-                pdf: submissionData.pdf,
-                image: submissionData.image,
-                audio: submissionData.audio,
-                lyrics: lyrics,
-                observations: observations,
+                workPerson: workPerson,
                 date: new Date(),
                 status: 'pending',
+                lyrics: lyrics,
+                observations: observations,
+                fileData: submitTempFiles.pdf ? submitTempFiles.pdf.data : null,
+                fileName: submitTempFiles.pdf ? submitTempFiles.pdf.name : null,
+                imageData: submitTempFiles.image ? submitTempFiles.image.data : null,
+                imageName: submitTempFiles.image ? submitTempFiles.image.name : null,
+                audio: submitTempFiles.audio ? submitTempFiles.audio.data : null,
+                audioName: submitTempFiles.audio ? submitTempFiles.audio.name : null,
                 literatureComment: '',
-                literatureReviewer: null,
+                literatureReviewer: '',
                 literatureReviewDate: null,
-                finalApprover: null,
-                finalApprovalDate: null
+                finalApprover: '',
+                finalApprovalDate: null,
+                directorObservations: ''
             };
 
-            appState.publications.push(obra);
+            appState.publications.push(newPub);
+            submitTempFiles = { pdf: null, image: null, audio: null };
+
             showNotification('✅ Obra submetida com sucesso! Estado: Em Revisão Literária', 'success');
-
-            // Reset
-            limparFormularioSubmissao();
-
-            // Show success screen
-            renderPosteFeito(title);
+            renderSuccessScreen(title);
         }
 
-        function limparFormularioSubmissao() {
-            submissionData = { pdf: null, image: null, audio: null, title: '', workPerson: '', lyrics: '', observations: '' };
-            document.getElementById('subTitle').value = '';
-            document.getElementById('subWorkPerson').value = '';
-            document.getElementById('subLyrics').value = '';
-            document.getElementById('subObservations').value = '';
-            document.getElementById('subPdfPreview').innerHTML = '';
-            document.getElementById('subImgPreview').innerHTML = '';
-            document.getElementById('subAudioPreview').innerHTML = '';
-            document.getElementById('subPdfInput').value = '';
-            document.getElementById('subImgInput').value = '';
-            document.getElementById('subAudioInput').value = '';
-            const previewBox = document.getElementById('submissionPreviewBox');
-            if (previewBox) previewBox.style.display = 'none';
-        }
-
-        function renderPosteFeito(title) {
+        function renderSuccessScreen(title) {
             const contentArea = document.getElementById('contentArea');
             contentArea.innerHTML = `
-                <div style="text-align: center; padding: 60px 20px; animation: slideUp 0.5s ease;">
-                    <div style="font-size: 80px; margin-bottom: 20px;">✅</div>
-                    <h2 style="color: #28a745; font-size: 28px; margin-bottom: 15px;">Obra Submetida com Sucesso!</h2>
-                    <p style="font-size: 18px; color: #666; margin-bottom: 10px;"><strong>"${title}"</strong></p>
-                    <p style="font-size: 14px; color: #999; margin-bottom: 30px;">Estado: <span class="status-badge status-pending">⏳ Em Revisão Literária</span></p>
-                    <p style="font-size: 14px; color: #999; margin-bottom: 30px;">Sua obra foi enviada e está aguardando revisão do Director de Literatura.</p>
-                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn btn-primary" onclick="renderContent('submeter')" style="padding: 12px 30px; font-size: 15px;">📝 Submeter Outra Obra</button>
-                        <button class="btn btn-info" onclick="renderContent('minhascontribuicoes')" style="padding: 12px 30px; font-size: 15px;">📋 Ver Meus Contributos</button>
+                <div class="success-screen">
+                    <div class="success-screen-icon">✅</div>
+                    <h2 class="success-screen-title">Obra Submetida com Sucesso!</h2>
+                    <p class="success-screen-subtitle"><strong>"${title}"</strong></p>
+                    <p class="success-screen-hint">Sua obra foi enviada e está aguardando revisão do Director de Literatura.</p>
+                    <div class="success-screen-actions">
+                        <button class="btn btn-primary" onclick="renderContent('submeter')">📝 Submeter Outra Obra</button>
+                        <button class="btn btn-info" onclick="renderContent('meuscontributos')">📋 Ver Meus Contributos</button>
                     </div>
-                </div>
-            `;
+                </div>`;
         }
 
-        // ===== REVISÕES PENDENTES - DIRECTOR DE LITERATURA =====
+        // ===== MEUS CONTRIBUTOS =====
+        function renderMeusContributos() {
+            const minhas = appState.publications.filter(p => p.author === appState.currentUser);
+            if (minhas.length === 0) {
+                return `<div class="empty-state">
+                    <div style="font-size: 48px; margin-bottom: 15px;">📭</div>
+                    <p style="font-size: 18px; color: #666; margin-bottom: 10px;">Nenhum contributo ainda</p>
+                    <p style="font-size: 14px; color: #999; margin-bottom: 20px;">Clique em "Submeter Nova Obra" para começar!</p>
+                    <button class="btn btn-primary" onclick="renderContent('submeter')">📤 Submeter Nova Obra</button>
+                </div>`;
+            }
+            return minhas.map((pub, idx) => renderContributionCard(pub, appState.publications.indexOf(pub))).join('');
+        }
+
+        function renderContributionCard(pub, idx) {
+            let statusClass = '';
+            let statusText = '';
+            let statusBadgeClass = '';
+
+            switch(pub.status) {
+                case 'published':
+                    statusClass = 'status-published';
+                    statusText = '📢 Publicado';
+                    statusBadgeClass = 'published';
+                    break;
+                case 'approved':
+                    statusClass = 'status-approved';
+                    statusText = '✅ Aprovado - Aguardando Publicação';
+                    statusBadgeClass = 'reviewed';
+                    break;
+                case 'literature_review':
+                    statusClass = 'status-literature_review';
+                    statusText = '📝 Em Revisão Literária';
+                    statusBadgeClass = 'literature_review';
+                    break;
+                case 'rejected':
+                    statusClass = 'status-rejected';
+                    statusText = '❌ Rejeitado';
+                    statusBadgeClass = 'rejected';
+                    break;
+                default:
+                    statusClass = 'status-pending';
+                    statusText = '⏳ Pendente - Aguardando Revisão';
+                    statusBadgeClass = 'pending';
+            }
+
+            let filesHtml = '';
+            if (pub.fileData || pub.imageData || pub.audio) {
+                filesHtml = `<div class="contribution-files">`;
+                if (pub.fileData) {
+                    filesHtml += `<button class="btn btn-sm btn-info" onclick="openFile('${pub.fileData}', '${pub.fileName || 'documento.pdf'}')">📄 Ver PDF</button>`;
+                }
+                if (pub.imageData) {
+                    filesHtml += `<button class="btn btn-sm btn-info" onclick="openFile('${pub.imageData}', '${pub.imageName || 'imagem.jpg'}')">🖼️ Ver Imagem</button>`;
+                }
+                if (pub.audio) {
+                    filesHtml += `<button class="btn btn-sm btn-info" onclick="playAudioInline('${pub.audio}', ${idx})">🎵 Ouvir Áudio</button>`;
+                }
+                filesHtml += `</div>`;
+            }
+
+            let lyricsHtml = '';
+            if (pub.lyrics) {
+                lyricsHtml = `<div class="lyrics-display">
+                    <pre>${escapeHtml(pub.lyrics)}</pre>
+                </div>`;
+            }
+
+            let observationsHtml = '';
+            if (pub.observations) {
+                observationsHtml = `<div class="observation-box">
+                    <div class="observation-box-title">💬 Observações do Autor</div>
+                    <div class="observation-box-content">${escapeHtml(pub.observations)}</div>
+                </div>`;
+            }
+
+            let directorObsHtml = '';
+            if (pub.directorObservations) {
+                directorObsHtml = `<div class="director-observation-box">
+                    <div class="director-observation-box-title">✏️ Observações do Director de Literatura</div>
+                    <div class="director-observation-box-content">${escapeHtml(pub.directorObservations)}</div>
+                </div>`;
+            }
+
+            let audioPlayerHtml = '';
+            if (pub.audio) {
+                audioPlayerHtml = `<div id="audioPlayer_${idx}" style="display: none; margin-top: 15px;">
+                    <div class="audio-player">
+                        <audio controls style="width: 100%;"><source src="${pub.audio}" type="audio/mpeg"></audio>
+                    </div>
+                </div>`;
+            }
+
+            return `<div class="contribution-card ${statusClass}">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <div>
+                        <div class="publication-title">🎵 ${escapeHtml(pub.title)}</div>
+                        <div class="publication-meta">
+                            <span>👤 ${escapeHtml(pub.author)}</span>
+                            <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
+                        </div>
+                    </div>
+                    <span class="review-status-badge ${statusBadgeClass}">${statusText}</span>
+                </div>
+                <p style="color: #666; font-size: 13px; margin-bottom: 10px;"><strong>Pauta de:</strong> ${escapeHtml(pub.workPerson)}</p>
+                ${filesHtml}
+                ${lyricsHtml}
+                ${observationsHtml}
+                ${directorObsHtml}
+                ${audioPlayerHtml}
+            </div>`;
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function playAudioInline(audioData, idx) {
+            const player = document.getElementById(`audioPlayer_${idx}`);
+            if (player) {
+                player.style.display = player.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        // ===== REVISÕES PENDENTES (DIRETOR DE LITERATURA) =====
         function renderRevisoesPendentes() {
             const pendentes = appState.publications.filter(p => p.status === 'pending');
             if (pendentes.length === 0) {
-                return '<p class="empty-state">🎉 Nenhuma publicação pendente de revisão. Todas as obras foram revisadas!</p>';
+                return `<div class="empty-state">
+                    <div style="font-size: 48px; margin-bottom: 15px;">✅</div>
+                    <p style="font-size: 18px; color: #666;">Nenhuma revisão pendente!</p>
+                    <p style="font-size: 14px; color: #999;">Todas as obras foram revisadas.</p>
+                </div>`;
+            }
+            return pendentes.map((pub, idx) => renderReviewCard(pub, appState.publications.indexOf(pub))).join('');
+        }
+
+        function renderReviewCard(pub, idx) {
+            let filesHtml = '';
+            if (pub.fileData || pub.imageData || pub.audio) {
+                filesHtml = `<div class="preview-section">
+                    <div class="preview-section-title">📎 Ficheiros Anexados</div>
+                    <div class="preview-section-content" style="display: flex; gap: 10px; flex-wrap: wrap;">`;
+                if (pub.fileData) {
+                    filesHtml += `<button class="btn btn-sm btn-info" onclick="openFile('${pub.fileData}', '${pub.fileName || 'documento.pdf'}')">📄 Ver PDF</button>`;
+                }
+                if (pub.imageData) {
+                    filesHtml += `<button class="btn btn-sm btn-info" onclick="openFile('${pub.imageData}', '${pub.imageName || 'imagem.jpg'}')">🖼️ Ver Imagem</button>`;
+                }
+                if (pub.audio) {
+                    filesHtml += `<button class="btn btn-sm btn-info" onclick="playAudioInline('${pub.audio}', 'review_${idx}')">🎵 Ouvir Áudio</button>`;
+                }
+                filesHtml += `</div></div>`;
             }
 
-            return pendentes.map((pub, idx) => {
-                const globalIdx = appState.publications.indexOf(pub);
-                return `
-                <div class="publication-card" style="border-left: 4px solid #ffc107; animation: slideUp 0.3s ease;">
-                    <div class="publication-title">🎵 ${pub.title}</div>
-                    <div class="publication-meta">
-                        <span>👤 ${pub.author}</span>
-                        <span>📍 ${pub.authorData?.provincia || 'N/A'}</span>
-                        <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
-                        <span class="status-badge status-pending">⏳ Em Revisão Literária</span>
+            let audioPlayerHtml = '';
+            if (pub.audio) {
+                audioPlayerHtml = `<div id="audioPlayer_review_${idx}" style="display: none; margin-top: 10px;">
+                    <div class="audio-player">
+                        <audio controls style="width: 100%;"><source src="${pub.audio}" type="audio/mpeg"></audio>
                     </div>
-                    <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${pub.workPerson}</p>
+                </div>`;
+            }
 
-                    ${pub.pdf ? `
-                    <div style="margin-top: 15px; padding: 15px; background: #1a1a1a; border-radius: 8px;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <span style="font-size: 20px;">📄</span>
-                            <strong style="color: #fff;">Pauta / Partitura (PDF):</strong>
-                            <span style="font-size: 12px; color: #999;">${pub.pdf.name}</span>
-                        </div>
-                        <embed src="${pub.pdf.data}" type="application/pdf" width="100%" height="400px" style="border-radius: 8px;">
-                    </div>` : ''}
-
-                    ${pub.image ? `
-                    <div style="margin-top: 15px; padding: 15px; background: #1a1a1a; border-radius: 8px;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <span style="font-size: 20px;">🖼️</span>
-                            <strong style="color: #fff;">Imagem:</strong>
-                            <span style="font-size: 12px; color: #999;">${pub.image.name}</span>
-                        </div>
-                        <img src="${pub.image.data}" style="max-width: 100%; max-height: 400px; border-radius: 8px; display: block; margin: 0 auto;">
-                    </div>` : ''}
-
-                    ${pub.audio ? `
-                    <div style="margin-top: 15px; padding: 15px; background: #1a1a1a; border-radius: 8px;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <span style="font-size: 20px;">🎵</span>
-                            <strong style="color: #fff;">Áudio (Guia/Ensaio):</strong>
-                            <span style="font-size: 12px; color: #999;">${pub.audio.name}</span>
-                        </div>
-                        <audio controls style="width: 100%; border-radius: 8px;">
-                            <source src="${pub.audio.data}" type="${pub.audio.type}">
-                        </audio>
-                    </div>` : ''}
-
-                    <div style="margin-top: 15px; padding: 15px; background: #1a1a1a; border-radius: 8px;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <span style="font-size: 20px;">📝</span>
-                            <strong style="color: #fff;">Letra da Canção (Editável):</strong>
-                        </div>
-                        <textarea id="lit_lyrics_${globalIdx}" style="width: 100%; padding: 12px; border: 2px solid #444; border-radius: 8px; min-height: 150px; font-family: inherit; font-size: 14px; line-height: 1.6; background: white; color: #333;">${pub.lyrics || ''}</textarea>
+            let lyricsHtml = '';
+            if (pub.lyrics) {
+                lyricsHtml = `<div class="preview-section">
+                    <div class="preview-section-title">📝 Letra da Canção (Editável)</div>
+                    <div class="preview-section-content" style="padding: 0;">
+                        <textarea id="reviewLyrics_${idx}" class="lyrics-editor" placeholder="Edite a letra aqui...">${escapeHtml(pub.lyrics)}</textarea>
                     </div>
+                </div>`;
+            }
 
-                    ${pub.observations ? `
-                    <div style="margin-top: 15px; padding: 15px; background: #fff8e1; border-radius: 8px; border: 1px solid #ffc107;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
-                            <span style="font-size: 20px;">💬</span>
-                            <strong>Observações do Autor:</strong>
-                        </div>
-                        <p style="font-size: 13px; color: #666; white-space: pre-wrap;">${pub.observations}</p>
-                    </div>` : ''}
-
-                    <div style="margin-top: 15px; padding: 15px; background: #e8f5e9; border-radius: 8px; border: 2px solid #28a745;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <span style="font-size: 20px;">✏️</span>
-                            <strong style="color: #155724;">Observações do Director de Literatura:</strong>
-                        </div>
-                        <textarea id="lit_comment_${globalIdx}" placeholder="Digite suas observações, correções ou comentários sobre a obra..." style="width: 100%; padding: 12px; border: 2px solid #28a745; border-radius: 8px; min-height: 100px; font-family: inherit; font-size: 14px; background: white;"></textarea>
+            let observationsHtml = '';
+            if (pub.observations) {
+                observationsHtml = `<div class="preview-section">
+                    <div class="preview-section-title">💬 Observações do Autor</div>
+                    <div class="preview-section-content">
+                        <pre style="white-space: pre-wrap; font-family: inherit; font-size: 14px; line-height: 1.6; color: #333; margin: 0;">${escapeHtml(pub.observations)}</pre>
                     </div>
+                </div>`;
+            }
 
-                    <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button class="btn btn-success" style="flex: 1; padding: 14px; font-size: 15px;" onclick="marcarRevisado(${globalIdx})">
-                            ✅ Marcar como Revisado
-                        </button>
-                        <button class="btn btn-danger" style="padding: 14px 20px; font-size: 15px;" onclick="rejeitarObra(${globalIdx})">
-                            ❌ Rejeitar
-                        </button>
+            return `<div class="contribution-card status-pending" style="border-left: 4px solid #ffc107;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                    <div>
+                        <div class="publication-title">🎵 ${escapeHtml(pub.title)}</div>
+                        <div class="publication-meta">
+                            <span>👤 ${escapeHtml(pub.author)}</span>
+                            <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
+                            <span class="status-badge status-pending">⏳ Pendente</span>
+                        </div>
                     </div>
                 </div>
-                `;
-            }).join('');
+                <p style="color: #666; font-size: 13px; margin-bottom: 15px;"><strong>Pauta de:</strong> ${escapeHtml(pub.workPerson)}</p>
+
+                ${filesHtml}
+                ${audioPlayerHtml}
+                ${lyricsHtml}
+                ${observationsHtml}
+
+                <div class="review-panel">
+                    <div class="review-panel-title">✏️ Revisão do Director de Literatura</div>
+                    <textarea id="directorObs_${idx}" class="review-textarea" placeholder="Digite suas observações, correções e comentários sobre a obra..."></textarea>
+                    <div class="review-actions">
+                        <button class="btn btn-success" onclick="markAsReviewed(${idx})">✅ Marcar como Revisado</button>
+                        <button class="btn btn-danger" onclick="rejectFromReview(${idx})">❌ Rejeitar</button>
+                    </div>
+                </div>
+            </div>`;
         }
 
-        function marcarRevisado(idx) {
-            const comment = document.getElementById(`lit_comment_${idx}`)?.value || '';
-            const newLyrics = document.getElementById(`lit_lyrics_${idx}`)?.value || appState.publications[idx].lyrics;
+        function markAsReviewed(idx) {
+            const directorObs = document.getElementById(`directorObs_${idx}`).value.trim();
+            const newLyrics = document.getElementById(`reviewLyrics_${idx}`);
 
-            appState.publications[idx].status = 'literature_approved';
-            appState.publications[idx].literatureComment = comment;
+            appState.publications[idx].directorObservations = directorObs;
+            appState.publications[idx].status = 'literature_review';
             appState.publications[idx].literatureReviewer = appState.currentUser;
             appState.publications[idx].literatureReviewDate = new Date();
-            appState.publications[idx].lyrics = newLyrics;
 
-            // Notificar o autor
-            const author = appState.publications[idx].author;
-            sendNotificationToUser(author, `✅ Sua obra "${appState.publications[idx].title}" foi revisada pelo Director de Literatura e enviada para aprovação do Director Nacional.`);
+            if (newLyrics) {
+                appState.publications[idx].lyrics = newLyrics.value;
+            }
 
-            // Notificar o Director Nacional
-            sendNotificationToUser('Director Emiliano Cupaia Lumbungululo', `📢 Nova obra "${appState.publications[idx].title}" de ${author} aguarda sua aprovação final.`);
-
-            showNotification('✅ Obra revisada e enviada para aprovação do Director Nacional!', 'success');
-            renderContent('revisoes');
-            updateBadges();
+            showNotification('✅ Obra marcada como revisada! Aguardando aprovação do Director Nacional.', 'success');
+            sendNotificationToUser(appState.publications[idx].author, `Sua obra "${appState.publications[idx].title}" foi revisada pelo Director de Literatura e aguarda aprovação final.`);
+            renderContent('revisoespendentes');
         }
 
-        function rejeitarObra(idx) {
-            const comment = document.getElementById(`lit_comment_${idx}`)?.value || 'Rejeitada sem comentário.';
-
+        function rejectFromReview(idx) {
+            const directorObs = document.getElementById(`directorObs_${idx}`).value.trim();
+            if (!directorObs) {
+                showNotification('❌ Digite o motivo da rejeição!', 'error');
+                return;
+            }
+            appState.publications[idx].directorObservations = directorObs;
             appState.publications[idx].status = 'rejected';
-            appState.publications[idx].literatureComment = comment;
             appState.publications[idx].literatureReviewer = appState.currentUser;
             appState.publications[idx].literatureReviewDate = new Date();
-
-            const author = appState.publications[idx].author;
-            sendNotificationToUser(author, `❌ Sua obra "${appState.publications[idx].title}" foi rejeitada pelo Director de Literatura. Motivo: ${comment}`);
 
             showNotification('❌ Obra rejeitada.', 'info');
-            renderContent('revisoes');
-            updateBadges();
+            sendNotificationToUser(appState.publications[idx].author, `Sua obra "${appState.publications[idx].title}" foi rejeitada pelo Director de Literatura. Motivo: ${directorObs}`);
+            renderContent('revisoespendentes');
         }
 
-        // ===== APROVAÇÃO FINAL - DIRECTOR NACIONAL =====
-        function renderObrasAprovacaoFinal() {
-            const aprovadas = appState.publications.filter(p => p.status === 'literature_approved');
-            if (aprovadas.length === 0) {
-                return '<p class="empty-state">Nenhuma obra aguardando aprovação final.</p>';
-            }
-
-            return aprovadas.map((pub, idx) => {
-                const globalIdx = appState.publications.indexOf(pub);
-                return `
-                <div class="publication-card" style="border-left: 4px solid #28a745; animation: slideUp 0.3s ease;">
-                    <div class="publication-title">🎵 ${pub.title}</div>
-                    <div class="publication-meta">
-                        <span>👤 ${pub.author}</span>
-                        <span>📍 ${pub.authorData?.provincia || 'N/A'}</span>
-                        <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
-                        <span class="status-badge status-literature">✅ Revisado pela Literatura</span>
-                    </div>
-                    <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${pub.workPerson}</p>
-
-                    <div style="margin-top: 15px; padding: 15px; background: #e8f5e9; border-radius: 8px; border: 1px solid #28a745;">
-                        <p style="font-size: 13px; color: #155724; margin-bottom: 8px;"><strong>✅ Revisado por:</strong> ${pub.literatureReviewer || 'Director de Literatura'} em ${pub.literatureReviewDate ? new Date(pub.literatureReviewDate).toLocaleDateString('pt-AO') : 'N/A'}</p>
-                        <p style="font-size: 13px; color: #155724; margin-bottom: 10px;"><strong>📝 Comentário da Revisão:</strong> ${pub.literatureComment || 'Sem comentários.'}</p>
-                    </div>
-
-                    ${pub.pdf ? `<div style="margin-top: 10px;"><button class="btn btn-sm btn-info" onclick="openFile('${pub.pdf.data}', '${pub.pdf.name}')">📄 Ver Pauta (PDF)</button></div>` : ''}
-                    ${pub.image ? `<div style="margin-top: 10px;"><button class="btn btn-sm btn-info" onclick="openFile('${pub.image.data}', '${pub.image.name}')">🖼️ Ver Imagem</button></div>` : ''}
-                    ${pub.audio ? `<div style="margin-top: 10px;"><button class="btn btn-sm btn-info" onclick="playAudio('${pub.audio.data}')">🎵 Ouvir Áudio</button></div>` : ''}
-
-                    ${pub.lyrics ? `<div style="margin-top: 10px; padding: 10px; background: #f9fafb; border-radius: 6px;">
-                        <strong>📝 Letra:</strong>
-                        <p style="font-size: 13px; color: #666; white-space: pre-wrap; margin-top: 5px;">${pub.lyrics}</p>
-                    </div>` : ''}
-
-                    <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button class="btn btn-success" style="flex: 1; padding: 14px; font-size: 15px;" onclick="certificarAprovacaoFinal(${globalIdx})">
-                            ✅ Certificar e Ativar Aprovação Final
-                        </button>
-                        <button class="btn btn-danger" style="padding: 14px 20px; font-size: 15px;" onclick="rejeitarAprovacaoFinal(${globalIdx})">
-                            ❌ Rejeitar
-                        </button>
-                    </div>
-                </div>
-                `;
-            }).join('');
-        }
-
-        function certificarAprovacaoFinal(idx) {
-            appState.publications[idx].status = 'published';
-            appState.publications[idx].finalApprover = appState.currentUser;
-            appState.publications[idx].finalApprovalDate = new Date();
-
-            const author = appState.publications[idx].author;
-            sendNotificationToUser(author, `🎉 Parabéns! Sua obra "${appState.publications[idx].title}" foi aprovada e publicada no Painel Oficial de Pautas Prontas!`);
-
-            showNotification('✅ Obra certificada, aprovada e publicada no Painel Oficial!', 'success');
-            renderContent('dashboard');
-        }
-
-        function rejeitarAprovacaoFinal(idx) {
-            appState.publications[idx].status = 'rejected';
-            appState.publications[idx].finalApprover = appState.currentUser;
-
-            const author = appState.publications[idx].author;
-            sendNotificationToUser(author, `❌ Sua obra "${appState.publications[idx].title}" foi rejeitada na aprovação final do Director Nacional.`);
-
-            showNotification('❌ Obra rejeitada na aprovação final.', 'info');
-            renderContent('dashboard');
-        }
-
-        // ===== SUGESTÃO DE HINOS - ACESSO PÚBLICO =====
-        let sugestaoData = {
-            pdf: null,
-            image: null,
-            audio: null,
-            title: '',
-            lyrics: '',
-            observations: ''
-        };
-
-        function renderFormularioSugestao() {
-            return `
-                <h2 class="section-title">💡 Sugerir Pauta/Música</h2>
-                <div style="background: #e8f5e9; border: 2px solid #28a745; border-radius: 10px; padding: 20px; margin-bottom: 25px;">
-                    <p style="color: #155724; font-size: 14px; line-height: 1.6;">
-                        <strong>🙏 Bem-vindo!</strong> Agradecemos o seu contributo para o trabalho do Senhor. 
-                        Preencha o formulário abaixo com os dados da música/pauta que deseja sugerir para a nossa equipa trabalhar.
-                    </p>
-                </div>
-
-                <div class="form-section">
-                    <div class="form-section-title">📌 Informações da Sugestão</div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label>Título da Canção/Música *</label>
-                            <input type="text" id="sugTitle" placeholder="Digite o título" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <div class="form-section-title">📄 Pauta (PDF) - Se tiver</div>
-                    <div class="upload-area" id="sugPdfArea" onclick="document.getElementById('sugPdfInput').click();" ondragover="handleDragOver(event, 'sugPdfArea')" ondragleave="handleDragLeave(event, 'sugPdfArea')" ondrop="handleDropSugestao(event, 'pdf')">
-                        <div style="font-size: 48px; margin-bottom: 15px;">📄</div>
-                        <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Clique ou arraste o ficheiro PDF aqui</div>
-                        <div style="font-size: 12px; color: #999;">Formato aceito: .pdf (opcional)</div>
-                    </div>
-                    <input type="file" id="sugPdfInput" class="file-input" accept=".pdf" onchange="handleSugestaoFile(this, 'pdf')">
-                    <div id="sugPdfPreview"></div>
-                </div>
-
-                <div class="form-section">
-                    <div class="form-section-title">🖼️ Imagem - Se tiver</div>
-                    <div class="upload-area" id="sugImgArea" onclick="document.getElementById('sugImgInput').click();" ondragover="handleDragOver(event, 'sugImgArea')" ondragleave="handleDragLeave(event, 'sugImgArea')" ondrop="handleDropSugestao(event, 'image')">
-                        <div style="font-size: 48px; margin-bottom: 15px;">🖼️</div>
-                        <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Clique ou arraste a imagem aqui</div>
-                        <div style="font-size: 12px; color: #999;">Formatos: .jpg, .jpeg, .png (opcional)</div>
-                    </div>
-                    <input type="file" id="sugImgInput" class="file-input" accept="image/*" onchange="handleSugestaoFile(this, 'image')">
-                    <div id="sugImgPreview"></div>
-                </div>
-
-                <div class="form-section">
-                    <div class="form-section-title">🎵 Áudio - Se tiver</div>
-                    <div class="upload-area" id="sugAudioArea" onclick="document.getElementById('sugAudioInput').click();" ondragover="handleDragOver(event, 'sugAudioArea')" ondragleave="handleDragLeave(event, 'sugAudioArea')" ondrop="handleDropSugestao(event, 'audio')">
-                        <div style="font-size: 48px; margin-bottom: 15px;">🎵</div>
-                        <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Clique ou arraste o ficheiro de áudio aqui</div>
-                        <div style="font-size: 12px; color: #999;">Formatos: .mp3, .wav, .ogg (opcional)</div>
-                    </div>
-                    <input type="file" id="sugAudioInput" class="file-input" accept="audio/*" onchange="handleSugestaoFile(this, 'audio')">
-                    <div id="sugAudioPreview"></div>
-                </div>
-
-                <div class="form-section">
-                    <div class="form-section-title">📝 Letra da Canção</div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <textarea id="sugLyrics" placeholder="Digite ou cole a letra aqui..." rows="8"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <div class="form-section-title">💬 Observações</div>
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <textarea id="sugObservations" placeholder="Adicione observações relevantes..." rows="4"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-success btn-block" style="padding: 16px; font-size: 18px; margin-top: 20px;" onclick="submeterSugestao()">
-                    💡 Submeter Sugestão
-                </button>
-            `;
-        }
-
-        function handleSugestaoFile(input, type) {
-            if (input.files && input.files.length > 0) {
-                processSugestaoFile(input.files[0], type);
-            }
-        }
-
-        function handleDropSugestao(event, type) {
-            event.preventDefault();
-            const areaMap = { pdf: 'sugPdfArea', image: 'sugImgArea', audio: 'sugAudioArea' };
-            document.getElementById(areaMap[type]).style.borderColor = '#555555';
-            document.getElementById(areaMap[type]).style.background = '#1a1a1a';
-            const files = event.dataTransfer.files;
-            if (files.length > 0) {
-                processSugestaoFile(files[0], type);
-            }
-        }
-
-        function processSugestaoFile(file, type) {
-            const validTypes = {
-                pdf: ['application/pdf'],
-                image: ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'],
-                audio: ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3', 'audio/x-m4a', 'audio/m4a']
-            };
-
-            const validExts = {
-                pdf: ['.pdf'],
-                image: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
-                audio: ['.mp3', '.wav', '.ogg', '.m4a']
-            };
-
-            const fileExt = '.' + file.name.split('.').pop().toLowerCase();
-            const isValidType = validTypes[type].includes(file.type) || validExts[type].includes(fileExt);
-
-            if (!isValidType) {
-                showNotification('❌ Tipo de ficheiro não suportado!', 'error');
-                return;
-            }
-
-            if (file.size > 50 * 1024 * 1024) {
-                showNotification('❌ Ficheiro muito grande! Máximo 50MB.', 'error');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                sugestaoData[type] = {
-                    name: file.name,
-                    type: file.type,
-                    size: file.size,
-                    data: e.target.result
-                };
-                exibirPreviewSugestao(type);
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function exibirPreviewSugestao(type) {
-            const data = sugestaoData[type];
-            if (!data) return;
-
-            const containerMap = { pdf: 'sugPdfPreview', image: 'sugImgPreview', audio: 'sugAudioPreview' };
-            const container = document.getElementById(containerMap[type]);
-
-            let html = `<div style="background: #1a1a1a; border: 2px solid #28a745; border-radius: 10px; padding: 15px; margin-top: 10px; animation: slideUp 0.3s ease;">`;
-            html += `<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">`;
-            html += `<span style="font-size: 28px;">${type === 'pdf' ? '📄' : type === 'image' ? '🖼️' : '🎵'}</span>`;
-            html += `<div style="flex: 1;"><strong style="color: #fff; font-size: 14px;">${data.name}</strong><br><span style="font-size: 12px; color: #999;">${(data.size / 1024).toFixed(1)} KB</span></div>`;
-            html += `<button type="button" class="btn btn-sm btn-danger" onclick="removerArquivoSugestao('${type}')">❌ Remover</button>`;
-            html += `</div>`;
-
-            if (type === 'pdf') {
-                html += `<embed src="${data.data}" type="application/pdf" width="100%" height="300px" style="border-radius: 8px;">`;
-            } else if (type === 'image') {
-                html += `<img src="${data.data}" style="max-width: 100%; max-height: 300px; border-radius: 8px; display: block; margin: 0 auto;">`;
-            } else if (type === 'audio') {
-                html += `<audio controls style="width: 100%; border-radius: 8px;"><source src="${data.data}" type="${data.type}"></audio>`;
-            }
-
-            html += `</div>`;
-            container.innerHTML = html;
-        }
-
-        function removerArquivoSugestao(type) {
-            sugestaoData[type] = null;
-            const containerMap = { pdf: 'sugPdfPreview', image: 'sugImgPreview', audio: 'sugAudioPreview' };
-            const inputMap = { pdf: 'sugPdfInput', image: 'sugImgInput', audio: 'sugAudioInput' };
-            document.getElementById(containerMap[type]).innerHTML = '';
-            document.getElementById(inputMap[type]).value = '';
-        }
-
-        function submeterSugestao() {
-            const title = document.getElementById('sugTitle').value.trim();
-            const lyrics = document.getElementById('sugLyrics').value.trim();
-            const observations = document.getElementById('sugObservations').value.trim();
-
-            if (!title) {
-                showNotification('❌ Por favor, digite o título da canção!', 'error');
-                return;
-            }
-
-            const sugestao = {
-                id: Date.now(),
-                title: title,
-                author: appState.currentUser,
-                authorData: { ...appState.currentUserData },
-                pdf: sugestaoData.pdf,
-                image: sugestaoData.image,
-                audio: sugestaoData.audio,
-                lyrics: lyrics,
-                observations: observations,
-                date: new Date(),
-                comments: []
-            };
-
-            appState.suggestions.push(sugestao);
-
-            // Notificar todos os directores
-            sendNotificationToUser('Director Emiliano Cupaia Lumbungululo', `💡 Nova sugestão recebida: "${title}" de ${appState.currentUser} (${appState.currentUserData.provincia})`);
-            sendNotificationToUser('Mimoso Kambungo', `💡 Nova sugestão recebida: "${title}" de ${appState.currentUser}`);
-            sendNotificationToUser('Eduardo Ngongoyove Gabriel', `💡 Nova sugestão recebida: "${title}" de ${appState.currentUser}`);
-            sendNotificationToUser('Bozzy Supia', `💡 Nova sugestão recebida: "${title}" de ${appState.currentUser}`);
-
-            // Limpar formulário
-            document.getElementById('sugTitle').value = '';
-            document.getElementById('sugLyrics').value = '';
-            document.getElementById('sugObservations').value = '';
-            removerArquivoSugestao('pdf');
-            removerArquivoSugestao('image');
-            removerArquivoSugestao('audio');
-
-            // Mostrar popup de confirmação
-            document.getElementById('successPopup').classList.add('show');
-            updateBadges();
-        }
-
-        function closeSuccessPopup() {
-            document.getElementById('successPopup').classList.remove('show');
-            renderContent('dashboard');
-        }
-
-        // ===== PAINEL DE SUGESTÕES - PARA DIRECTORES =====
-        function renderSugestoesPainel() {
-            if (appState.suggestions.length === 0) {
-                return `
-                    <h2 class="section-title">💡 Sugestões de Obras a Trabalhar</h2>
-                    <p class="empty-state">Nenhuma sugestão recebida ainda.</p>
-                `;
-            }
-
-            const posts = appState.suggestions.map((sug, idx) => {
-                const commentsHTML = sug.comments.map(c => `
-                    <div class="suggestion-comment">
-                        <div class="suggestion-comment-author">${c.author} - ${c.role}</div>
-                        <div class="suggestion-comment-text">${c.text}</div>
-                    </div>
-                `).join('');
-
-                return `
-                <div class="suggestion-post" style="animation: slideUp 0.3s ease;">
-                    <div class="suggestion-post-header">
-                        <div class="suggestion-avatar">${sug.author.charAt(0).toUpperCase()}</div>
-                        <div class="suggestion-post-info">
-                            <h4>${sug.author}</h4>
-                            <p>📍 ${sug.authorData?.provincia || 'N/A'} | 📅 ${new Date(sug.date).toLocaleDateString('pt-AO')}</p>
-                        </div>
-                    </div>
-                    <div class="suggestion-post-body">
-                        <h5>🎵 ${sug.title}</h5>
-
-                        ${sug.pdf || sug.image || sug.audio ? `
-                        <div class="suggestion-files">
-                            ${sug.pdf ? `<button class="suggestion-file-btn" onclick="openFile('${sug.pdf.data}', '${sug.pdf.name}')">📄 ${sug.pdf.name}</button>` : ''}
-                            ${sug.image ? `<button class="suggestion-file-btn" onclick="openFile('${sug.image.data}', '${sug.image.name}')">🖼️ ${sug.image.name}</button>` : ''}
-                            ${sug.audio ? `<button class="suggestion-file-btn" onclick="playAudio('${sug.audio.data}')">🎵 ${sug.audio.name}</button>` : ''}
-                        </div>` : ''}
-
-                        ${sug.lyrics ? `
-                        <div style="margin-top: 15px; padding: 15px; background: #f9fafb; border-radius: 8px;">
-                            <strong style="font-size: 13px; color: #555;">📝 Letra:</strong>
-                            <p style="font-size: 13px; color: #666; white-space: pre-wrap; margin-top: 8px; line-height: 1.6;">${sug.lyrics}</p>
-                        </div>` : ''}
-
-                        ${sug.observations ? `
-                        <div style="margin-top: 10px; padding: 10px; background: #fff8e1; border-radius: 6px;">
-                            <strong style="font-size: 12px; color: #856404;">💬 Observações:</strong>
-                            <p style="font-size: 12px; color: #666; margin-top: 4px;">${sug.observations}</p>
-                        </div>` : ''}
-                    </div>
-
-                    <div class="suggestion-comments">
-                        <strong style="font-size: 13px; color: #555; display: block; margin-bottom: 10px;">💬 Comentários dos Directores (${sug.comments.length})</strong>
-                        ${commentsHTML || '<p style="font-size: 12px; color: #999; font-style: italic;">Nenhum comentário ainda. Seja o primeiro a comentar!</p>'}
-                        <div class="suggestion-comment-input">
-                            <input type="text" id="sug_comment_${idx}" placeholder="Escreva um comentário sobre viabilidade, arranjo ou divisão de tarefas...">
-                            <button class="btn btn-primary btn-sm" onclick="adicionarComentarioSugestao(${idx})">📤</button>
-                        </div>
-                    </div>
-                </div>
-                `;
-            }).join('');
-
-            return `
-                <h2 class="section-title">💡 Sugestões de Obras a Trabalhar</h2>
-                <p style="color: #666; font-size: 14px; margin-bottom: 25px;">
-                    Aqui aparecem todas as sugestões enviadas pelo público. Os Directores podem debater sobre viabilidade, 
-                    ideias de arranjo e divisão de tarefas em equipa.
-                </p>
-                ${posts}
-            `;
-        }
-
-        function adicionarComentarioSugestao(idx) {
-            const input = document.getElementById(`sug_comment_${idx}`);
-            const text = input.value.trim();
-            if (!text) return;
-
-            appState.suggestions[idx].comments.push({
-                author: appState.currentUser,
-                role: appState.currentUserData.role,
-                text: text,
-                date: new Date()
-            });
-
-            showNotification('💬 Comentário adicionado!', 'success');
-            renderContent('sugestoes');
-        }
-
-        // ===== MINHAS CONTRIBUIÇÕES (COMPOSITOR) =====
-        function renderMinhasContribuicoes() {
-            const minhas = appState.publications.filter(p => p.author === appState.currentUser);
-            if (minhas.length === 0) {
-                return '<p class="empty-state">Você ainda não enviou nenhuma contribuição. Clique em "Submeter Nova Obra" para começar!</p>';
-            }
-
-            return minhas.map((pub, idx) => {
-                const globalIdx = appState.publications.indexOf(pub);
-                let statusClass = '';
-                let statusText = '';
-
-                if (pub.status === 'published') {
-                    statusClass = 'status-published'; statusText = '📢 Publicado';
-                } else if (pub.status === 'literature_approved') {
-                    statusClass = 'status-literature'; statusText = '✅ Revisado pela Literatura - Aguardando DNAC';
-                } else if (pub.status === 'rejected') {
-                    statusClass = 'status-rejected'; statusText = '❌ Rejeitado';
-                } else {
-                    statusClass = 'status-pending'; statusText = '⏳ Em Revisão Literária';
-                }
-
-                return `
-                <div class="publication-card" style="${pub.status === 'literature_approved' ? 'border-left: 4px solid #28a745;' : pub.status === 'rejected' ? 'border-left: 4px solid #dc3545;' : pub.status === 'pending' ? 'border-left: 4px solid #ffc107;' : ''}">
-                    <div class="publication-title">🎵 ${pub.title}</div>
-                    <div class="publication-meta">
-                        <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
-                        <span class="status-badge ${statusClass}">${statusText}</span>
-                    </div>
-                    <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${pub.workPerson}</p>
-
-                    ${pub.pdf ? `<div style="margin-top: 10px;"><button class="btn btn-sm btn-info" onclick="openFile('${pub.pdf.data}', '${pub.pdf.name}')">📄 Ver Pauta (PDF)</button></div>` : ''}
-                    ${pub.image ? `<div style="margin-top: 10px;"><button class="btn btn-sm btn-info" onclick="openFile('${pub.image.data}', '${pub.image.name}')">🖼️ Ver Imagem</button></div>` : ''}
-                    ${pub.audio ? `<div style="margin-top: 10px;"><button class="btn btn-sm btn-info" onclick="playAudio('${pub.audio.data}')">🎵 Ouvir Áudio</button></div>` : ''}
-
-                    ${pub.lyrics ? `<div style="margin-top: 10px; padding: 10px; background: #f9fafb; border-radius: 6px;">
-                        <strong>📝 Letra:</strong>
-                        <p style="font-size: 13px; color: #666; white-space: pre-wrap; margin-top: 5px;">${pub.lyrics}</p>
-                    </div>` : ''}
-
-                    ${pub.literatureComment ? `<div style="margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 6px;">
-                        <strong>✏️ Comentário do Revisor:</strong>
-                        <p style="font-size: 13px; color: #155724; margin-top: 5px;">${pub.literatureComment}</p>
-                    </div>` : ''}
-
-                    ${pub.observations ? `<div style="margin-top: 10px; padding: 10px; background: #fff8e1; border-radius: 6px;">
-                        <strong>💬 Observações:</strong>
-                        <p style="font-size: 13px; color: #666; white-space: pre-wrap; margin-top: 5px;">${pub.observations}</p>
-                    </div>` : ''}
-                </div>
-                `;
-            }).join('');
-        }
-
-        // ===== ALL PUBLICATIONS (DIRECTORS VIEW) =====
+        // ===== PUBLICAÇÕES (VISÃO GERAL) =====
         function renderAllPublications() {
             if (appState.publications.length === 0) {
                 return '<p class="empty-state">Nenhuma publicação registrada.</p>';
             }
-
             const isDirector = ['nacional', 'adjunto'].includes(appState.currentRole);
             const isSecretario = appState.currentRole === 'secretario';
+            const isLiterature = appState.currentRole === 'literatura';
 
             let pubs = appState.publications;
-            if (!isDirector && !isSecretario) {
+            if (!isDirector && !isSecretario && !isLiterature) {
                 pubs = pubs.filter(p => p.status === 'published');
             }
-
             if (pubs.length === 0) {
                 return '<p class="empty-state">Nenhuma publicação encontrada.</p>';
             }
 
             return pubs.map((pub, idx) => {
-                const globalIdx = appState.publications.indexOf(pub);
                 let statusClass = '';
                 let statusText = '';
-
-                if (pub.status === 'published') {
-                    statusClass = 'status-published'; statusText = '📢 Publicado';
-                } else if (pub.status === 'literature_approved') {
-                    statusClass = 'status-literature'; statusText = '✅ Revisado pela Literatura';
-                } else if (pub.status === 'rejected') {
-                    statusClass = 'status-rejected'; statusText = '❌ Rejeitado';
-                } else {
-                    statusClass = 'status-pending'; statusText = '⏳ Em Revisão Literária';
+                switch(pub.status) {
+                    case 'published': statusClass = 'status-published'; statusText = '📢 Publicado'; break;
+                    case 'approved': statusClass = 'status-approved'; statusText = '✅ Aprovado'; break;
+                    case 'literature_review': statusClass = 'status-literature_review'; statusText = '📝 Em Revisão Literária'; break;
+                    case 'rejected': statusClass = 'status-rejected'; statusText = '❌ Rejeitado'; break;
+                    default: statusClass = 'status-pending'; statusText = '⏳ Pendente';
                 }
 
-                return `
-                <div class="publication-card">
-                    <div class="publication-title">🎵 ${pub.title}</div>
+                let directorActions = '';
+                if (isDirector && pub.status === 'literature_review') {
+                    directorActions = `
+                        <div style="margin-top: 15px; padding: 15px; background: #e8f5e9; border-radius: 8px; border: 2px solid #28a745;">
+                            <p style="font-size: 13px; color: #155724; margin-bottom: 10px;"><strong>✅ Revisado por:</strong> ${pub.literatureReviewer || 'Director de Literatura'} em ${pub.literatureReviewDate ? new Date(pub.literatureReviewDate).toLocaleDateString('pt-AO') : 'N/A'}</p>
+                            ${pub.directorObservations ? `<p style="font-size: 13px; color: #155724; margin-bottom: 10px;"><strong>📝 Observações da Revisão:</strong> ${pub.directorObservations}</p>` : ''}
+                            <div style="display: flex; gap: 10px;">
+                                <button class="btn btn-success" style="flex: 1;" onclick="finalApprove(${idx})">✅ Aprovar Publicação Final</button>
+                                <button class="btn btn-danger" onclick="finalReject(${idx})">❌ Rejeitar</button>
+                            </div>
+                        </div>`;
+                }
+
+                let filesHtml = '';
+                if (pub.fileData || pub.imageData || pub.audio) {
+                    filesHtml = '<div style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">';
+                    if (pub.fileData) filesHtml += `<button class="btn btn-sm btn-info" onclick="openFile('${pub.fileData}', '${pub.fileName || 'documento.pdf'}')">📄 Ver PDF</button>`;
+                    if (pub.imageData) filesHtml += `<button class="btn btn-sm btn-info" onclick="openFile('${pub.imageData}', '${pub.imageName || 'imagem.jpg'}')">🖼️ Ver Imagem</button>`;
+                    if (pub.audio) filesHtml += `<button class="btn btn-sm btn-info" onclick="playAudioInline('${pub.audio}', ${idx})">🎵 Ouvir</button>`;
+                    filesHtml += '</div>';
+                }
+
+                let lyricsHtml = pub.lyrics ? `<div style="margin-top: 10px; padding: 10px; background: #f9fafb; border-radius: 6px;">
+                    <strong>📝 Letra:</strong>
+                    <p style="font-size: 13px; color: #666; white-space: pre-wrap; margin-top: 5px;">${escapeHtml(pub.lyrics)}</p>
+                </div>` : '';
+
+                let observationsHtml = pub.observations ? `<div style="margin-top: 10px; padding: 10px; background: #fff8e1; border-radius: 6px;">
+                    <strong>💬 Observações:</strong>
+                    <p style="font-size: 13px; color: #666; white-space: pre-wrap; margin-top: 5px;">${escapeHtml(pub.observations)}</p>
+                </div>` : '';
+
+                let directorObsHtml = pub.directorObservations ? `<div style="margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 6px;">
+                    <strong>✏️ Observações do Director:</strong>
+                    <p style="font-size: 13px; color: #155724; margin-top: 5px;">${escapeHtml(pub.directorObservations)}</p>
+                </div>` : '';
+
+                let audioPlayerHtml = pub.audio ? `<div id="audioPlayer_${idx}" style="display: none; margin-top: 10px;">
+                    <div class="audio-player"><audio controls style="width: 100%;"><source src="${pub.audio}" type="audio/mpeg"></audio></div>
+                </div>` : '';
+
+                return `<div class="publication-card" style="${pub.status === 'literature_review' ? 'border-left: 4px solid #28a745;' : ''}">
+                    <div class="publication-title">🎵 ${escapeHtml(pub.title)}</div>
                     <div class="publication-meta">
-                        <span>👤 ${pub.author}</span>
-                        <span>📍 ${pub.authorData?.provincia || 'N/A'}</span>
+                        <span>👤 ${escapeHtml(pub.author)}</span>
                         <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
                         <span class="status-badge ${statusClass}">${statusText}</span>
                     </div>
-                    <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${pub.workPerson}</p>
-
-                    ${pub.pdf ? `<div style="margin-top: 10px;"><button class="btn btn-sm btn-info" onclick="openFile('${pub.pdf.data}', '${pub.pdf.name}')">📄 Ver Pauta</button></div>` : ''}
-                    ${pub.image ? `<div style="margin-top: 10px;"><button class="btn btn-sm btn-info" onclick="openFile('${pub.image.data}', '${pub.image.name}')">🖼️ Ver Imagem</button></div>` : ''}
-                    ${pub.audio ? `<div style="margin-top: 10px;"><button class="btn btn-sm btn-info" onclick="playAudio('${pub.audio.data}')">🎵 Ouvir Áudio</button></div>` : ''}
-
-                    ${pub.lyrics ? `<div style="margin-top: 10px; padding: 10px; background: #f9fafb; border-radius: 6px;">
-                        <strong>📝 Letra:</strong>
-                        <p style="font-size: 13px; color: #666; white-space: pre-wrap; margin-top: 5px;">${pub.lyrics}</p>
-                    </div>` : ''}
-
-                    ${pub.literatureComment ? `<div style="margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 6px;">
-                        <strong>✏️ Comentário do Revisor:</strong>
-                        <p style="font-size: 13px; color: #155724; margin-top: 5px;">${pub.literatureComment}</p>
-                    </div>` : ''}
-                </div>
-                `;
+                    <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${escapeHtml(pub.workPerson)}</p>
+                    ${filesHtml}
+                    ${audioPlayerHtml}
+                    ${lyricsHtml}
+                    ${observationsHtml}
+                    ${directorObsHtml}
+                    ${directorActions}
+                </div>`;
             }).join('');
+        }
+
+        function finalApprove(idx) {
+            appState.publications[idx].status = 'published';
+            appState.publications[idx].finalApprover = appState.currentUser;
+            appState.publications[idx].finalApprovalDate = new Date();
+            sendNotificationToUser(appState.publications[idx].author, `🎉 Parabéns! Sua obra "${appState.publications[idx].title}" foi aprovada e publicada!`);
+            showNotification('✅ Obra aprovada e publicada com sucesso!', 'success');
+            renderContent('dashboard');
+        }
+
+        function finalReject(idx) {
+            appState.publications[idx].status = 'rejected';
+            appState.publications[idx].finalApprover = appState.currentUser;
+            sendNotificationToUser(appState.publications[idx].author, `Sua obra "${appState.publications[idx].title}" foi rejeitada na aprovação final do Director Nacional.`);
+            showNotification('❌ Obra rejeitada na aprovação final.', 'info');
+            renderContent('dashboard');
+        }
+
+        // ===== PERFIL =====
+        function renderPerfilCompositorArranjador() {
+            const user = appState.currentUserData;
+            return `<div class="form-section">
+                <div class="form-section-title">👤 Dados Pessoais</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" value="${user.name}" disabled style="background: #e9ecef;">
+                    </div>
+                    <div class="form-group">
+                        <label>Função</label>
+                        <input type="text" value="${user.role}" disabled style="background: #e9ecef;">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Província</label>
+                        <input type="text" value="${user.provincia}" disabled style="background: #e9ecef;">
+                    </div>
+                    <div class="form-group">
+                        <label>Município</label>
+                        <input type="text" value="${user.municipio}" disabled style="background: #e9ecef;">
+                    </div>
+                </div>
+            </div>`;
         }
 
         // ===== HINÁRIO =====
@@ -2692,17 +2031,26 @@
                             <textarea id="hinarioDesc" placeholder="Descrição..."></textarea>
                         </div>
                     </div>
+                    <div class="form-row full">
+                        <div class="upload-area" onclick="document.getElementById('hinarioFile').click();">
+                            <div style="font-size: 32px;">📄</div>
+                            <div>Carregar Arquivo</div>
+                        </div>
+                        <input type="file" id="hinarioFile" class="file-input" accept=".pdf,.doc,.docx,.txt">
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block">Salvar Hinário</button>
                 </form>
             </div>`;
-
             if (appState.hinarios.length > 0) {
                 html += '<h3 style="color: #333; margin: 20px 0;">Hinários Registrados</h3>';
                 appState.hinarios.forEach((item, idx) => {
                     html += `<div class="editable-item">
                         <div class="editable-item-header">
                             <span class="editable-item-title">📖 ${item.titulo}</span>
-                            <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'hinarios')">Deletar</button>
+                            <div class="editable-item-actions">
+                                <button class="btn btn-sm btn-info" onclick="viewFile(${idx}, 'hinarios')">👁️ Ver</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'hinarios')">Deletar</button>
+                            </div>
                         </div>
                         <p style="color: #666; font-size: 13px;">${item.descricao}</p>
                     </div>`;
@@ -2729,8 +2077,8 @@
                         <div class="form-group">
                             <label>Língua Tradução *</label>
                             <select id="traducaoDestino" required>
-                                <option>Inglês</option>
                                 <option>Português</option>
+                                <option>Inglês</option>
                                 <option>Francês</option>
                                 <option>Espanhol</option>
                             </select>
@@ -2757,7 +2105,6 @@
                     <button type="submit" class="btn btn-primary btn-block">Salvar Tradução</button>
                 </form>
             </div>`;
-
             if (appState.traducoes.length > 0) {
                 html += '<h3 style="color: #333; margin: 20px 0;">Traduções Registradas</h3>';
                 appState.traducoes.forEach((item, idx) => {
@@ -2803,7 +2150,6 @@
                     <button type="submit" class="btn btn-primary btn-block">Agendar Reunião</button>
                 </form>
             </div>`;
-
             if (appState.reunioes.length > 0) {
                 html += '<h3 style="color: #333; margin: 20px 0;">Reuniões Agendadas</h3>';
                 appState.reunioes.forEach((item, idx) => {
@@ -2845,7 +2191,6 @@
                     <button type="submit" class="btn btn-primary btn-block">Salvar Lição</button>
                 </form>
             </div>`;
-
             if (appState.licoes.length > 0) {
                 html += '<h3 style="color: #333; margin: 20px 0;">Lições da Semana</h3>';
                 appState.licoes.forEach((item, idx) => {
@@ -2882,17 +2227,26 @@
                             <input type="text" id="partituraTom">
                         </div>
                     </div>
+                    <div class="form-row full">
+                        <div class="upload-area" onclick="document.getElementById('partituraFile').click();">
+                            <div style="font-size: 32px;">🎼</div>
+                            <div>Carregar Partitura</div>
+                        </div>
+                        <input type="file" id="partituraFile" class="file-input" accept=".pdf,.jpg,.png">
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block">Salvar Partitura</button>
                 </form>
             </div>`;
-
             if (appState.partitures.length > 0) {
                 html += '<h3 style="color: #333; margin: 20px 0;">Partituras na Biblioteca</h3>';
                 appState.partitures.forEach((item, idx) => {
                     html += `<div class="editable-item">
                         <div class="editable-item-header">
                             <span class="editable-item-title">🎼 ${item.titulo}</span>
-                            <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'partitures')">Deletar</button>
+                            <div class="editable-item-actions">
+                                <button class="btn btn-sm btn-info" onclick="viewFile(${idx}, 'partitures')">👁️ Ver</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'partitures')">Deletar</button>
+                            </div>
                         </div>
                         <p style="font-size: 13px; color: #666;">Compositor: ${item.compositor} | Tom: ${item.tom}</p>
                     </div>`;
@@ -2932,10 +2286,33 @@
                             <input type="date" id="tarefaVencimento">
                         </div>
                     </div>
+                    <div class="divider"></div>
+                    <div class="form-section-title">📎 Anexar Arquivos (Opcional)</div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>PDF/Imagem</label>
+                            <div class="upload-area" onclick="document.getElementById('tarefaFileInput').click();">
+                                <div style="font-size: 32px;">📄</div>
+                                <div>Carregar Arquivo</div>
+                            </div>
+                            <input type="file" id="tarefaFileInput" class="file-input" accept=".pdf,.jpg,.png,.doc,.docx">
+                            <div id="tarefaFilePreview"></div>
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>Áudio</label>
+                            <div class="upload-area" onclick="document.getElementById('tarefaAudioInput').click();">
+                                <div style="font-size: 32px;">🎵</div>
+                                <div>Carregar Áudio</div>
+                            </div>
+                            <input type="file" id="tarefaAudioInput" class="file-input" accept="audio/*">
+                            <div id="tarefaAudioPreview"></div>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block">Criar Tarefa</button>
                 </form>
             </div>`;
-
             if (appState.tarefas.length > 0) {
                 html += '<h3 style="color: #333; margin: 20px 0;">Tarefas Distribuídas</h3>';
                 appState.tarefas.forEach((item, idx) => {
@@ -2945,7 +2322,11 @@
                             <span class="editable-item-title">✓ ${item.descricao}</span>
                             <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'tarefas')">Deletar</button>
                         </div>
-                        <p style="font-size: 13px; color: #666;">👤 ${item.atribuido} | <span style="color: ${prioridadeColor}; font-weight: 600;">Prioridade: ${item.prioridade}</span> | 📅 ${item.vencimento}</p>
+                        <p style="font-size: 13px; color: #666;">👤 ${item.atribuido} | <span style="color: ${prioridadeColor}; font-weight: 600;">Prioridade: ${item.prioridade}</span></p>
+                        ${item.fileData || item.audioData ? `<div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            ${item.fileData ? `<button class="btn btn-sm btn-info" onclick="openFile('${item.fileData}', '${item.fileName}')">👁️ Ver Arquivo</button>` : ''}
+                            ${item.audioData ? `<button class="btn btn-sm btn-info" onclick="playAudio('${item.audioData}')">🎵 Ouvir</button>` : ''}
+                        </div>` : ''}
                     </div>`;
                 });
             }
@@ -2954,22 +2335,20 @@
 
         // ===== CHAT =====
         function renderChat() {
-            return `
-                <div class="chat-container">
-                    <div class="chat-messages" id="chatMessages">
-                        ${appState.messages.map(msg => `
-                            <div class="message ${msg.sender === appState.currentUser ? 'sent' : 'received'}">
-                                <div class="message-sender" style="text-align: ${msg.sender === appState.currentUser ? 'right' : 'left'};">${msg.sender}</div>
-                                <div class="message-bubble">${msg.text}</div>
-                            </div>
-                        `).join('') || '<p style="text-align: center; color: #999; margin-top: 20px;">Nenhuma mensagem ainda! Seja o primeiro a enviar.</p>'}
-                    </div>
-                    <div class="chat-input">
-                        <input type="text" id="chatInput" placeholder="Digite sua mensagem..." onkeypress="if(event.key==='Enter') sendChatMessage();">
-                        <button onclick="sendChatMessage()">📤</button>
-                    </div>
+            return `<div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    ${appState.messages.map(msg => `
+                        <div class="message ${msg.sender === appState.currentUser ? 'sent' : 'received'}">
+                            <div class="message-sender" style="text-align: ${msg.sender === appState.currentUser ? 'right' : 'left'};">${msg.sender}</div>
+                            <div class="message-bubble">${msg.text}</div>
+                        </div>
+                    `).join('') || '<p style="text-align: center; color: #999; margin-top: 20px;">Nenhuma mensagem ainda!</p>'}
                 </div>
-            `;
+                <div class="chat-input">
+                    <input type="text" id="chatInput" placeholder="Digite sua mensagem..." onkeypress="if(event.key==='Enter') sendChatMessage();">
+                    <button onclick="sendChatMessage()">📤</button>
+                </div>
+            </div>`;
         }
 
         function sendChatMessage() {
@@ -2978,7 +2357,7 @@
             if (text) {
                 appState.messages.push({ sender: appState.currentUser, text, time: new Date() });
                 input.value = '';
-                showNotification(`💬 Mensagem enviada`, 'info');
+                showNotification(`💬 Mensagem enviada por ${appState.currentUser}`, 'info');
                 renderContent('chat');
                 setTimeout(() => {
                     const chatMessages = document.getElementById('chatMessages');
@@ -2991,180 +2370,143 @@
         function renderRelatorios() {
             const totalObras = appState.publications.length;
             const pendentes = appState.publications.filter(p => p.status === 'pending').length;
-            const literatureApproved = appState.publications.filter(p => p.status === 'literature_approved').length;
+            const emRevisao = appState.publications.filter(p => p.status === 'literature_review').length;
+            const aprovados = appState.publications.filter(p => p.status === 'approved').length;
             const publicados = appState.publications.filter(p => p.status === 'published').length;
             const rejeitados = appState.publications.filter(p => p.status === 'rejected').length;
-            const totalSugestoes = appState.suggestions.length;
-            const totalTarefas = appState.tarefas.length;
-            const totalReunioes = appState.reunioes.length;
-            const totalLicoes = appState.licoes.length;
-            const totalHinarios = appState.hinarios.length;
-            const totalPartituras = appState.partitures.length;
-            const totalTraducoes = appState.traducoes.length;
 
             const porAutor = {};
             appState.publications.forEach(p => {
-                if (!porAutor[p.author]) porAutor[p.author] = { total: 0, publicados: 0, pendentes: 0, rejeitados: 0 };
+                if (!porAutor[p.author]) porAutor[p.author] = { total: 0, publicados: 0, pendentes: 0 };
                 porAutor[p.author].total++;
                 if (p.status === 'published') porAutor[p.author].publicados++;
                 if (p.status === 'pending') porAutor[p.author].pendentes++;
-                if (p.status === 'rejected') porAutor[p.author].rejeitados++;
             });
 
             let autorRows = '';
             for (const [autor, dados] of Object.entries(porAutor)) {
-                autorRows += `<tr><td>${autor}</td><td style="text-align:center">${dados.total}</td><td style="text-align:center">${dados.publicados}</td><td style="text-align:center">${dados.pendentes}</td><td style="text-align:center">${dados.rejeitados}</td></tr>`;
+                autorRows += `<tr><td>${autor}</td><td>${dados.total}</td><td>${dados.publicados}</td><td>${dados.pendentes}</td></tr>`;
             }
 
-            return `
-                <div class="stats-grid" style="margin-bottom: 30px;">
-                    <div class="stat-card" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);">
-                        <h3>${totalObras}</h3>
-                        <p>Total de Obras</p>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">
-                        <h3>${pendentes}</h3>
-                        <p>Em Revisão Literária</p>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
-                        <h3>${literatureApproved}</h3>
-                        <p>Aguardando DNAC</p>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #17a2b8 0%, #4facfe 100%);">
-                        <h3>${publicados}</h3>
-                        <p>Publicados</p>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #dc3545 0%, #f5576c 100%);">
-                        <h3>${rejeitados}</h3>
-                        <p>Rejeitados</p>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #6f42c1 0%, #8e44ad 100%);">
-                        <h3>${totalSugestoes}</h3>
-                        <p>Sugestões Recebidas</p>
-                    </div>
+            return `<div class="stats-grid" style="margin-bottom: 30px;">
+                <div class="stat-card" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);">
+                    <h3>${totalObras}</h3><p>Total de Obras</p>
                 </div>
-
-                <div class="form-section" style="margin-bottom: 20px;">
-                    <div class="form-section-title">📊 Resumo do Sistema</div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalReunioes}</div>
-                            <div style="font-size: 13px; color: #666;">Reuniões Agendadas</div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">
+                    <h3>${pendentes}</h3><p>Pendentes</p>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #3730a3 0%, #6366f1 100%);">
+                    <h3>${emRevisao}</h3><p>Em Revisão Literária</p>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                    <h3>${aprovados}</h3><p>Aprovados</p>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #17a2b8 0%, #4facfe 100%);">
+                    <h3>${publicados}</h3><p>Publicados</p>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #dc3545 0%, #f5576c 100%);">
+                    <h3>${rejeitados}</h3><p>Rejeitados</p>
+                </div>
+            </div>
+            <div class="form-section" style="margin-bottom: 20px;">
+                <div class="form-section-title">👥 Obras por Autor</div>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                        <thead>
+                            <tr style="background: #444444; color: white;">
+                                <th style="padding: 12px; text-align: left;">Autor</th>
+                                <th style="padding: 12px; text-align: center;">Total</th>
+                                <th style="padding: 12px; text-align: center;">Publicados</th>
+                                <th style="padding: 12px; text-align: center;">Pendentes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${autorRows || '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #999;">Nenhuma obra registrada</td></tr>'}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="form-section-title">📋 Lista Completa de Obras</div>
+                ${appState.publications.length === 0 ? '<p class="empty-state">Nenhuma obra registrada.</p>' : appState.publications.map((pub, i) => `
+                    <div style="padding: 12px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${i+1}. ${pub.title}</strong> - ${pub.author}
+                            <div style="font-size: 12px; color: #666;">Pauta: ${pub.workPerson} | ${new Date(pub.date).toLocaleDateString('pt-AO')}</div>
                         </div>
-                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalLicoes}</div>
-                            <div style="font-size: 13px; color: #666;">Lições Cadastradas</div>
-                        </div>
-                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalHinarios}</div>
-                            <div style="font-size: 13px; color: #666;">Hinários</div>
-                        </div>
-                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalPartituras}</div>
-                            <div style="font-size: 13px; color: #666;">Partituras</div>
-                        </div>
-                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalTraducoes}</div>
-                            <div style="font-size: 13px; color: #666;">Traduções</div>
-                        </div>
-                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalTarefas}</div>
-                            <div style="font-size: 13px; color: #666;">Tarefas</div>
-                        </div>
+                        <span class="status-badge ${pub.status === 'published' ? 'status-published' : pub.status === 'approved' ? 'status-approved' : pub.status === 'literature_review' ? 'status-literature_review' : pub.status === 'rejected' ? 'status-rejected' : 'status-pending'}">
+                            ${pub.status === 'published' ? '📢 Publicado' : pub.status === 'approved' ? '✅ Aprovado' : pub.status === 'literature_review' ? '📝 Em Revisão' : pub.status === 'rejected' ? '❌ Rejeitado' : '⏳ Pendente'}
+                        </span>
                     </div>
-                </div>
-
-                <div class="form-section" style="margin-bottom: 20px;">
-                    <div class="form-section-title">👥 Obras por Autor</div>
-                    <div style="overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                            <thead>
-                                <tr style="background: #444444; color: white;">
-                                    <th style="padding: 12px; text-align: left;">Autor</th>
-                                    <th style="padding: 12px; text-align: center;">Total</th>
-                                    <th style="padding: 12px; text-align: center;">Publicados</th>
-                                    <th style="padding: 12px; text-align: center;">Pendentes</th>
-                                    <th style="padding: 12px; text-align: center;">Rejeitados</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${autorRows || '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #999;">Nenhuma obra registrada</td></tr>'}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <div class="form-section-title">📋 Lista Completa de Obras</div>
-                    ${appState.publications.length === 0 ? '<p class="empty-state">Nenhuma obra registrada.</p>' : appState.publications.map((pub, i) => `
-                        <div style="padding: 12px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <strong>${i+1}. ${pub.title}</strong> - ${pub.author}
-                                <div style="font-size: 12px; color: #666;">Pauta: ${pub.workPerson} | ${new Date(pub.date).toLocaleDateString('pt-AO')}</div>
-                            </div>
-                            <span class="status-badge ${pub.status === 'published' ? 'status-published' : pub.status === 'literature_approved' ? 'status-literature' : pub.status === 'rejected' ? 'status-rejected' : 'status-pending'}">
-                                ${pub.status === 'published' ? '📢 Publicado' : pub.status === 'literature_approved' ? '✅ Lit. Aprovado' : pub.status === 'rejected' ? '❌ Rejeitado' : '⏳ Em Revisão'}
-                            </span>
-                        </div>
-                    `).join('')}
-                </div>
-
-                <div style="margin-top: 20px; text-align: center;">
-                    <button class="btn btn-primary" onclick="window.print()" style="padding: 12px 30px;">🖨️ Imprimir Relatório</button>
-                </div>
-            `;
+                `).join('')}
+            </div>
+            <div style="margin-top: 20px; text-align: center;">
+                <button class="btn btn-primary" onclick="window.print()" style="padding: 12px 30px;">🖨️ Imprimir Relatório</button>
+            </div>`;
         }
 
         // ===== UTILITÁRIOS =====
         function addItem(event, type) {
             event.preventDefault();
             let item = {};
+            let fileData = null;
+            let audioData = null;
+            let fileName = null;
 
             if (type === 'tarefas') {
-                item = {
-                    descricao: document.getElementById('tarefaDescricao').value,
-                    atribuido: document.getElementById('tarefaAtribuido').value,
-                    prioridade: document.getElementById('tarefaPrioridade').value,
-                    vencimento: document.getElementById('tarefaVencimento').value
+                const tarefaFileInput = document.getElementById('tarefaFileInput');
+                const tarefaAudioInput = document.getElementById('tarefaAudioInput');
+                const processFiles = () => {
+                    item = {
+                        descricao: document.getElementById('tarefaDescricao').value,
+                        atribuido: document.getElementById('tarefaAtribuido').value,
+                        prioridade: document.getElementById('tarefaPrioridade').value,
+                        vencimento: document.getElementById('tarefaVencimento').value,
+                        fileData: fileData,
+                        audioData: audioData,
+                        fileName: fileName
+                    };
+                    appState.tarefas.push(item);
+                    showNotification('✅ Tarefa criada!', 'success');
+                    sendNotificationToUser(item.atribuido, `Nova tarefa: "${item.descricao}". Prioridade: ${item.prioridade}`);
+                    updateBadges();
+                    document.getElementById('tarefaDescricao').value = '';
+                    document.getElementById('tarefaAtribuido').value = '';
+                    renderContent('tarefas');
                 };
-                document.getElementById('tarefaDescricao').value = '';
-                document.getElementById('tarefaAtribuido').value = '';
-            } else if (type === 'hinarios') {
+                if (tarefaFileInput.files.length > 0) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => { fileData = e.target.result; fileName = tarefaFileInput.files[0].name; processAudio(); };
+                    reader.readAsDataURL(tarefaFileInput.files[0]);
+                } else { processAudio(); }
+                function processAudio() {
+                    if (tarefaAudioInput.files.length > 0) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => { audioData = e.target.result; processFiles(); };
+                        reader.readAsDataURL(tarefaAudioInput.files[0]);
+                    } else { processFiles(); }
+                }
+                return;
+            }
+
+            if (type === 'hinarios') {
                 item = { titulo: document.getElementById('hinarioTitle').value, descricao: document.getElementById('hinarioDesc').value };
                 document.getElementById('hinarioTitle').value = '';
                 document.getElementById('hinarioDesc').value = '';
             } else if (type === 'traducoes') {
-                item = { 
-                    titulo: document.getElementById('traducaoTitulo').value,
-                    original: document.getElementById('traducaoOriginal').value,
-                    destino: document.getElementById('traducaoDestino').value
-                };
+                item = { titulo: document.getElementById('traducaoTitulo').value, original: document.getElementById('traducaoOriginal').value, destino: document.getElementById('traducaoDestino').value };
                 document.getElementById('traducaoTitulo').value = '';
             } else if (type === 'reunioes') {
-                item = {
-                    assunto: document.getElementById('reuniaoAssunto').value,
-                    data: document.getElementById('reuniaoData').value,
-                    hora: document.getElementById('reuniaoHora').value,
-                    local: document.getElementById('reuniaoLocal').value
-                };
+                item = { assunto: document.getElementById('reuniaoAssunto').value, data: document.getElementById('reuniaoData').value, hora: document.getElementById('reuniaoHora').value, local: document.getElementById('reuniaoLocal').value };
                 document.getElementById('reuniaoAssunto').value = '';
             } else if (type === 'licoes') {
-                item = {
-                    titulo: document.getElementById('licaoTitulo').value,
-                    conteudo: document.getElementById('licaoConteudo').value,
-                    data: document.getElementById('licaoData').value
-                };
+                item = { titulo: document.getElementById('licaoTitulo').value, conteudo: document.getElementById('licaoConteudo').value, data: document.getElementById('licaoData').value };
                 document.getElementById('licaoTitulo').value = '';
                 document.getElementById('licaoConteudo').value = '';
             } else if (type === 'partitures') {
-                item = {
-                    titulo: document.getElementById('partituraTitulo').value,
-                    compositor: document.getElementById('partituraCompositor').value,
-                    tom: document.getElementById('partituraTom').value
-                };
+                item = { titulo: document.getElementById('partituraTitulo').value, compositor: document.getElementById('partituraCompositor').value, tom: document.getElementById('partituraTom').value };
                 document.getElementById('partituraTitulo').value = '';
             }
-
             appState[type].push(item);
             showNotification('✅ Item adicionado!', 'success');
             const pageMap = { hinarios: 'hinario', traducoes: 'traducoes', reunioes: 'reunioes', licoes: 'licoes', partitures: 'partitures', tarefas: 'tarefas' };
@@ -3179,12 +2521,7 @@
         }
 
         function sendNotificationToUser(userName, message) {
-            appState.notifications.push({ 
-                message: message, 
-                for: userName,
-                time: new Date(), 
-                read: false 
-            });
+            appState.notifications.push({ message: message, for: userName, time: new Date(), read: false });
             updateNotificationBadge();
         }
 
@@ -3192,9 +2529,7 @@
             const modal = document.getElementById('fileModal');
             const modalBody = document.getElementById('fileModalBody');
             const modalTitle = document.getElementById('fileModalTitle');
-
             modalTitle.textContent = `Visualizar: ${fileName}`;
-
             if (fileName.endsWith('.pdf')) {
                 modalBody.innerHTML = `<embed src="${fileData}" type="application/pdf" width="100%" height="600px" />`;
             } else if (fileName.endsWith('.jpg') || fileName.endsWith('.png') || fileName.endsWith('.jpeg') || fileName.endsWith('.gif') || fileName.endsWith('.webp')) {
@@ -3204,7 +2539,6 @@
             } else {
                 modalBody.innerHTML = `<p>📄 ${fileName}</p><a href="${fileData}" download="${fileName}" class="btn btn-primary">📥 Download</a>`;
             }
-
             modal.classList.add('show');
         }
 
@@ -3212,11 +2546,18 @@
             const modal = document.getElementById('fileModal');
             const modalBody = document.getElementById('fileModalBody');
             const modalTitle = document.getElementById('fileModalTitle');
-
             modalTitle.textContent = 'Reproduzir Áudio';
             modalBody.innerHTML = `<div class="audio-player"><audio controls style="width: 100%;"><source src="${audioData}" type="audio/mpeg"></audio></div>`;
-
             modal.classList.add('show');
+        }
+
+        function viewFile(idx, type) {
+            let item = appState[type][idx];
+            if (item.fileData) {
+                openFile(item.fileData, item.fileName || `${item.titulo}.pdf`);
+            } else {
+                showNotification('Nenhum arquivo associado', 'info');
+            }
         }
 
         function closeFileModal() {
@@ -3227,28 +2568,9 @@
             const totalArranjos = document.getElementById('totalArranjos');
             const totalComposicoes = document.getElementById('totalComposicoes');
             const totalAprovados = document.getElementById('totalAprovados');
-
             if (totalArranjos) totalArranjos.textContent = appState.publications.length;
             if (totalComposicoes) totalComposicoes.textContent = appState.publications.length;
             if (totalAprovados) totalAprovados.textContent = appState.publications.filter(p => p.status === 'published').length;
-        }
-
-        function handleDragOver(event, areaId) {
-            event.preventDefault();
-            const el = document.getElementById(areaId);
-            if (el) {
-                el.style.borderColor = '#28a745';
-                el.style.background = '#0f2f1f';
-            }
-        }
-
-        function handleDragLeave(event, areaId) {
-            event.preventDefault();
-            const el = document.getElementById(areaId);
-            if (el) {
-                el.style.borderColor = '#555555';
-                el.style.background = '#1a1a1a';
-            }
         }
 
         function logout() {
