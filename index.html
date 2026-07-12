@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -107,14 +107,14 @@
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #888888;
+            box-shadow: 0 0 0 3px rgba(100, 100, 100, 0.2);
         }
 
         .btn-login {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -171,7 +171,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
             color: white;
             padding: 20px 30px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -241,7 +241,7 @@
         }
 
         .welcome-banner {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
             color: white;
             padding: 20px;
             margin: 20px 30px;
@@ -283,7 +283,7 @@
         .sidebar-title {
             font-size: 13px;
             font-weight: 700;
-            color: #667eea;
+            color: #888888;
             text-transform: uppercase;
             margin-bottom: 15px;
             letter-spacing: 0.5px;
@@ -314,9 +314,9 @@
 
         .nav-link:hover,
         .nav-link.active {
-            background: #f0f4ff;
-            color: #667eea;
-            border-left-color: #667eea;
+            background: #1a1a1a;
+            color: #888888;
+            border-left-color: #888888;
         }
 
         .nav-link-badge {
@@ -385,7 +385,7 @@
         }
 
         .publication-card:hover {
-            border-color: #667eea;
+            border-color: #888888;
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
         }
 
@@ -441,7 +441,7 @@
         }
 
         .form-section-title {
-            color: #667eea;
+            color: #888888;
             font-weight: 700;
             margin-bottom: 15px;
             font-size: 15px;
@@ -475,19 +475,19 @@
         }
 
         .upload-area {
-            border: 2px dashed #667eea;
+            border: 2px dashed #555555;
             border-radius: 10px;
             padding: 40px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             margin-bottom: 20px;
-            background: #f8f9ff;
+            background: #1a1a1a;
         }
 
         .upload-area:hover {
-            background: #f0f4ff;
-            border-color: #764ba2;
+            background: #1a1a1a;
+            border-color: #222222;
         }
 
         .file-input {
@@ -517,7 +517,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
             color: white;
         }
 
@@ -602,7 +602,7 @@
 
         .message-sender {
             font-size: 12px;
-            color: #667eea;
+            color: #888888;
             font-weight: 600;
             margin-bottom: 4px;
         }
@@ -621,7 +621,7 @@
         }
 
         .message.sent .message-bubble {
-            background: #667eea;
+            background: #444444;
             color: white;
         }
 
@@ -641,7 +641,7 @@
         }
 
         .chat-input button {
-            background: #667eea;
+            background: #444444;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -651,7 +651,7 @@
         }
 
         .chat-input button:hover {
-            background: #764ba2;
+            background: #222222;
         }
 
         .tab-content {
@@ -810,8 +810,8 @@
 
         /* Preview de arquivos */
         .preview-container {
-            background: #f8f9ff;
-            border: 2px solid #667eea;
+            background: #1a1a1a;
+            border: 2px solid #444444;
             border-radius: 10px;
             padding: 15px;
             margin-top: 10px;
@@ -859,7 +859,7 @@
         }
 
         table tbody tr:hover {
-            background: #f0f4ff;
+            background: #1a1a1a;
         }
 
         /* Animação de sucesso */
@@ -873,7 +873,6 @@
             animation: successPulse 0.5s ease;
         }
     </style>
-<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -1070,10 +1069,9 @@
         function handleLogin(event) {
             event.preventDefault();
             const role = document.getElementById('roleSelect').value;
-            const password = document.getElementById('passwordInput').value;
-            
-            if (!role || !password) {
-                showLoginError('Por favor, preencha todos os campos!');
+
+            if (!role) {
+                showLoginError('Por favor, selecione uma função!');
                 return;
             }
 
@@ -1081,9 +1079,15 @@
                 const fullName = document.getElementById('userFullName').value.trim();
                 const provincia = document.getElementById('userProvincia').value;
                 const municipio = document.getElementById('userMunicipio').value.trim();
+                const userPassword = document.getElementById('userPassword').value;
 
                 if (!fullName || !provincia || !municipio) {
                     showLoginError('Por favor, preencha todos os dados pessoais!');
+                    return;
+                }
+
+                if (userPassword !== 'musica2025') {
+                    showLoginError('Senha única incorreta! Use: musica2025');
                     return;
                 }
 
@@ -1093,16 +1097,40 @@
                     municipio: municipio,
                     role: role === 'compositor' ? 'Compositor' : role === 'arranjador' ? 'Arranjador' : 'Tradutor'
                 };
-            } else {
-                appState.currentUserData = appState.users[role];
-            }
-
-            if (password === '1234') {
                 appState.currentRole = role;
-                appState.currentUser = appState.currentUserData.name;
+                appState.currentUser = fullName;
                 showDashboard();
             } else {
-                showLoginError('Senha incorreta! Tente novamente.');
+                const password = document.getElementById('passwordInput').value;
+
+                if (!password) {
+                    showLoginError('Por favor, digite a senha de acesso!');
+                    return;
+                }
+
+                if (role === 'nacional' && password === '2025') {
+                    appState.currentUserData = appState.users[role];
+                    appState.currentRole = role;
+                    appState.currentUser = appState.currentUserData.name;
+                    showDashboard();
+                } else if (role === 'adjunto' && password === '2025') {
+                    appState.currentUserData = appState.users[role];
+                    appState.currentRole = role;
+                    appState.currentUser = appState.currentUserData.name;
+                    showDashboard();
+                } else if (role === 'secretario' && password === '2025') {
+                    appState.currentUserData = appState.users[role];
+                    appState.currentRole = role;
+                    appState.currentUser = appState.currentUserData.name;
+                    showDashboard();
+                } else if (role === 'literatura' && password === '2025') {
+                    appState.currentUserData = appState.users[role];
+                    appState.currentRole = role;
+                    appState.currentUser = appState.currentUserData.name;
+                    showDashboard();
+                } else {
+                    showLoginError('Senha de acesso incorreta! Use: 2025');
+                }
             }
         }
 
@@ -1200,11 +1228,11 @@
                     html = `
                         <h2 class="section-title">📊 Dashboard de Controle</h2>
                         <div class="stats-grid">
-                            <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="stat-card" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);">
                                 <h3 id="totalArranjos">0</h3>
                                 <p>Arranjos</p>
                             </div>
-                            <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <div class="stat-card" style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);">
                                 <h3 id="totalComposicoes">0</h3>
                                 <p>Composições</p>
                             </div>
@@ -1292,7 +1320,7 @@
 
             return `
                 <div class="stats-grid" style="margin-bottom: 30px;">
-                    <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);">
                         <h3>${totalObras}</h3>
                         <p>Total de Obras</p>
                     </div>
@@ -1322,23 +1350,23 @@
                     <div class="form-section-title">📊 Resumo do Sistema</div>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                         <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #667eea;">${totalReunioes}</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalReunioes}</div>
                             <div style="font-size: 13px; color: #666;">Reuniões Agendadas</div>
                         </div>
                         <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #667eea;">${totalLicoes}</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalLicoes}</div>
                             <div style="font-size: 13px; color: #666;">Lições Cadastradas</div>
                         </div>
                         <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #667eea;">${totalHinarios}</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalHinarios}</div>
                             <div style="font-size: 13px; color: #666;">Hinários</div>
                         </div>
                         <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #667eea;">${totalPartituras}</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalPartituras}</div>
                             <div style="font-size: 13px; color: #666;">Partituras</div>
                         </div>
                         <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
-                            <div style="font-size: 28px; font-weight: 700; color: #667eea;">${totalTraducoes}</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #888888;">${totalTraducoes}</div>
                             <div style="font-size: 13px; color: #666;">Traduções</div>
                         </div>
                     </div>
@@ -1349,7 +1377,7 @@
                     <div style="overflow-x: auto;">
                         <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
                             <thead>
-                                <tr style="background: #667eea; color: white;">
+                                <tr style="background: #444444; color: white;">
                                     <th style="padding: 12px; text-align: left;">Autor</th>
                                     <th style="padding: 12px; text-align: center;">Total</th>
                                     <th style="padding: 12px; text-align: center;">Publicados</th>
@@ -1577,7 +1605,7 @@
                             <span class="editable-item-title">🌐 ${item.titulo}</span>
                             <button class="btn btn-sm btn-danger" onclick="deleteItem(${idx}, 'traducoes')">Deletar</button>
                         </div>
-                        <p style="font-size: 12px; color: #667eea;"><strong>${item.original} → ${item.destino}</strong></p>
+                        <p style="font-size: 12px; color: #888888;"><strong>${item.original} → ${item.destino}</strong></p>
                     </div>`;
                 });
             }
@@ -1925,7 +1953,7 @@
                     </div>
                     <p style="margin-top: 10px; color: #666;"><strong>Pauta de:</strong> ${pub.workPerson}</p>
 
-                    ${pub.fileData ? `<div style="margin-top: 15px; padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                    ${pub.fileData ? `<div style="margin-top: 15px; padding: 15px; background: #1a1a1a; border-radius: 8px;">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                             <span style="font-size: 20px;">📄</span>
                             <strong>Pauta / Partitura:</strong>
@@ -1939,7 +1967,7 @@
                         }
                     </div>` : '<p style="color: #999; font-style: italic;">Nenhuma pauta anexada.</p>'}
 
-                    ${pub.audio ? `<div style="margin-top: 15px; padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                    ${pub.audio ? `<div style="margin-top: 15px; padding: 15px; background: #1a1a1a; border-radius: 8px;">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                             <span style="font-size: 20px;">🎵</span>
                             <strong>Áudio:</strong>
@@ -1950,12 +1978,12 @@
                         </audio>
                     </div>` : '<p style="color: #999; font-style: italic;">Nenhum áudio anexado.</p>'}
 
-                    <div style="margin-top: 15px; padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                    <div style="margin-top: 15px; padding: 15px; background: #1a1a1a; border-radius: 8px;">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                             <span style="font-size: 20px;">📝</span>
                             <strong>Letra da Canção (Editável):</strong>
                         </div>
-                        <textarea id="lyrics_edit_${idx}" style="width: 100%; padding: 12px; border: 2px solid #667eea; border-radius: 8px; min-height: 150px; font-family: inherit; font-size: 14px; line-height: 1.6; background: white;">${pub.lyrics || ''}</textarea>
+                        <textarea id="lyrics_edit_${idx}" style="width: 100%; padding: 12px; border: 2px solid #444444; border-radius: 8px; min-height: 150px; font-family: inherit; font-size: 14px; line-height: 1.6; background: white;">${pub.lyrics || ''}</textarea>
                     </div>
 
                     ${pub.observations ? `<div style="margin-top: 15px; padding: 15px; background: #fff8e1; border-radius: 8px; border: 1px solid #ffc107;">
@@ -2099,7 +2127,7 @@
 
             reader.onload = function(e) {
                 const fileData = e.target.result;
-                let html = `<div style="background: #f0f4ff; border: 2px solid #667eea; border-radius: 10px; padding: 15px; margin-top: 10px;">`;
+                let html = `<div style="background: #1a1a1a; border: 2px solid #444444; border-radius: 10px; padding: 15px; margin-top: 10px;">`;
                 html += `<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">`;
                 html += `<span style="font-size: 24px;">📄</span>`;
                 html += `<div><strong>${file.name}</strong><br><span style="font-size: 12px; color: #666;">${(file.size / 1024).toFixed(1)} KB</span></div>`;
@@ -2142,7 +2170,7 @@
 
             reader.onload = function(e) {
                 const fileData = e.target.result;
-                let html = `<div style="background: #f0f4ff; border: 2px solid #667eea; border-radius: 10px; padding: 15px; margin-top: 10px;">`;
+                let html = `<div style="background: #1a1a1a; border: 2px solid #444444; border-radius: 10px; padding: 15px; margin-top: 10px;">`;
                 html += `<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">`;
                 html += `<span style="font-size: 24px;">🎵</span>`;
                 html += `<div><strong>${file.name}</strong><br><span style="font-size: 12px; color: #666;">${(file.size / 1024).toFixed(1)} KB</span></div>`;
