@@ -50,7 +50,6 @@
             margin-bottom: 15px; display: none;
         }
         .additional-fields { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0; }
-        .additional-fields.show { display: block; }
         .dashboard-wrapper { width: 100%; min-height: 100vh; background: #f5f7fa; display: none; }
         .dashboard-wrapper.active { display: block; }
         .header {
@@ -438,15 +437,41 @@
             const passwordInput = document.getElementById('passwordInput');
 
             if (['compositor','arranjador','tradutor'].includes(role)) {
-                additionalFields.classList.add('show');
-                fullNameInput.required = true; provinciaInput.required = true; municipioInput.required = true; userPassword.required = true;
-                directorPasswordGroup.style.display = 'none'; passwordInput.required = false;
+                // Mostrar campos de criador, esconder senha de director
+                additionalFields.style.display = 'block';
+                fullNameInput.required = true; 
+                provinciaInput.required = true; 
+                municipioInput.required = true; 
+                userPassword.required = true;
+                directorPasswordGroup.style.display = 'none'; 
+                passwordInput.required = false;
+                passwordInput.value = ''; // Limpar senha de director
+            } else if (role) {
+                // Mostrar senha de director, esconder campos de criador
+                additionalFields.style.display = 'none';
+                fullNameInput.required = false; 
+                provinciaInput.required = false; 
+                municipioInput.required = false; 
+                userPassword.required = false;
+                directorPasswordGroup.style.display = 'block'; 
+                passwordInput.required = true;
+                // Limpar campos de criador
+                fullNameInput.value = '';
+                provinciaInput.value = '';
+                municipioInput.value = '';
+                userPassword.value = '';
             } else {
-                additionalFields.classList.remove('show');
-                fullNameInput.required = false; provinciaInput.required = false; municipioInput.required = false; userPassword.required = false;
-                directorPasswordGroup.style.display = 'block'; passwordInput.required = true;
+                // Nenhuma função selecionada - mostrar apenas senha de director por padrão
+                additionalFields.style.display = 'none';
+                directorPasswordGroup.style.display = 'block';
+                passwordInput.required = true;
             }
         }
+
+        // Garantir que o estado inicial está correto quando a página carrega
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleAdditionalFields();
+        });
 
         function handleLogin(event) {
             event.preventDefault();
