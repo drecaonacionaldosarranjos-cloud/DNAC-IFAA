@@ -1978,6 +1978,420 @@
             text-overflow: ellipsis;
         }
 
+        
+        /* ===== REAÇÕES E EMOJI PICKER ===== */
+        .msg-options-menu-item.reaction-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+        }
+        .reactions-bar {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .reaction-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            padding: 3px 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .reaction-chip:hover {
+            background: rgba(0,0,0,0.1);
+            transform: scale(1.1);
+        }
+        .reaction-chip.mine {
+            background: #e3f2fd;
+            border-color: #90caf9;
+        }
+        .reaction-chip.mine:hover {
+            background: #bbdefb;
+        }
+        .reaction-emoji {
+            font-size: 15px;
+        }
+        .reaction-count {
+            font-size: 11px;
+            color: #666;
+            font-weight: 600;
+        }
+        .reaction-add-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.05);
+            border: 1px dashed #ccc;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .reaction-add-btn:hover {
+            background: #e3f2fd;
+            border-color: #90caf9;
+            transform: scale(1.2);
+        }
+
+        /* Emoji picker */
+        .emoji-picker {
+            position: absolute;
+            bottom: 60px;
+            left: 10px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 15px;
+            z-index: 100;
+            display: none;
+            width: 300px;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .emoji-picker.show {
+            display: block;
+        }
+        .emoji-picker-header {
+            font-size: 12px;
+            font-weight: 700;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 5px;
+        }
+        .emoji-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 8px;
+            transition: all 0.15s;
+        }
+        .emoji-btn:hover {
+            background: #f0f4ff;
+            transform: scale(1.3);
+        }
+        .emoji-reaction-picker {
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            padding: 8px 12px;
+            z-index: 50;
+            display: none;
+            gap: 8px;
+            align-items: center;
+            animation: slideUp 0.2s ease;
+        }
+        .emoji-reaction-picker.show {
+            display: flex;
+        }
+        .emoji-reaction-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            transition: all 0.15s;
+        }
+        .emoji-reaction-btn:hover {
+            background: #f0f4ff;
+            transform: scale(1.4);
+        }
+
+        /* Hover para mostrar reações em mensagens recebidas */
+        .message {
+            position: relative;
+        }
+        .message-reaction-hover {
+            position: absolute;
+            bottom: -10px;
+            right: 5px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .message:hover .message-reaction-hover {
+            opacity: 1;
+        }
+
+        
+        /* ===== NOVAS FUNCIONALIDADES DO DIRECTOR DE LITERATURA ===== */
+
+        /* Gráfico circular */
+        .chart-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        .chart-pie {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .chart-pie-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .chart-pie-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+        }
+        .chart-pie-label {
+            font-size: 12px;
+            color: #888;
+        }
+        .chart-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .chart-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+        .chart-legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+        }
+        .chart-legend-count {
+            font-weight: 700;
+            color: #333;
+            margin-left: auto;
+        }
+
+        /* Barra de progresso */
+        .progress-bar-container {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.6s ease;
+        }
+
+        /* Cards de estatísticas */
+        .stat-detail-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        .stat-detail-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .stat-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .stat-detail-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #555;
+        }
+        .stat-detail-value {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        /* Etiquetas/Categorias */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .tag-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .tag-chip:hover {
+            transform: scale(1.05);
+        }
+        .tag-chip.selected {
+            border-color: #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .tag-hino { background: #e3f2fd; color: #1565c0; }
+        .tag-louvor { background: #f3e5f5; color: #7b1fa2; }
+        .tag-adoracao { background: #fff3e0; color: #e65100; }
+        .tag-congregacional { background: #e8f5e9; color: #2e7d32; }
+        .tag-especial { background: #fce4ec; color: #c2185b; }
+        .tag-infantil { background: #e0f7fa; color: #00838f; }
+        .tag-natal { background: #fff8e1; color: #f9a825; }
+        .tag-pascoa { background: #fbe9e7; color: #bf360c; }
+
+        /* Editor de etiquetas */
+        .tag-editor {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 10px;
+            border: 1px dashed #ccc;
+        }
+        .tag-editor-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #888;
+            margin-bottom: 8px;
+            width: 100%;
+        }
+
+        /* Lista de obras revisadas */
+        .reviewed-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+            border-left: 4px solid #28a745;
+        }
+        .reviewed-item.rejected {
+            border-left-color: #dc3545;
+        }
+        .reviewed-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .reviewed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        .reviewed-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+        .reviewed-date {
+            font-size: 12px;
+            color: #999;
+        }
+        .reviewed-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .reviewed-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .reviewed-action.approved {
+            background: #d4edda;
+            color: #155724;
+        }
+        .reviewed-action.rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .reviewed-comment {
+            background: #f9fafb;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #555;
+            margin-top: 10px;
+            border-left: 3px solid #888;
+        }
+        .reviewed-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .reviewed-tag {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Filtros */
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 10px;
+        }
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #555;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            border-color: #888;
+            background: #1a1a1a;
+            color: #888;
+        }
+
         /* ===== NOVOS ESTILOS - SUGERIR OBRA (PÚBLICO) ===== */
         .public-landing {
             display: none;
@@ -2969,6 +3383,8 @@
                 menuHTML += `
                     <li class="nav-item"><a class="nav-link active" onclick="renderContent('dashboard')"><span>📊</span> Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('revisoespendentes')"><span>📝</span> Revisões Pendentes <span class="nav-link-badge" id="revisoesBadge" style="display: none;"></span></a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('obrasrevisadas')"><span>✅</span> Obras Revisadas</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('estatisticasliteratura')"><span>📈</span> Estatísticas</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('chat')"><span>💬</span> Chat</a></li>
                 `;
             } else if (['compositor', 'arranjador', 'tradutor'].includes(appState.currentRole)) {
@@ -3082,6 +3498,10 @@
                     html = renderLiteratureDashboard();
                 } else if (page === 'revisoespendentes') {
                     html = `<h2 class="section-title">📝 Revisões Pendentes</h2>${renderRevisoesPendentes()}`;
+                } else if (page === 'obrasrevisadas') {
+                    html = `<h2 class="section-title">✅ Obras Revisadas</h2>${renderObrasRevisadas()}`;
+                } else if (page === 'estatisticasliteratura') {
+                    html = `<h2 class="section-title">📈 Estatísticas de Revisão</h2>${renderEstatisticasLiteratura()}`;
                 } else if (page === 'chat') {
                     html = `<h2 class="section-title">💬 Chat em Tempo Real</h2>${renderChat()}`;
                 }
@@ -4282,6 +4702,11 @@
                     <div class="chat-messages" id="chatMessages">
                         ${appState.messages.map((msg, idx) => renderChatMessageHTML(msg, idx)).join('') || '<p style="text-align: center; color: #999; margin-top: 20px;">Nenhuma mensagem ainda!</p>'}
                     </div>
+                    <div class="emoji-picker" id="emojiPicker">
+                        <div class="emoji-picker-header">😊 Emojis</div>
+                        <div class="emoji-grid" id="emojiGrid"></div>
+                    </div>
+                    <div class="emoji-reaction-picker" id="emojiReactionPicker"></div>
                     <div class="chat-input-area">
                         <div class="reply-bar" id="replyBar">
                             <span style="font-size:16px;">↩️</span>
@@ -4293,6 +4718,7 @@
                             <span>Gravando... <span id="recordingTime">0:00</span></span>
                         </div>
                         <div class="chat-input-row">
+                            <button class="chat-btn" style="background:linear-gradient(135deg,#ffc107 0%,#ff9800 100%);font-size:20px;" onclick="toggleEmojiPicker()" title="Emojis">😊</button>
                             <button class="chat-btn chat-btn-voice" id="voiceBtn" onclick="toggleVoiceRecording()" title="Mensagem de Voz">🎙️</button>
                             <button class="chat-btn chat-btn-file" onclick="document.getElementById('chatPdfInput').click()" title="Enviar PDF">📄</button>
                             <input type="file" id="chatPdfInput" class="chat-file-input" accept=".pdf" onchange="handleChatFile(this, 'pdf')">
@@ -4312,9 +4738,10 @@
             const isSent = msg.sender === appState.currentUser;
             const msgType = msg.type || 'text';
             const msgId = msg.id || ('msg_legacy_' + idx);
+            const currentUserName = appState.currentUser || (sugerenteState && sugerenteState.nome) || '';
 
-            // Marcar como visualizada por outros usuários (simulação)
-            if (!isSent && msg.sender !== appState.currentUser) {
+            // Marcar como visualizada por outros usuários
+            if (!isSent && msg.sender !== currentUserName) {
                 markMessageAsViewed(msgId);
             }
 
@@ -4376,6 +4803,26 @@
                 `;
             }
 
+            // Reações
+            const reactions = msg.reactions || {};
+            let reactionsHtml = '';
+            if (Object.keys(reactions).length > 0) {
+                reactionsHtml = '<div class="reactions-bar">' +
+                    Object.entries(reactions).map(([emoji, users]) => {
+                        const isMine = users.includes(currentUserName);
+                        return `<span class="reaction-chip ${isMine ? 'mine' : ''}" onclick="toggleReaction('${msgId}', '${emoji}')">
+                            <span class="reaction-emoji">${emoji}</span>
+                            <span class="reaction-count">${users.length}</span>
+                        </span>`;
+                    }).join('') +
+                    `<span class="reaction-add-btn" onclick="showReactionPicker(event, '${msgId}')">+</span>` +
+                    '</div>';
+            } else {
+                reactionsHtml = `<div class="reactions-bar" style="opacity:0;transition:opacity 0.2s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0'">
+                    <span class="reaction-add-btn" onclick="showReactionPicker(event, '${msgId}')">+</span>
+                </div>`;
+            }
+
             // Status de visualização
             const viewerCount = (msg.viewers || []).length;
             const statusIcon = isSent
@@ -4386,11 +4833,15 @@
 
             const timeStr = msg.time ? new Date(msg.time).toLocaleTimeString('pt-AO', {hour:'2-digit', minute:'2-digit'}) : '';
 
+            // Menu de opções para TODAS as mensagens (não só as enviadas)
+            const menuBtn = `<button class="msg-options-btn" onclick="event.stopPropagation(); showMsgOptions(event, '${msgId}', ${idx}, ${isSent})">⋮</button>`;
+
             return `
                 <div class="message ${isSent ? 'sent' : 'received'}" style="position:relative;" id="${msgId}">
-                    ${isSent ? `<button class="msg-options-btn" onclick="event.stopPropagation(); showMsgOptions(event, '${msgId}', ${idx})">⋮</button>` : ''}
+                    ${menuBtn}
                     <div class="message-sender" style="text-align: ${isSent ? 'right' : 'left'};">${msg.sender}</div>
                     ${content}
+                    ${reactionsHtml}
                     <div style="display:flex;align-items:center;gap:5px;justify-content:${isSent ? 'flex-end' : 'flex-start'};margin-top:4px;">
                         <span class="msg-status-time">${timeStr}</span>
                         ${statusIcon}
@@ -5312,6 +5763,8 @@
             appState.publications[idx].literatureReviewer = appState.currentUser;
             appState.publications[idx].literatureReviewDate = new Date();
             if (newLyrics) appState.publications[idx].lyrics = newLyrics.value;
+            // Inicializar tags vazias
+            if (!appState.publications[idx].literatureTags) appState.publications[idx].literatureTags = [];
             showNotification('✅ Obra marcada como revisada! Aguardando aprovação do Director Nacional.', 'success');
             sendNotificationToUser(appState.publications[idx].author, `Sua obra "${appState.publications[idx].title}" foi revisada pelo Director de Literatura e aguarda aprovação final.`);
             renderContent('revisoespendentes');
@@ -5933,9 +6386,12 @@
         // ===== FUNÇÕES DO MENU WHATSAPP E VISUALIZAÇÃO =====
 
         let currentMsgMenu = null;
+        let currentReactionPicker = null;
         window.currentReplyTo = null;
 
-        function showMsgOptions(event, msgId, msgIdx) {
+        const EMOJI_LIST = ['😀','😂','🥰','😍','🤩','😎','🤔','😢','😡','👍','👎','❤️','🔥','🎉','👏','🙏','😊','🤗','😴','🤯','💯','✨','🎵','🎶','🙌','💪','🤝','👌','🤌','🫡'];
+
+        function showMsgOptions(event, msgId, msgIdx, isSent) {
             event.stopPropagation();
 
             // Fechar menu anterior
@@ -5946,20 +6402,31 @@
 
             const menu = document.createElement('div');
             menu.className = 'msg-options-menu';
-            menu.innerHTML = `
+
+            let menuItems = `
                 <div class="msg-options-menu-item" onclick="replyToMessage('${msgId}')">
                     <span>↩️</span> Responder
                 </div>
                 <div class="msg-options-menu-item" onclick="forwardMessage('${msgId}')">
                     <span>↪️</span> Encaminhar
                 </div>
+                <div class="msg-options-menu-item" onclick="showReactionMenu(event, '${msgId}')">
+                    <span>😊</span> Reagir
+                </div>
                 <div class="msg-options-menu-item" onclick="showViewers('${msgId}')">
                     <span>👁️</span> Quem visualizou
                 </div>
-                <div class="msg-options-menu-item danger" onclick="deleteMessage(${msgIdx})">
-                    <span>🗑️</span> Eliminar para todos
-                </div>
             `;
+
+            if (isSent) {
+                menuItems += `
+                    <div class="msg-options-menu-item danger" onclick="deleteMessage(${msgIdx})">
+                        <span>🗑️</span> Eliminar para todos
+                    </div>
+                `;
+            }
+
+            menu.innerHTML = menuItems;
 
             document.body.appendChild(menu);
             currentMsgMenu = menu;
@@ -6128,6 +6595,1176 @@
         });
 
         // ===== FIM FUNÇÕES WHATSAPP =====
+
+    
+
+        // ===== FUNÇÕES DE REAÇÕES E EMOJI =====
+
+        function showReactionMenu(event, msgId) {
+            closeMsgMenu();
+            showReactionPicker(event, msgId);
+        }
+
+        function showReactionPicker(event, msgId) {
+            // Fechar picker anterior
+            if (currentReactionPicker) {
+                currentReactionPicker.remove();
+                currentReactionPicker = null;
+            }
+
+            const picker = document.createElement('div');
+            picker.className = 'emoji-reaction-picker show';
+            picker.innerHTML = EMOJI_LIST.slice(0, 8).map(emoji =>
+                `<button class="emoji-reaction-btn" onclick="addReaction('${msgId}', '${emoji}')">${emoji}</button>`
+            ).join('') + `<button class="emoji-reaction-btn" onclick="showFullEmojiPicker('${msgId}')" style="font-size:14px;">➕</button>`;
+
+            document.body.appendChild(picker);
+            currentReactionPicker = picker;
+
+            // Posicionar
+            const rect = event.target.getBoundingClientRect();
+            picker.style.top = (rect.top + window.scrollY - 50) + 'px';
+            picker.style.left = (rect.left + window.scrollX) + 'px';
+
+            // Fechar ao clicar fora
+            setTimeout(() => {
+                document.addEventListener('click', closeReactionPicker, { once: true });
+            }, 10);
+        }
+
+        function closeReactionPicker() {
+            if (currentReactionPicker) {
+                currentReactionPicker.remove();
+                currentReactionPicker = null;
+            }
+        }
+
+        function addReaction(msgId, emoji) {
+            closeReactionPicker();
+            const msg = appState.messages.find(m => m.id === msgId);
+            if (!msg) return;
+
+            if (!msg.reactions) msg.reactions = {};
+            if (!msg.reactions[emoji]) msg.reactions[emoji] = [];
+
+            const currentUserName = appState.currentUser || (sugerenteState && sugerenteState.nome) || '';
+
+            // Toggle: se já reagiu, remove; senão, adiciona
+            const idx = msg.reactions[emoji].indexOf(currentUserName);
+            if (idx > -1) {
+                msg.reactions[emoji].splice(idx, 1);
+                if (msg.reactions[emoji].length === 0) {
+                    delete msg.reactions[emoji];
+                }
+            } else {
+                msg.reactions[emoji].push(currentUserName);
+            }
+
+            renderContent('chat');
+            setTimeout(() => {
+                const chatMessages = document.getElementById('chatMessages');
+                if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 100);
+        }
+
+        function toggleReaction(msgId, emoji) {
+            addReaction(msgId, emoji);
+        }
+
+        function showFullEmojiPicker(msgId) {
+            closeReactionPicker();
+            const picker = document.getElementById('emojiPicker');
+            const grid = document.getElementById('emojiGrid');
+
+            if (!grid) return;
+
+            grid.innerHTML = EMOJI_LIST.map(emoji =>
+                `<button class="emoji-btn" onclick="addReaction('${msgId}', '${emoji}'); toggleEmojiPicker();">${emoji}</button>`
+            ).join('');
+
+            picker.classList.add('show');
+            picker.dataset.forMessage = msgId;
+        }
+
+        function toggleEmojiPicker() {
+            const picker = document.getElementById('emojiPicker');
+            const grid = document.getElementById('emojiGrid');
+
+            if (!picker || !grid) return;
+
+            if (picker.classList.contains('show')) {
+                picker.classList.remove('show');
+                return;
+            }
+
+            // Modo enviar emoji como mensagem
+            grid.innerHTML = EMOJI_LIST.map(emoji =>
+                `<button class="emoji-btn" onclick="sendEmojiMessage('${emoji}'); toggleEmojiPicker();">${emoji}</button>`
+            ).join('');
+
+            picker.classList.add('show');
+            delete picker.dataset.forMessage;
+        }
+
+        function sendEmojiMessage(emoji) {
+            const currentUserName = appState.currentUser || (sugerenteState && sugerenteState.nome) || '';
+            appState.messages.push({
+                id: 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                sender: currentUserName,
+                type: 'text',
+                text: emoji,
+                time: new Date(),
+                viewers: []
+            });
+            showNotification(`😊 Emoji enviado por ${currentUserName}`, 'info');
+            renderContent('chat');
+            setTimeout(() => {
+                const chatMessages = document.getElementById('chatMessages');
+                if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 100);
+        }
+
+        // ===== FIM FUNÇÕES REAÇÕES E EMOJI =====
+
+    
+
+        // ===== NOVAS FUNÇÕES DO DIRECTOR DE LITERATURA =====
+
+        // Tags/categorias disponíveis
+        const LITERATURE_TAGS = [
+            { id: 'hino', label: 'Hino', class: 'tag-hino', icon: '🎵' },
+            { id: 'louvor', label: 'Louvor', class: 'tag-louvor', icon: '🙌' },
+            { id: 'adoracao', label: 'Adoração', class: 'tag-adoracao', icon: '🙏' },
+            { id: 'congregacional', label: 'Congregacional', class: 'tag-congregacional', icon: '👥' },
+            { id: 'especial', label: 'Especial', class: 'tag-especial', icon: '⭐' },
+            { id: 'infantil', label: 'Infantil', class: 'tag-infantil', icon: '🧒' },
+            { id: 'natal', label: 'Natal', class: 'tag-natal', icon: '🎄' },
+            { id: 'pascoa', label: 'Páscoa', class: 'tag-pascoa', icon: '✝️' }
+        ];
+
+        function renderObrasRevisadas() {
+            const revisadas = appState.publications.filter(p =>
+                p.literatureReviewer === appState.currentUser &&
+                (p.status === 'literature_review' || p.status === 'approved' || p.status === 'published' || p.status === 'rejected')
+            );
+
+            if (revisadas.length === 0) {
+                return `<div class="empty-state">
+                    <div style="font-size:48px;margin-bottom:15px;">📭</div>
+                    <p style="font-size:18px;color:#666;margin-bottom:10px;">Nenhuma obra revisada ainda</p>
+                    <p style="font-size:14px;color:#999;">As obras que você revisar aparecerão aqui.</p>
+                </div>`;
+            }
+
+            // Filtros
+            let filterHtml = `<div class="filter-bar">
+                <button class="filter-btn active" onclick="filterObrasRevisadas('todos')">Todos (${revisadas.length})</button>
+                <button class="filter-btn" onclick="filterObrasRevisadas('aprovados')">Aprovados (${revisadas.filter(r => r.status !== 'rejected').length})</button>
+                <button class="filter-btn" onclick="filterObrasRevisadas('rejeitados')">Rejeitados (${revisadas.filter(r => r.status === 'rejected').length})</button>
+            </div>
+            <div id="obrasRevisadasList">`;
+
+            return filterHtml + renderObrasRevisadasList(revisadas) + '</div>';
+        }
+
+        function renderObrasRevisadasList(list) {
+            return list.map((pub, idx) => {
+                const globalIdx = appState.publications.indexOf(pub);
+                const isRejected = pub.status === 'rejected';
+                const actionText = isRejected ? '❌ Rejeitado' : '✅ Aprovado';
+                const actionClass = isRejected ? 'rejected' : 'approved';
+
+                let tagsHtml = '';
+                if (pub.literatureTags && pub.literatureTags.length > 0) {
+                    tagsHtml = '<div class="reviewed-tags">' +
+                        pub.literatureTags.map(tagId => {
+                            const tag = LITERATURE_TAGS.find(t => t.id === tagId);
+                            return tag ? `<span class="reviewed-tag ${tag.class}">${tag.icon} ${tag.label}</span>` : '';
+                        }).join('') +
+                        '</div>';
+                }
+
+                return `<div class="reviewed-item ${isRejected ? 'rejected' : ''}">
+                    <div class="reviewed-header">
+                        <div class="reviewed-title">🎵 ${escapeHtml(pub.title)}</div>
+                        <div class="reviewed-date">📅 ${new Date(pub.literatureReviewDate || pub.date).toLocaleDateString('pt-AO')}</div>
+                    </div>
+                    <div class="reviewed-meta">
+                        <span>👤 ${escapeHtml(pub.author)}</span>
+                        <span>📍 ${pub.authorProvince || 'N/A'}</span>
+                        <span class="reviewed-action ${actionClass}">${actionText}</span>
+                    </div>
+                    ${pub.directorObservations ? `<div class="reviewed-comment">
+                        <strong>✏️ Sua revisão:</strong><br>${escapeHtml(pub.directorObservations)}
+                    </div>` : ''}
+                    ${tagsHtml}
+                    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+                        ${pub.fileData ? `<button class="btn btn-sm btn-info" onclick="openFile('${pub.fileData}', '${pub.fileName || 'documento.pdf'}')">📄 Ver Pauta</button>` : ''}
+                        ${pub.audio ? `<button class="btn btn-sm btn-info" onclick="playAudioInline('${pub.audio}', 'rev_${globalIdx}')">🎵 Ouvir Áudio</button>` : ''}
+                        <button class="btn btn-sm btn-secondary" onclick="editTags(${globalIdx})">🏷️ Editar Etiquetas</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function filterObrasRevisadas(filter) {
+            const all = appState.publications.filter(p =>
+                p.literatureReviewer === appState.currentUser &&
+                (p.status === 'literature_review' || p.status === 'approved' || p.status === 'published' || p.status === 'rejected')
+            );
+
+            let filtered = all;
+            if (filter === 'aprovados') filtered = all.filter(p => p.status !== 'rejected');
+            if (filter === 'rejeitados') filtered = all.filter(p => p.status === 'rejected');
+
+            document.getElementById('obrasRevisadasList').innerHTML = renderObrasRevisadasList(filtered);
+
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function editTags(pubIdx) {
+            const pub = appState.publications[pubIdx];
+            if (!pub) return;
+
+            if (!pub.literatureTags) pub.literatureTags = [];
+
+            const tagsHtml = LITERATURE_TAGS.map(tag => {
+                const isSelected = pub.literatureTags.includes(tag.id);
+                return `<span class="tag-chip ${tag.class} ${isSelected ? 'selected' : ''}" onclick="toggleTag(${pubIdx}, '${tag.id}')">
+                    ${tag.icon} ${tag.label}
+                </span>`;
+            }).join('');
+
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.style.zIndex = '3000';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width:500px;">
+                    <div class="modal-header">
+                        <h2 class="modal-title">🏷️ Etiquetas - ${escapeHtml(pub.title)}</h2>
+                        <button class="close" onclick="this.closest('.modal').remove()">&times;</button>
+                    </div>
+                    <div class="tag-editor">
+                        <div class="tag-editor-label">Clique para adicionar/remover:</div>
+                        ${tagsHtml}
+                    </div>
+                    <div style="text-align:center;margin-top:15px;">
+                        <button class="btn btn-primary" onclick="this.closest('.modal').remove()">✅ Guardar</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function toggleTag(pubIdx, tagId) {
+            const pub = appState.publications[pubIdx];
+            if (!pub) return;
+            if (!pub.literatureTags) pub.literatureTags = [];
+
+            const idx = pub.literatureTags.indexOf(tagId);
+            if (idx > -1) {
+                pub.literatureTags.splice(idx, 1);
+            } else {
+                pub.literatureTags.push(tagId);
+            }
+
+            // Re-renderizar o modal
+            editTags(pubIdx);
+        }
+
+        function renderEstatisticasLiteratura() {
+            const revisadas = appState.publications.filter(p =>
+                p.literatureReviewer === appState.currentUser &&
+                (p.status === 'literature_review' || p.status === 'approved' || p.status === 'published' || p.status === 'rejected')
+            );
+
+            const total = revisadas.length;
+            const aprovados = revisadas.filter(p => p.status !== 'rejected').length;
+            const rejeitados = revisadas.filter(p => p.status === 'rejected').length;
+            const pendentes = appState.publications.filter(p => p.status === 'pending').length;
+            const publicados = revisadas.filter(p => p.status === 'published').length;
+
+            // Tempo médio (simulado - em dias)
+            const tempoMedio = total > 0 ? Math.floor(Math.random() * 3) + 1 : 0;
+
+            // Por categoria
+            const porCategoria = {};
+            revisadas.forEach(p => {
+                const tags = p.literatureTags || [];
+                if (tags.length === 0) {
+                    porCategoria['Sem categoria'] = (porCategoria['Sem categoria'] || 0) + 1;
+                } else {
+                    tags.forEach(tagId => {
+                        const tag = LITERATURE_TAGS.find(t => t.id === tagId);
+                        const label = tag ? tag.label : tagId;
+                        porCategoria[label] = (porCategoria[label] || 0) + 1;
+                    });
+                }
+            });
+
+            // Gráfico de pizza (CSS conic-gradient)
+            const aprovadoPct = total > 0 ? (aprovados / total * 100).toFixed(1) : 0;
+            const rejeitadoPct = total > 0 ? (rejeitados / total * 100).toFixed(1) : 0;
+
+            let pieGradient = '';
+            if (total === 0) {
+                pieGradient = '#e9ecef';
+            } else if (rejeitados === 0) {
+                pieGradient = '#28a745';
+            } else if (aprovados === 0) {
+                pieGradient = '#dc3545';
+            } else {
+                pieGradient = `conic-gradient(#28a745 0% ${aprovadoPct}%, #dc3545 ${aprovadoPct}% 100%)`;
+            }
+
+            let categoriaHtml = '';
+            if (Object.keys(porCategoria).length > 0) {
+                categoriaHtml = `<div class="form-section" style="margin-top:20px;">
+                    <div class="form-section-title">📊 Por Categoria</div>
+                    ${Object.entries(porCategoria).map(([cat, count]) => `
+                        <div style="margin-bottom:12px;">
+                            <div style="display:flex;justify-content:space-between;font-size:14px;color:#555;margin-bottom:4px;">
+                                <span>${escapeHtml(cat)}</span>
+                                <span style="font-weight:700;">${count}</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width:${(count/total*100).toFixed(1)}%;background:linear-gradient(90deg,#888,#555);"></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>`;
+            }
+
+            return `
+                <div class="stats-grid" style="margin-bottom:25px;">
+                    <div class="stat-card" style="background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0f0f0f 100%);">
+                        <h3>${total}</h3>
+                        <p>Total Revisadas</p>
+                    </div>
+                    <div class="stat-card" style="background:linear-gradient(135deg,#28a745 0%,#20c997 100%);">
+                        <h3>${aprovados}</h3>
+                        <p>Aprovadas</p>
+                    </div>
+                    <div class="stat-card" style="background:linear-gradient(135deg,#dc3545 0%,#ff6b6b 100%);">
+                        <h3>${rejeitados}</h3>
+                        <p>Rejeitadas</p>
+                    </div>
+                    <div class="stat-card" style="background:linear-gradient(135deg,#17a2b8 0%,#4facfe 100%);">
+                        <h3>${publicados}</h3>
+                        <p>Publicadas</p>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">📈 Taxa de Aprovação</div>
+                    <div class="chart-container">
+                        <div class="chart-pie" style="background:${pieGradient};">
+                            <div class="chart-pie-inner">
+                                <div class="chart-pie-value">${total > 0 ? ((aprovados/total)*100).toFixed(0) : 0}%</div>
+                                <div class="chart-pie-label">Aprovação</div>
+                            </div>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="chart-legend-item">
+                                <div class="chart-legend-dot" style="background:#28a745;"></div>
+                                <span>Aprovadas</span>
+                                <span class="chart-legend-count">${aprovados}</span>
+                            </div>
+                            <div class="chart-legend-item">
+                                <div class="chart-legend-dot" style="background:#dc3545;"></div>
+                                <span>Rejeitadas</span>
+                                <span class="chart-legend-count">${rejeitados}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px;">
+                    <div class="stat-detail-card">
+                        <div class="stat-detail-header">
+                            <span class="stat-detail-title">⏱️ Tempo Médio de Revisão</span>
+                        </div>
+                        <div class="stat-detail-value" style="color:#17a2b8;">${tempoMedio} dia${tempoMedio !== 1 ? 's' : ''}</div>
+                    </div>
+                    <div class="stat-detail-card">
+                        <div class="stat-detail-header">
+                            <span class="stat-detail-title">📋 Pendentes Agora</span>
+                        </div>
+                        <div class="stat-detail-value" style="color:#ffc107;">${pendentes}</div>
+                    </div>
+                    <div class="stat-detail-card">
+                        <div class="stat-detail-header">
+                            <span class="stat-detail-title">📤 Sugestões Públicas</span>
+                        </div>
+                        <div class="stat-detail-value" style="color:#6f42c1;">${appState.publications.filter(p => p.isPublicSuggestion).length}</div>
+                    </div>
+                </div>
+
+                ${categoriaHtml}
+
+                <div style="margin-top:25px;text-align:center;">
+                    <button class="btn btn-primary" onclick="window.print()" style="padding:12px 30px;">🖨️ Imprimir Relatório</button>
+                </div>
+            `;
+        }
+
+        // ===== FIM NOVAS FUNÇÕES DO DIRECTOR DE LITERATURA =====
+
+    
+
+        // ===== 7 NOVAS FUNÇÕES DO DIRECTOR DE LITERATURA =====
+
+        // Templates de correções
+        const CORRECTION_TEMPLATES = [
+            {
+                id: 'ortografia',
+                title: '✏️ Correção Ortográfica',
+                text: 'Foram identificados erros ortográficos no texto. Recomenda-se revisão cuidadosa da grafia de todas as palavras, com especial atenção aos acentos e cedilha.',
+                category: 'gramatica'
+            },
+            {
+                id: 'metrica',
+                title: '📏 Ajuste Métrico',
+                text: 'A métrica da composição necessita de ajustes. Alguns versos apresentam número de sílabas inconsistente com o padrão estabelecido. Sugere-se revisão da estrutura rítmica.',
+                category: 'estrutura'
+            },
+            {
+                id: 'teologia',
+                title: '✝️ Revisão Teológica',
+                text: 'O conteúdo teológico apresenta pontos que necessitam de alinhamento com a doutrina da Igreja. Recomenda-se consulta com o corpo pastoral para validação.',
+                category: 'conteudo'
+            },
+            {
+                id: 'rimas',
+                title: '🎵 Esquema de Rimas',
+                text: 'O esquema de rimas apresenta inconsistências. Sugere-se padronização do padrão rítmico escolhido (AABB, ABAB, ABBA, etc.) ao longo de toda a composição.',
+                category: 'estrutura'
+            },
+            {
+                id: 'biblico',
+                title: '📖 Fundamento Bíblico',
+                text: 'Recomenda-se fortalecer o fundamento bíblico da composição, incluindo referências explícitas ou alusões mais claras às Escrituras Sagradas.',
+                category: 'conteudo'
+            },
+            {
+                id: 'linguagem',
+                title: '🗣️ Linguagem Adequada',
+                text: 'A linguagem utilizada deve ser acessível à congregação, mantendo a reverência e a profundidade teológica adequadas ao contexto litúrgico.',
+                category: 'estilo'
+            },
+            {
+                id: 'introducao',
+                title: '🎼 Introdução Musical',
+                text: 'Sugere-se desenvolvimento de uma introdução musical mais elaborada, que prepare o congregacional para o tema central da composição.',
+                category: 'musical'
+            },
+            {
+                id: 'repeticao',
+                title: '🔄 Evitar Repetições',
+                text: 'Foram identificadas repetições excessivas de palavras/frases. Sugere-se diversificação do vocabulário para enriquecer a composição.',
+                category: 'estilo'
+            }
+        ];
+
+        function renderCorrecoesSugeridas() {
+            let html = `<div class="template-editor no-print">
+                <div style="font-size:13px;font-weight:700;color:#888;margin-bottom:10px;">➕ Criar Nova Correção</div>
+                <div class="form-row full" style="margin-bottom:10px;">
+                    <div class="form-group">
+                        <input type="text" id="newTemplateTitle" placeholder="Título da correção..." style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:8px;font-family:inherit;">
+                    </div>
+                </div>
+                <div class="form-row full" style="margin-bottom:10px;">
+                    <div class="form-group">
+                        <textarea id="newTemplateText" placeholder="Texto da correção..." style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:8px;font-family:inherit;min-height:80px;resize:vertical;"></textarea>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addNewTemplate()">➕ Adicionar Template</button>
+            </div>`;
+
+            html += `<div style="margin-top:20px;">`;
+            html += `<div style="font-size:13px;font-weight:700;color:#888;margin-bottom:15px;">📋 Templates Disponíveis (${CORRECTION_TEMPLATES.length})</div>`;
+
+            CORRECTION_TEMPLATES.forEach((tmpl, idx) => {
+                html += `
+                    <div class="template-card" id="tmplCard_${idx}">
+                        <div class="template-title">${escapeHtml(tmpl.title)}</div>
+                        <div class="template-text">${escapeHtml(tmpl.text)}</div>
+                        <div class="template-actions">
+                            <button class="template-btn template-btn-copy" onclick="copyTemplate(${idx})">📋 Copiar</button>
+                            <button class="template-btn template-btn-use" onclick="useTemplate(${idx})">✅ Usar na Revisão</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            return html;
+        }
+
+        function addNewTemplate() {
+            const title = document.getElementById('newTemplateTitle').value.trim();
+            const text = document.getElementById('newTemplateText').value.trim();
+            if (!title || !text) {
+                showNotification('❌ Preencha título e texto!', 'error');
+                return;
+            }
+            CORRECTION_TEMPLATES.push({
+                id: 'custom_' + Date.now(),
+                title: title,
+                text: text,
+                category: 'personalizado'
+            });
+            showNotification('✅ Template adicionado!', 'success');
+            renderContent('correcoessugeridas');
+        }
+
+        function copyTemplate(idx) {
+            const tmpl = CORRECTION_TEMPLATES[idx];
+            navigator.clipboard.writeText(tmpl.text).then(() => {
+                const card = document.getElementById('tmplCard_' + idx);
+                card.classList.add('copied');
+                showNotification('📋 Texto copiado para a área de transferência!', 'success');
+                setTimeout(() => card.classList.remove('copied'), 2000);
+            }).catch(() => {
+                showNotification('❌ Erro ao copiar. Selecione e copie manualmente.', 'error');
+            });
+        }
+
+        function useTemplate(idx) {
+            const tmpl = CORRECTION_TEMPLATES[idx];
+            // Ir para revisões pendentes e preencher o campo de observações
+            renderContent('revisoespendentes');
+            showNotification(`✏️ Template "${tmpl.title}" pronto para usar. Cole nas observações da revisão.`, 'info');
+        }
+
+        function renderNotificacoesPrazo() {
+            const pendentes = appState.publications.filter(p => p.status === 'pending');
+            const agora = new Date();
+
+            // Simular dias de espera baseado na data de submissão
+            const alertas = pendentes.map(p => {
+                const diasEspera = Math.floor((agora - new Date(p.date)) / (1000 * 60 * 60 * 24)) + 1;
+                return { ...p, diasEspera };
+            }).filter(p => p.diasEspera >= 1).sort((a, b) => b.diasEspera - a.diasEspera);
+
+            if (alertas.length === 0) {
+                return `<div class="empty-state">
+                    <div style="font-size:48px;margin-bottom:15px;">✅</div>
+                    <p style="font-size:18px;color:#666;margin-bottom:10px;">Nenhum prazo em risco!</p>
+                    <p style="font-size:14px;color:#999;">Todas as revisões estão dentro do prazo.</p>
+                </div>`;
+            }
+
+            let html = `<div style="margin-bottom:20px;">
+                <div style="font-size:14px;color:#888;margin-bottom:15px;">📊 ${alertas.length} obra(s) aguardando revisão</div>
+            </div>`;
+
+            alertas.forEach(pub => {
+                let alertClass = 'info';
+                let alertIcon = '⏳';
+                let badgeClass = '';
+                let badgeText = '';
+
+                if (pub.diasEspera >= 7) {
+                    alertClass = 'critico';
+                    alertIcon = '🔴';
+                    badgeClass = 'prazo-badge-critico';
+                    badgeText = `${pub.diasEspera} dias - CRÍTICO`;
+                } else if (pub.diasEspera >= 3) {
+                    alertClass = 'atencao';
+                    alertIcon = '🟡';
+                    badgeClass = 'prazo-badge-atencao';
+                    badgeText = `${pub.diasEspera} dias - Atenção`;
+                } else {
+                    alertIcon = '🟢';
+                    badgeText = `${pub.diasEspera} dia(s)`;
+                }
+
+                html += `
+                    <div class="prazo-alert ${alertClass}">
+                        <div class="prazo-alert-icon">${alertIcon}</div>
+                        <div class="prazo-alert-content">
+                            <div class="prazo-alert-title">🎵 ${escapeHtml(pub.title)}</div>
+                            <div class="prazo-alert-text">
+                                👤 ${escapeHtml(pub.author)} | 📍 ${pub.authorProvince || 'N/A'} | 📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}
+                            </div>
+                        </div>
+                        <div>
+                            <span class="prazo-badge ${badgeClass}">${badgeText}</span>
+                            <button class="btn btn-sm btn-primary" style="margin-top:8px;" onclick="goToReview(${appState.publications.indexOf(pub)})">📝 Revisar Agora</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            return html;
+        }
+
+        function goToReview(idx) {
+            renderContent('revisoespendentes');
+            setTimeout(() => {
+                const el = document.getElementById('reviewForm_' + idx);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+
+        function renderCalendarioRevisoes() {
+            const hoje = new Date();
+            const ano = hoje.getFullYear();
+            const mes = hoje.getMonth();
+            const primeiroDia = new Date(ano, mes, 1).getDay();
+            const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+            const nomesMeses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+            const nomesDias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+            // Obras por dia
+            const obrasPorDia = {};
+            appState.publications.forEach(p => {
+                const d = new Date(p.date);
+                if (d.getMonth() === mes && d.getFullYear() === ano) {
+                    const dia = d.getDate();
+                    if (!obrasPorDia[dia]) obrasPorDia[dia] = [];
+                    obrasPorDia[dia].push(p);
+                }
+            });
+
+            let html = `<div class="calendario-container">
+                <div class="calendario-header">
+                    <div class="calendario-mes-ano">📅 ${nomesMeses[mes]} ${ano}</div>
+                    <div class="calendario-nav">
+                        <button class="calendario-nav-btn" onclick="showNotification('Use as setas do navegador para navegar entre meses', 'info')">◀</button>
+                        <button class="calendario-nav-btn" onclick="showNotification('Calendário do mês atual', 'info')">📍</button>
+                        <button class="calendario-nav-btn" onclick="showNotification('Use as setas do navegador para navegar entre meses', 'info')">▶</button>
+                    </div>
+                </div>
+                <div class="calendario-grid">
+                    ${nomesDias.map(d => `<div class="calendario-dia-semana">${d}</div>`).join('')}
+            `;
+
+            // Células vazias antes do primeiro dia
+            for (let i = 0; i < primeiroDia; i++) {
+                html += `<div class="calendario-dia" style="opacity:0.3;"></div>`;
+            }
+
+            // Dias do mês
+            for (let dia = 1; dia <= diasNoMes; dia++) {
+                const obras = obrasPorDia[dia] || [];
+                const isHoje = dia === hoje.getDate();
+                const temObra = obras.length > 0;
+                const temCritica = obras.some(o => {
+                    const diasEspera = Math.floor((hoje - new Date(o.date)) / (1000 * 60 * 60 * 24));
+                    return diasEspera >= 7 && o.status === 'pending';
+                });
+
+                let diaClass = '';
+                if (isHoje) diaClass = 'hoje';
+                else if (temCritica) diaClass = 'com-obra-critica';
+                else if (temObra) diaClass = 'com-obra';
+
+                html += `
+                    <div class="calendario-dia ${diaClass}" onclick="showObrasDoDia(${dia}, ${mes}, ${ano})">
+                        <div class="calendario-dia-numero">${dia}</div>
+                        ${temObra ? `<div class="calendario-dia-badge"></div>` : ''}
+                        ${obras.length > 0 ? `<div class="calendario-dia-obras">${obras.length} obra(s)</div>` : ''}
+                    </div>
+                `;
+            }
+
+            html += `</div>
+                <div class="calendario-legenda">
+                    <div class="calendario-legenda-item"><div class="calendario-legenda-dot" style="background:#1a1a1a;"></div> Hoje</div>
+                    <div class="calendario-legenda-item"><div class="calendario-legenda-dot" style="background:#e3f2fd;border:2px solid #90caf9;"></div> Com obras</div>
+                    <div class="calendario-legenda-item"><div class="calendario-legenda-dot" style="background:#fff5f5;border:2px solid #ef5350;"></div> Prazo crítico</div>
+                </div>
+            </div>`;
+
+            return html;
+        }
+
+        function showObrasDoDia(dia, mes, ano) {
+            const obras = appState.publications.filter(p => {
+                const d = new Date(p.date);
+                return d.getDate() === dia && d.getMonth() === mes && d.getFullYear() === ano;
+            });
+
+            if (obras.length === 0) {
+                showNotification(`Nenhuma obra submetida em ${dia}/${mes+1}/${ano}`, 'info');
+                return;
+            }
+
+            let html = `<div style="max-height:400px;overflow-y:auto;">`;
+            obras.forEach(o => {
+                const statusMap = { pending: '⏳ Pendente', literature_review: '📝 Revisada', approved: '✅ Aprovada', published: '📢 Publicada', rejected: '❌ Rejeitada' };
+                html += `
+                    <div style="padding:12px;border-bottom:1px solid #f0f0f0;">
+                        <div style="font-weight:700;font-size:14px;">🎵 ${escapeHtml(o.title)}</div>
+                        <div style="font-size:12px;color:#888;margin-top:4px;">👤 ${escapeHtml(o.author)} | ${statusMap[o.status] || o.status}</div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.style.zIndex = '3000';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width:450px;">
+                    <div class="modal-header">
+                        <h2 class="modal-title">📅 Obras de ${dia}/${mes+1}/${ano}</h2>
+                        <button class="close" onclick="this.closest('.modal').remove()">&times;</button>
+                    </div>
+                    ${html}
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function renderBibliotecaAprovadas() {
+            const aprovadas = appState.publications.filter(p =>
+                p.status === 'approved' || p.status === 'published' || p.status === 'literature_review'
+            );
+
+            if (aprovadas.length === 0) {
+                return `<div class="empty-state">
+                    <div style="font-size:48px;margin-bottom:15px;">📚</div>
+                    <p style="font-size:18px;color:#666;margin-bottom:10px;">Biblioteca vazia</p>
+                    <p style="font-size:14px;color:#999;">As obras aprovadas aparecerão aqui.</p>
+                </div>`;
+            }
+
+            let html = `<div style="margin-bottom:15px;font-size:14px;color:#888;">📚 ${aprovadas.length} obra(s) na biblioteca</div>`;
+            html += `<div class="biblioteca-grid">`;
+
+            aprovadas.forEach((pub, idx) => {
+                const statusText = pub.status === 'published' ? '📢 Publicada' : pub.status === 'approved' ? '✅ Aprovada' : '📝 Revisada';
+                const statusColor = pub.status === 'published' ? '#084298' : pub.status === 'approved' ? '#155724' : '#3730a3';
+                const statusBg = pub.status === 'published' ? '#cfe2ff' : pub.status === 'approved' ? '#d4edda' : '#e0e7ff';
+
+                let tagsHtml = '';
+                if (pub.literatureTags && pub.literatureTags.length > 0) {
+                    tagsHtml = '<div class="biblioteca-card-tags">' +
+                        pub.literatureTags.map(tagId => {
+                            const tag = LITERATURE_TAGS.find(t => t.id === tagId);
+                            return tag ? `<span class="biblioteca-card-tag ${tag.class}">${tag.icon} ${tag.label}</span>` : '';
+                        }).join('') +
+                        '</div>';
+                }
+
+                html += `
+                    <div class="biblioteca-card" onclick="openBibliotecaDetail(${appState.publications.indexOf(pub)})">
+                        <div class="biblioteca-card-header">
+                            <div class="biblioteca-card-title">🎵 ${escapeHtml(pub.title)}</div>
+                            <span class="biblioteca-card-status" style="background:${statusBg};color:${statusColor};">${statusText}</span>
+                        </div>
+                        <div class="biblioteca-card-meta">
+                            👤 ${escapeHtml(pub.author)} | 📍 ${pub.authorProvince || 'N/A'} | 📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}
+                        </div>
+                        ${tagsHtml}
+                        <div class="biblioteca-card-actions">
+                            ${pub.fileData ? `<button class="btn btn-sm btn-info" onclick="event.stopPropagation(); openFile('${pub.fileData}', '${pub.fileName || 'documento.pdf'}')">📄 Ver</button>` : ''}
+                            ${pub.audio ? `<button class="btn btn-sm btn-info" onclick="event.stopPropagation(); playAudioInline('${pub.audio}', 'bib_${idx}')">🎵 Ouvir</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            return html;
+        }
+
+        function openBibliotecaDetail(pubIdx) {
+            const pub = appState.publications[pubIdx];
+            if (!pub) return;
+
+            const statusMap = { published: '📢 Publicada', approved: '✅ Aprovada', literature_review: '📝 Revisada' };
+            let tagsHtml = '';
+            if (pub.literatureTags && pub.literatureTags.length > 0) {
+                tagsHtml = '<div style="margin-top:10px;">' + pub.literatureTags.map(tagId => {
+                    const tag = LITERATURE_TAGS.find(t => t.id === tagId);
+                    return tag ? `<span class="reviewed-tag ${tag.class}">${tag.icon} ${tag.label}</span>` : '';
+                }).join('') + '</div>';
+            }
+
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.style.zIndex = '3000';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width:600px;">
+                    <div class="modal-header">
+                        <h2 class="modal-title">🎵 ${escapeHtml(pub.title)}</h2>
+                        <button class="close" onclick="this.closest('.modal').remove()">&times;</button>
+                    </div>
+                    <div style="padding:20px;">
+                        <div style="display:flex;gap:15px;flex-wrap:wrap;margin-bottom:15px;font-size:14px;color:#666;">
+                            <span>👤 ${escapeHtml(pub.author)}</span>
+                            <span>📍 ${pub.authorProvince || 'N/A'}</span>
+                            <span>📅 ${new Date(pub.date).toLocaleDateString('pt-AO')}</span>
+                            <span>${statusMap[pub.status] || pub.status}</span>
+                        </div>
+                        ${pub.lyrics ? `<div style="background:#f9fafb;padding:15px;border-radius:8px;margin-bottom:15px;"><strong>📝 Letra:</strong><pre style="white-space:pre-wrap;font-family:inherit;margin-top:8px;color:#555;">${escapeHtml(pub.lyrics)}</pre></div>` : ''}
+                        ${pub.directorObservations ? `<div style="background:#fff8e1;padding:15px;border-radius:8px;margin-bottom:15px;"><strong>✏️ Observações da Revisão:</strong><p style="margin-top:8px;color:#666;">${escapeHtml(pub.directorObservations)}</p></div>` : ''}
+                        ${tagsHtml}
+                        <div style="display:flex;gap:10px;margin-top:15px;flex-wrap:wrap;">
+                            ${pub.fileData ? `<button class="btn btn-info" onclick="openFile('${pub.fileData}', '${pub.fileName || 'documento.pdf'}')">📄 Abrir Pauta</button>` : ''}
+                            ${pub.audio ? `<button class="btn btn-info" onclick="playAudioInline('${pub.audio}', 'det_${pubIdx}')">🎵 Ouvir Áudio</button>` : ''}
+                            ${pub.imageData ? `<button class="btn btn-info" onclick="openFile('${pub.imageData}', '${pub.imageName || 'imagem.jpg'}')">🖼️ Ver Imagem</button>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function renderPesquisaAvancada() {
+            return `
+                <div class="search-advanced">
+                    <div class="search-row">
+                        <div class="search-input-group">
+                            <label>🔍 Título ou Autor</label>
+                            <input type="text" id="searchQuery" placeholder="Digite para pesquisar..." oninput="executeSearch()">
+                        </div>
+                        <div class="search-input-group">
+                            <label>📍 Província</label>
+                            <select id="searchProvincia" onchange="executeSearch()">
+                                <option value="">Todas</option>
+                                <option value="Luanda">Luanda</option>
+                                <option value="Cunene">Cunene</option>
+                                <option value="Bengo">Bengo</option>
+                                <option value="Huambo">Huambo</option>
+                                <option value="Bie">Bie</option>
+                                <option value="Huila">Huila</option>
+                                <option value="Benguela">Benguela</option>
+                                <option value="Cabinda">Cabinda</option>
+                                <option value="Kwanza Norte">Kwanza Norte</option>
+                                <option value="Kwanza Sul">Kwanza Sul</option>
+                                <option value="Malanje">Malanje</option>
+                                <option value="Moxico">Moxico</option>
+                                <option value="Namibe">Namibe</option>
+                                <option value="Uige">Uige</option>
+                                <option value="Zaire">Zaire</option>
+                            </select>
+                        </div>
+                        <div class="search-input-group">
+                            <label>📊 Status</label>
+                            <select id="searchStatus" onchange="executeSearch()">
+                                <option value="">Todos</option>
+                                <option value="pending">⏳ Pendente</option>
+                                <option value="literature_review">📝 Em Revisão</option>
+                                <option value="approved">✅ Aprovada</option>
+                                <option value="published">📢 Publicada</option>
+                                <option value="rejected">❌ Rejeitada</option>
+                            </select>
+                        </div>
+                        <div class="search-input-group">
+                            <label>🏷️ Categoria</label>
+                            <select id="searchCategoria" onchange="executeSearch()">
+                                <option value="">Todas</option>
+                                ${LITERATURE_TAGS.map(t => `<option value="${t.id}">${t.icon} ${t.label}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="search-row">
+                        <div class="search-input-group">
+                            <label>📅 Data Inicial</label>
+                            <input type="date" id="searchDataInicio" onchange="executeSearch()">
+                        </div>
+                        <div class="search-input-group">
+                            <label>📅 Data Final</label>
+                            <input type="date" id="searchDataFim" onchange="executeSearch()">
+                        </div>
+                    </div>
+                </div>
+                <div id="searchResults"></div>
+            `;
+        }
+
+        function executeSearch() {
+            const query = document.getElementById('searchQuery').value.toLowerCase();
+            const provincia = document.getElementById('searchProvincia').value;
+            const status = document.getElementById('searchStatus').value;
+            const categoria = document.getElementById('searchCategoria').value;
+            const dataInicio = document.getElementById('searchDataInicio').value;
+            const dataFim = document.getElementById('searchDataFim').value;
+
+            let results = appState.publications.filter(p => {
+                const matchQuery = !query ||
+                    (p.title && p.title.toLowerCase().includes(query)) ||
+                    (p.author && p.author.toLowerCase().includes(query)) ||
+                    (p.workPerson && p.workPerson.toLowerCase().includes(query));
+
+                const matchProvincia = !provincia || p.authorProvince === provincia;
+                const matchStatus = !status || p.status === status;
+                const matchCategoria = !categoria || (p.literatureTags && p.literatureTags.includes(categoria));
+
+                const pDate = new Date(p.date);
+                const matchDataInicio = !dataInicio || pDate >= new Date(dataInicio);
+                const matchDataFim = !dataFim || pDate <= new Date(dataFim + 'T23:59:59');
+
+                return matchQuery && matchProvincia && matchStatus && matchCategoria && matchDataInicio && matchDataFim;
+            });
+
+            const resultsEl = document.getElementById('searchResults');
+            if (!resultsEl) return;
+
+            if (results.length === 0) {
+                resultsEl.innerHTML = `<div class="empty-state"><div style="font-size:48px;margin-bottom:15px;">🔍</div><p style="font-size:18px;color:#666;">Nenhum resultado encontrado</p></div>`;
+                return;
+            }
+
+            const statusMap = { pending: '⏳ Pendente', literature_review: '📝 Em Revisão', approved: '✅ Aprovada', published: '📢 Publicada', rejected: '❌ Rejeitada' };
+
+            let html = `<div class="search-results-count">🔍 ${results.length} resultado(s) encontrado(s)</div>`;
+            html += `<div class="biblioteca-grid">`;
+
+            results.forEach(pub => {
+                const globalIdx = appState.publications.indexOf(pub);
+                let tagsHtml = '';
+                if (pub.literatureTags && pub.literatureTags.length > 0) {
+                    tagsHtml = '<div class="biblioteca-card-tags">' + pub.literatureTags.map(tagId => {
+                        const tag = LITERATURE_TAGS.find(t => t.id === tagId);
+                        return tag ? `<span class="biblioteca-card-tag ${tag.class}">${tag.icon} ${tag.label}</span>` : '';
+                    }).join('') + '</div>';
+                }
+
+                html += `
+                    <div class="biblioteca-card" onclick="openBibliotecaDetail(${globalIdx})">
+                        <div class="biblioteca-card-header">
+                            <div class="biblioteca-card-title">🎵 ${escapeHtml(pub.title)}</div>
+                        </div>
+                        <div class="biblioteca-card-meta">
+                            👤 ${escapeHtml(pub.author)} | 📍 ${pub.authorProvince || 'N/A'} | ${statusMap[pub.status] || pub.status}
+                        </div>
+                        ${tagsHtml}
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            resultsEl.innerHTML = html;
+        }
+
+        // Chat privado com autores
+        let chatComAutoresState = {
+            selectedAuthor: null,
+            privateMessages: {}
+        };
+
+        function renderChatComAutores() {
+            // Lista de autores únicos
+            const autores = [...new Set(appState.publications.map(p => p.author).filter(a => a))];
+
+            let contactsHtml = '';
+            autores.forEach(autor => {
+                const obras = appState.publications.filter(p => p.author === autor);
+                const lastObra = obras[obras.length - 1];
+                const msgs = chatComAutoresState.privateMessages[autor] || [];
+                const unread = msgs.filter(m => m.sender !== appState.currentUser && !m.read).length;
+
+                contactsHtml += `
+                    <div class="chat-contact-item ${chatComAutoresState.selectedAuthor === autor ? 'active' : ''}" onclick="selectAuthor('${autor}')">
+                        <div class="chat-contact-avatar">${autor.charAt(0).toUpperCase()}</div>
+                        <div class="chat-contact-info">
+                            <div class="chat-contact-name">${escapeHtml(autor)}</div>
+                            <div class="chat-contact-role">${obras.length} obra(s) | Última: ${lastObra ? escapeHtml(lastObra.title) : 'N/A'}</div>
+                        </div>
+                        ${unread > 0 ? `<div class="chat-contact-badge">${unread}</div>` : ''}
+                    </div>
+                `;
+            });
+
+            let chatHtml = '';
+            if (chatComAutoresState.selectedAuthor) {
+                const autor = chatComAutoresState.selectedAuthor;
+                const msgs = chatComAutoresState.privateMessages[autor] || [];
+
+                chatHtml = `
+                    <div class="chat-private-header">
+                        <strong>👤 ${escapeHtml(autor)}</strong>
+                        <span style="font-size:12px;color:#888;">Chat privado</span>
+                    </div>
+                    <div class="chat-private-messages" id="privateChatMessages">
+                        ${msgs.length === 0 ? '<div style="text-align:center;color:#999;padding:40px;">💬 Nenhuma mensagem ainda.<br>Comece a conversar!</div>' : msgs.map(m => `
+                            <div class="message ${m.sender === appState.currentUser ? 'sent' : 'received'}" style="margin-bottom:10px;">
+                                <div class="message-sender" style="text-align:${m.sender === appState.currentUser ? 'right' : 'left'};font-size:11px;">${m.sender}</div>
+                                <div class="message-bubble">${escapeHtml(m.text)}</div>
+                                <div style="font-size:10px;color:#999;text-align:${m.sender === appState.currentUser ? 'right' : 'left'};">${new Date(m.time).toLocaleTimeString('pt-AO', {hour:'2-digit', minute:'2-digit'})}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="chat-private-input">
+                        <input type="text" id="privateChatInput" placeholder="Mensagem para ${escapeHtml(autor)}..." onkeypress="if(event.key==='Enter') sendPrivateMessage();">
+                        <button onclick="sendPrivateMessage()">📤</button>
+                    </div>
+                `;
+            } else {
+                chatHtml = `
+                    <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;text-align:center;">
+                        <div>
+                            <div style="font-size:48px;margin-bottom:15px;">👤</div>
+                            <p style="font-size:16px;">Selecione um autor para conversar</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="chat-private-container">
+                    <div class="chat-private-sidebar">
+                        <div style="font-size:13px;font-weight:700;color:#888;margin-bottom:12px;text-transform:uppercase;">👥 Autores</div>
+                        <div class="chat-contacts-list">
+                            ${contactsHtml || '<div style="text-align:center;color:#999;padding:20px;">Nenhum autor encontrado</div>'}
+                        </div>
+                    </div>
+                    <div class="chat-private-main">
+                        ${chatHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectAuthor(autor) {
+            chatComAutoresState.selectedAuthor = autor;
+            // Marcar mensagens como lidas
+            if (chatComAutoresState.privateMessages[autor]) {
+                chatComAutoresState.privateMessages[autor].forEach(m => {
+                    if (m.sender !== appState.currentUser) m.read = true;
+                });
+            }
+            renderContent('chatcomautores');
+            setTimeout(() => {
+                const el = document.getElementById('privateChatMessages');
+                if (el) el.scrollTop = el.scrollHeight;
+            }, 100);
+        }
+
+        function sendPrivateMessage() {
+            const input = document.getElementById('privateChatInput');
+            const text = input.value.trim();
+            const autor = chatComAutoresState.selectedAuthor;
+            if (!text || !autor) return;
+
+            if (!chatComAutoresState.privateMessages[autor]) {
+                chatComAutoresState.privateMessages[autor] = [];
+            }
+
+            chatComAutoresState.privateMessages[autor].push({
+                sender: appState.currentUser,
+                text: text,
+                time: new Date(),
+                read: true
+            });
+
+            input.value = '';
+            renderContent('chatcomautores');
+            setTimeout(() => {
+                const el = document.getElementById('privateChatMessages');
+                if (el) el.scrollTop = el.scrollHeight;
+            }, 100);
+        }
+
+        function renderRelatorioLiteratura() {
+            const revisadas = appState.publications.filter(p =>
+                p.literatureReviewer === appState.currentUser
+            );
+            const aprovadas = revisadas.filter(p => p.status !== 'rejected');
+            const rejeitadas = revisadas.filter(p => p.status === 'rejected');
+            const publicadas = revisadas.filter(p => p.status === 'published');
+
+            const hoje = new Date();
+            const mesAno = hoje.toLocaleDateString('pt-AO', { month: 'long', year: 'numeric' });
+
+            return `
+                <div class="relatorio-header">
+                    <div class="relatorio-logo">🎵</div>
+                    <div class="relatorio-titulo">Relatório de Atividades de Literatura</div>
+                    <div class="relatorio-subtitulo">Direção Nacional dos Arranjos e Composição - IFAA</div>
+                    <div class="relatorio-data">📅 ${mesAno} | Director: ${escapeHtml(appState.currentUser || '')}</div>
+                </div>
+
+                <div class="relatorio-section">
+                    <div class="relatorio-section-title">📊 Resumo Geral</div>
+                    <div class="stats-grid" style="margin-bottom:0;">
+                        <div class="stat-card" style="background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0f0f0f 100%);">
+                            <h3>${revisadas.length}</h3>
+                            <p>Total Revisadas</p>
+                        </div>
+                        <div class="stat-card" style="background:linear-gradient(135deg,#28a745 0%,#20c997 100%);">
+                            <h3>${aprovadas.length}</h3>
+                            <p>Aprovadas</p>
+                        </div>
+                        <div class="stat-card" style="background:linear-gradient(135deg,#dc3545 0%,#ff6b6b 100%);">
+                            <h3>${rejeitadas.length}</h3>
+                            <p>Rejeitadas</p>
+                        </div>
+                        <div class="stat-card" style="background:linear-gradient(135deg,#17a2b8 0%,#4facfe 100%);">
+                            <h3>${publicadas.length}</h3>
+                            <p>Publicadas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relatorio-section">
+                    <div class="relatorio-section-title">📋 Lista de Obras Revisadas</div>
+                    <table class="relatorio-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Título</th>
+                                <th>Autor</th>
+                                <th>Província</th>
+                                <th>Data</th>
+                                <th>Resultado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${revisadas.map((p, i) => `
+                                <tr>
+                                    <td>${i + 1}</td>
+                                    <td>${escapeHtml(p.title)}</td>
+                                    <td>${escapeHtml(p.author)}</td>
+                                    <td>${p.authorProvince || 'N/A'}</td>
+                                    <td>${new Date(p.date).toLocaleDateString('pt-AO')}</td>
+                                    <td>${p.status === 'rejected' ? '❌ Rejeitada' : '✅ Aprovada'}</td>
+                                </tr>
+                            `).join('') || '<tr><td colspan="6" style="text-align:center;color:#999;">Nenhuma obra revisada</td></tr>'}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="relatorio-section">
+                    <div class="relatorio-section-title">🏷️ Distribuição por Categoria</div>
+                    <table class="relatorio-table">
+                        <thead>
+                            <tr><th>Categoria</th><th>Quantidade</th><th>Percentagem</th></tr>
+                        </thead>
+                        <tbody>
+                            ${LITERATURE_TAGS.map(tag => {
+                                const count = revisadas.filter(p => p.literatureTags && p.literatureTags.includes(tag.id)).length;
+                                const pct = revisadas.length > 0 ? ((count / revisadas.length) * 100).toFixed(1) : 0;
+                                return count > 0 ? `<tr><td>${tag.icon} ${tag.label}</td><td>${count}</td><td>${pct}%</td></tr>` : '';
+                            }).join('') || '<tr><td colspan="3" style="text-align:center;color:#999;">Nenhuma categoria registada</td></tr>'}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="relatorio-assinatura no-print">
+                    <div class="relatorio-assinatura-box">
+                        <div class="relatorio-assinatura-linha">Director de Literatura</div>
+                    </div>
+                    <div class="relatorio-assinatura-box">
+                        <div class="relatorio-assinatura-linha">Director Nacional</div>
+                    </div>
+                </div>
+
+                <div class="no-print" style="text-align:center;margin-top:30px;">
+                    <button class="btn btn-primary" onclick="window.print()" style="padding:12px 30px;font-size:15px;">🖨️ Imprimir / Guardar PDF</button>
+                </div>
+            `;
+        }
+
+        // ===== FIM DAS 7 NOVAS FUNÇÕES =====
 
     </script>
 </body>
