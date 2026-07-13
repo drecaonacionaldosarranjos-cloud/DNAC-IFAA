@@ -3177,8 +3177,43 @@
                 'adjunto': { name: 'Mimoso Kambungo', role: 'Director Adjunto' },
                 'secretario': { name: 'Eduardo Ngongoyove Gabriel', role: 'Secretário Nacional' },
                 'literatura': { name: 'Bozzy Supia', role: 'Supervisor de de Literatura' }
+            },
+            systemConfig: {
+                institutionName: 'Igreja Fé Apostólica Americana em Angola',
+                directionName: 'Direção Nacional dos Arranjos e Composição',
+                welcomeMessage: 'Seja Muito Bem Vindo ao trabalho do Senhor, que Deus te Abençoe',
+                primaryColor: '#0a0a0a',
+                prazoRevisao: 7,
+                notifNovasObras: true,
+                notifPrazo: true,
+                notifRejeicoes: true,
+                notifPublicacoes: true
             }
         };
+
+        // Load system config from localStorage
+        function loadSystemConfig() {
+            const saved = localStorage.getItem('ifaa_system_config');
+            if (saved) {
+                try {
+                    const config = JSON.parse(saved);
+                    appState.systemConfig = { ...appState.systemConfig, ...config };
+                } catch (e) {}
+            }
+            // Also load users
+            const savedUsers = localStorage.getItem('ifaa_users');
+            if (savedUsers) {
+                try {
+                    const users = JSON.parse(savedUsers);
+                    appState.users = { ...appState.users, ...users };
+                } catch (e) {}
+            }
+        }
+
+        function saveSystemConfig() {
+            localStorage.setItem('ifaa_system_config', JSON.stringify(appState.systemConfig));
+            localStorage.setItem('ifaa_users', JSON.stringify(appState.users));
+        }
 
         function showNotification(message, type = 'success') {
             const notif = document.createElement('div');
@@ -5270,6 +5305,7 @@
                 timestamp: new Date().toISOString()
             };
             localStorage.setItem('ifaa_session', JSON.stringify(sessionData));
+            saveSystemConfig();
         }
 
         function clearSession() {
@@ -5294,6 +5330,7 @@
                 appState.currentUser = session.currentUser;
                 appState.currentRole = session.currentRole;
                 appState.currentUserData = session.currentUserData;
+                loadSystemConfig();
                 return true;
             } catch (e) {
                 clearSession();
@@ -5305,6 +5342,7 @@
             if (restoreSession()) {
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('publicLanding').classList.remove('active');
+                loadSystemConfig();
                 showDashboard();
                 showNotification('👋 Bem-vindo de volta, ' + appState.currentUser + '!', 'success');
                 return true;
@@ -5435,6 +5473,7 @@
         // ===== CONFIGURAÇÕES, AUDITORIA E LOG - DR. NACIONAL =====
 
         function renderConfiguracoes() {
+            loadSystemConfig();
             const allUsers = appState.publications.reduce((acc, p) => {
                 if (!acc.find(u => u.name === p.author)) {
                     acc.push({
@@ -5445,6 +5484,8 @@
                 }
                 return acc;
             }, []);
+
+            const cfg = appState.systemConfig;
 
             return `
                 <div style="margin-bottom:20px;">
@@ -5490,7 +5531,34 @@
                     </div>
                 </div>
 
-                <!-- 2. GESTÃO DE SENHAS -->
+                <!-- 2. GESTÃO DE DIRECTORES (NOVO) -->
+                <div class="form-section">
+                    <div class="form-section-title">👔 Gestão de Directores</div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;">
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e0e0e0;">
+                            <div style="font-weight:700;margin-bottom:10px;">👔 Director Nacional</div>
+                            <input type="text" id="dirNacionalNome" value="${escapeHtml(appState.users.nacional.name)}" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px;">
+                            <button class="btn btn-sm btn-primary" onclick="updateDirectorName('nacional', document.getElementById('dirNacionalNome').value)">💾 Guardar Nome</button>
+                        </div>
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e0e0e0;">
+                            <div style="font-weight:700;margin-bottom:10px;">👤 Director Adjunto</div>
+                            <input type="text" id="dirAdjuntoNome" value="${escapeHtml(appState.users.adjunto.name)}" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px;">
+                            <button class="btn btn-sm btn-primary" onclick="updateDirectorName('adjunto', document.getElementById('dirAdjuntoNome').value)">💾 Guardar Nome</button>
+                        </div>
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e0e0e0;">
+                            <div style="font-weight:700;margin-bottom:10px;">📋 Secretário Nacional</div>
+                            <input type="text" id="dirSecretarioNome" value="${escapeHtml(appState.users.secretario.name)}" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px;">
+                            <button class="btn btn-sm btn-primary" onclick="updateDirectorName('secretario', document.getElementById('dirSecretarioNome').value)">💾 Guardar Nome</button>
+                        </div>
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e0e0e0;">
+                            <div style="font-weight:700;margin-bottom:10px;">📚 Director de Literatura</div>
+                            <input type="text" id="dirLiteraturaNome" value="${escapeHtml(appState.users.literatura.name)}" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px;">
+                            <button class="btn btn-sm btn-primary" onclick="updateDirectorName('literatura', document.getElementById('dirLiteraturaNome').value)">💾 Guardar Nome</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. GESTÃO DE SENHAS -->
                 <div class="form-section">
                     <div class="form-section-title">🔐 Gestão de Senhas</div>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;">
@@ -5525,7 +5593,7 @@
                     </div>
                 </div>
 
-                <!-- 3. BACKUP E RESTAURAÇÃO -->
+                <!-- 4. BACKUP E RESTAURAÇÃO -->
                 <div class="form-section">
                     <div class="form-section-title">💾 Backup e Restauração</div>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
@@ -5552,42 +5620,42 @@
                     </div>
                 </div>
 
-                <!-- 4. NOTIFICAÇÕES E ALERTAS -->
+                <!-- 5. NOTIFICAÇÕES E ALERTAS -->
                 <div class="form-section">
                     <div class="form-section-title">🔔 Notificações e Alertas</div>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;">
                         <div style="background:#f9fafb;padding:15px;border-radius:10px;">
                             <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-                                <input type="checkbox" id="notifNovasObras" checked style="width:18px;height:18px;">
+                                <input type="checkbox" id="notifNovasObras" ${cfg.notifNovasObras ? 'checked' : ''} style="width:18px;height:18px;" onchange="toggleConfig('notifNovasObras', this.checked)">
                                 <span>📤 Notificar novas obras</span>
                             </label>
                         </div>
                         <div style="background:#f9fafb;padding:15px;border-radius:10px;">
                             <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-                                <input type="checkbox" id="notifPrazo" checked style="width:18px;height:18px;">
-                                <span>⏰ Alerta de prazo (7 dias)</span>
+                                <input type="checkbox" id="notifPrazo" ${cfg.notifPrazo ? 'checked' : ''} style="width:18px;height:18px;" onchange="toggleConfig('notifPrazo', this.checked)">
+                                <span>⏰ Alerta de prazo (${cfg.prazoRevisao} dias)</span>
                             </label>
                         </div>
                         <div style="background:#f9fafb;padding:15px;border-radius:10px;">
                             <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-                                <input type="checkbox" id="notifRejeicoes" checked style="width:18px;height:18px;">
+                                <input type="checkbox" id="notifRejeicoes" ${cfg.notifRejeicoes ? 'checked' : ''} style="width:18px;height:18px;" onchange="toggleConfig('notifRejeicoes', this.checked)">
                                 <span>❌ Notificar rejeições</span>
                             </label>
                         </div>
                         <div style="background:#f9fafb;padding:15px;border-radius:10px;">
                             <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-                                <input type="checkbox" id="notifPublicacoes" checked style="width:18px;height:18px;">
+                                <input type="checkbox" id="notifPublicacoes" ${cfg.notifPublicacoes ? 'checked' : ''} style="width:18px;height:18px;" onchange="toggleConfig('notifPublicacoes', this.checked)">
                                 <span>📢 Notificar publicações</span>
                             </label>
                         </div>
                     </div>
                     <div style="margin-top:15px;">
                         <label style="font-weight:600;margin-bottom:8px;display:block;">⏱️ Prazo máximo de revisão (dias):</label>
-                        <input type="number" id="prazoRevisao" value="7" min="1" max="30" style="width:100px;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                        <input type="number" id="prazoRevisao" value="${cfg.prazoRevisao}" min="1" max="30" style="width:100px;padding:10px;border:1px solid #e0e0e0;border-radius:6px;" onchange="updateConfig('prazoRevisao', this.value)">
                     </div>
                 </div>
 
-                <!-- 5. LOGS DE ACESSO -->
+                <!-- 6. LOGS DE ACESSO -->
                 <div class="form-section">
                     <div class="form-section-title">🚪 Logs de Acesso</div>
                     <div style="max-height:300px;overflow-y:auto;">
@@ -5603,19 +5671,19 @@
                             <tbody>
                                 <tr style="border-bottom:1px solid #e0e0e0;">
                                     <td style="padding:10px;">${new Date().toLocaleString('pt-AO')}</td>
-                                    <td style="padding:10px;font-weight:600;">Director Emiliano Cupaia Lumbungululo</td>
+                                    <td style="padding:10px;font-weight:600;">${escapeHtml(appState.users.nacional.name)}</td>
                                     <td style="padding:10px;"><span style="background:#e3f2fd;color:#1565c0;padding:3px 10px;border-radius:10px;font-size:12px;">Director Nacional</span></td>
                                     <td style="padding:10px;">🔓 Login bem-sucedido</td>
                                 </tr>
                                 <tr style="border-bottom:1px solid #e0e0e0;background:#f9fafb;">
                                     <td style="padding:10px;">${new Date(Date.now()-3600000).toLocaleString('pt-AO')}</td>
-                                    <td style="padding:10px;font-weight:600;">Bozzy Supia</td>
+                                    <td style="padding:10px;font-weight:600;">${escapeHtml(appState.users.literatura.name)}</td>
                                     <td style="padding:10px;"><span style="background:#f3e5f5;color:#7b1fa2;padding:3px 10px;border-radius:10px;font-size:12px;">Director de Literatura</span></td>
                                     <td style="padding:10px;">🔓 Login bem-sucedido</td>
                                 </tr>
                                 <tr style="border-bottom:1px solid #e0e0e0;">
                                     <td style="padding:10px;">${new Date(Date.now()-7200000).toLocaleString('pt-AO')}</td>
-                                    <td style="padding:10px;font-weight:600;">Eduardo Ngongoyove Gabriel</td>
+                                    <td style="padding:10px;font-weight:600;">${escapeHtml(appState.users.secretario.name)}</td>
                                     <td style="padding:10px;"><span style="background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:10px;font-size:12px;">Secretário</span></td>
                                     <td style="padding:10px;">🔓 Login bem-sucedido</td>
                                 </tr>
@@ -5624,27 +5692,27 @@
                     </div>
                 </div>
 
-                <!-- 6. PERSONALIZAÇÃO AVANÇADA -->
+                <!-- 7. PERSONALIZAÇÃO AVANÇADA -->
                 <div class="form-section">
                     <div class="form-section-title">🎨 Personalização Avançada</div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Nome da Instituição</label>
-                            <input type="text" id="instNome" value="Igreja Fé Apostólica Americana em Angola" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                            <input type="text" id="instNome" value="${escapeHtml(cfg.institutionName)}" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
                         </div>
                         <div class="form-group">
                             <label>Nome da Direção</label>
-                            <input type="text" id="instDirecao" value="Direção Nacional dos Arranjos e Composição" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                            <input type="text" id="instDirecao" value="${escapeHtml(cfg.directionName)}" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Mensagem de Boas-Vindas</label>
-                            <input type="text" id="instWelcome" value="Seja Muito Bem Vindo ao trabalho do Senhor, que Deus te Abençoe" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                            <input type="text" id="instWelcome" value="${escapeHtml(cfg.welcomeMessage)}" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
                         </div>
                         <div class="form-group">
                             <label>Cor Principal</label>
-                            <input type="color" id="instColor" value="#0a0a0a" style="width:100%;height:40px;border:1px solid #e0e0e0;border-radius:6px;">
+                            <input type="color" id="instColor" value="${cfg.primaryColor}" style="width:100%;height:40px;border:1px solid #e0e0e0;border-radius:6px;">
                         </div>
                     </div>
                     <div style="margin-top:10px;">
@@ -5652,7 +5720,7 @@
                     </div>
                 </div>
 
-                <!-- 7. MANUTENÇÃO DO SISTEMA -->
+                <!-- 8. MANUTENÇÃO DO SISTEMA -->
                 <div class="form-section">
                     <div class="form-section-title">🔧 Manutenção do Sistema</div>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;">
@@ -5683,7 +5751,7 @@
                     </div>
                 </div>
 
-                <!-- 8. GESTÃO DE CATEGORIAS -->
+                <!-- 9. GESTÃO DE CATEGORIAS -->
                 <div class="form-section">
                     <div class="form-section-title">🏷️ Gestão de Categorias/Etiquetas</div>
                     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;">
@@ -5729,6 +5797,30 @@
 
         // ===== FUNÇÕES AUXILIARES DAS CONFIGURAÇÕES =====
 
+        function updateDirectorName(role, newName) {
+            if (!newName || !newName.trim()) {
+                showNotification('❌ Digite um nome válido!', 'error');
+                return;
+            }
+            appState.users[role].name = newName.trim();
+            saveSystemConfig();
+            showNotification('✅ Nome do ' + role + ' actualizado para: ' + newName.trim(), 'success');
+            renderContent('configuracoes');
+        }
+
+        function toggleConfig(key, value) {
+            appState.systemConfig[key] = value;
+            saveSystemConfig();
+            showNotification('✅ Configuração actualizada!', 'success');
+        }
+
+        function updateConfig(key, value) {
+            appState.systemConfig[key] = parseInt(value) || value;
+            saveSystemConfig();
+            showNotification('✅ Configuração actualizada!', 'success');
+            renderContent('configuracoes');
+        }
+
         function updatePassword(role) {
             const inputMap = {
                 'nacional': 'passNacional',
@@ -5765,6 +5857,8 @@
                 reunioes: appState.reunioes,
                 licoes: appState.licoes,
                 partitures: appState.partitures,
+                systemConfig: appState.systemConfig,
+                users: appState.users,
                 exportDate: new Date().toISOString(),
                 version: '1.0'
             };
@@ -5793,6 +5887,9 @@
                     if (data.reunioes) appState.reunioes = data.reunioes;
                     if (data.licoes) appState.licoes = data.licoes;
                     if (data.partitures) appState.partitures = data.partitures;
+                    if (data.systemConfig) appState.systemConfig = data.systemConfig;
+                    if (data.users) appState.users = data.users;
+                    saveSystemConfig();
                     showNotification('✅ Dados importados com sucesso! Sistema restaurado.', 'success');
                     renderContent('configuracoes');
                 } catch (err) {
@@ -5870,10 +5967,27 @@
         }
 
         function saveInstitutionSettings() {
-            const nome = document.getElementById('instNome').value;
-            const direcao = document.getElementById('instDirecao').value;
-            const welcome = document.getElementById('instWelcome').value;
-            showNotification('✅ Configurações da instituição guardadas!', 'success');
+            const nome = document.getElementById('instNome').value.trim();
+            const direcao = document.getElementById('instDirecao').value.trim();
+            const welcome = document.getElementById('instWelcome').value.trim();
+            const cor = document.getElementById('instColor').value;
+
+            if (!nome || !direcao || !welcome) {
+                showNotification('❌ Preencha todos os campos!', 'error');
+                return;
+            }
+
+            appState.systemConfig.institutionName = nome;
+            appState.systemConfig.directionName = direcao;
+            appState.systemConfig.welcomeMessage = welcome;
+            appState.systemConfig.primaryColor = cor;
+            saveSystemConfig();
+
+            // Update welcome banner text
+            const welcomeEl = document.getElementById('welcomeName');
+            if (welcomeEl) welcomeEl.textContent = welcome;
+
+            showNotification('✅ Configurações da instituição guardadas e aplicadas!', 'success');
         }
 
         function removeCategory(tagId) {
@@ -5902,7 +6016,7 @@
             renderContent('configuracoes');
         }
 
-        // ===== FIM FUNÇÕES AUXILIARES DAS CONFIGURAÇÕES =====
+        // ===== FIM FUNÇÕES AUXILIARES DAS CONFIGURAÇÕES =====// ===== FIM FUNÇÕES AUXILIARES DAS CONFIGURAÇÕES =====
 
         function renderAuditoria() {
             const allActions = appState.publications.map(p => {
