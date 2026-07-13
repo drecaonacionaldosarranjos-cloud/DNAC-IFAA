@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão IFAA</title>
+    <title>Sistema de Gestão Musical IFAA</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -50,6 +50,7 @@
             margin-bottom: 15px; display: none;
         }
         .additional-fields { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0; }
+        .additional-fields.show { display: block; }
         .dashboard-wrapper { width: 100%; min-height: 100vh; background: #f5f7fa; display: none; }
         .dashboard-wrapper.active { display: block; }
         .header {
@@ -437,41 +438,15 @@
             const passwordInput = document.getElementById('passwordInput');
 
             if (['compositor','arranjador','tradutor'].includes(role)) {
-                // Mostrar campos de criador, esconder senha de director
-                additionalFields.style.display = 'block';
-                fullNameInput.required = true; 
-                provinciaInput.required = true; 
-                municipioInput.required = true; 
-                userPassword.required = true;
-                directorPasswordGroup.style.display = 'none'; 
-                passwordInput.required = false;
-                passwordInput.value = ''; // Limpar senha de director
-            } else if (role) {
-                // Mostrar senha de director, esconder campos de criador
-                additionalFields.style.display = 'none';
-                fullNameInput.required = false; 
-                provinciaInput.required = false; 
-                municipioInput.required = false; 
-                userPassword.required = false;
-                directorPasswordGroup.style.display = 'block'; 
-                passwordInput.required = true;
-                // Limpar campos de criador
-                fullNameInput.value = '';
-                provinciaInput.value = '';
-                municipioInput.value = '';
-                userPassword.value = '';
+                additionalFields.classList.add('show');
+                fullNameInput.required = true; provinciaInput.required = true; municipioInput.required = true; userPassword.required = true;
+                directorPasswordGroup.style.display = 'none'; passwordInput.required = false;
             } else {
-                // Nenhuma função selecionada - mostrar apenas senha de director por padrão
-                additionalFields.style.display = 'none';
-                directorPasswordGroup.style.display = 'block';
-                passwordInput.required = true;
+                additionalFields.classList.remove('show');
+                fullNameInput.required = false; provinciaInput.required = false; municipioInput.required = false; userPassword.required = false;
+                directorPasswordGroup.style.display = 'block'; passwordInput.required = true;
             }
         }
-
-        // Garantir que o estado inicial está correto quando a página carrega
-        document.addEventListener('DOMContentLoaded', function() {
-            toggleAdditionalFields();
-        });
 
         function handleLogin(event) {
             event.preventDefault();
@@ -778,8 +753,7 @@
             </div>`;
         }
 
-        
-        // ===== APROVAÇÃO RÁPIDA (DIRECTOR NACIONAL / ADJUNTO) =====
+                // ===== APROVAÇÃO RÁPIDA (DIRECTOR NACIONAL / ADJUNTO) =====
         function quickApprove(idx) {
             const finalObs = document.getElementById(`quickObs_${idx}`).value.trim();
             appState.publications[idx].status = 'published';
@@ -789,7 +763,7 @@
             const author = appState.publications[idx].author;
             sendNotificationToUser(author, `🎉 Parabéns! Sua obra "${appState.publications[idx].title}" foi aprovada e publicada no painel oficial!`);
             showNotification('✅ Obra aprovada e publicada com sucesso! Agora visível por todos.', 'success');
-            // Re-render current content to show updated status
+            // Re-render current page
             const currentPage = document.querySelector('.nav-link.active')?.getAttribute('onclick')?.match(/renderContent\('(.+?)'\)/)?.[1] || 'dashboard';
             renderContent(currentPage);
         }
@@ -806,7 +780,6 @@
             const currentPage = document.querySelector('.nav-link.active')?.getAttribute('onclick')?.match(/renderContent\('(.+?)'\)/)?.[1] || 'dashboard';
             renderContent(currentPage);
         }
-
 
         function approveFinal(idx) {
             const finalObs = document.getElementById(`finalObs_${idx}`).value.trim();
@@ -1158,7 +1131,7 @@
                 else if (pub.status === 'rejected') { statusClass = 'status-rejected'; statusText = '❌ Rejeitado'; }
                 else { statusClass = 'status-pending'; statusText = '⏳ Pendente'; }
 
-                // Botão de Aprovação Final do Dr. Nacional - aparece para nacional/adjunto em obras pendentes ou revisadas pela literatura
+                // ===== NOVO: Botão de Aprovação Final do Dr. Nacional =====
                 let approvalBtnHtml = '';
                 if (isDirector && (pub.status === 'pending' || pub.status === 'literature_review')) {
                     approvalBtnHtml = `<div style="margin-top:15px;padding:15px;background:#f8f9fa;border:2px solid #ffc107;border-radius:10px;">
@@ -1183,9 +1156,7 @@
                     ${approvalBtnHtml}
                 </div>`;
             }).join('');
-        }
-
-// ===== HINÁRIO =====
+        }// ===== HINÁRIO =====
         function renderHinario() {
             let html = `<div class="form-section"><div class="form-section-title">➕ Adicionar Hinário</div>
                 <form onsubmit="addItem(event,'hinarios')">
