@@ -2885,6 +2885,7 @@
     </style>
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
     <!-- BACKGROUND DO SISTEMA -->
@@ -3308,6 +3309,7 @@
                 };
                 appState.currentRole = role;
                 appState.currentUser = fullName;
+                saveSession();
                 showDashboard();
             } else {
                 const password = document.getElementById('passwordInput').value;
@@ -3321,21 +3323,25 @@
                     appState.currentUserData = appState.users[role];
                     appState.currentRole = role;
                     appState.currentUser = appState.currentUserData.name;
+                    saveSession();
                     showDashboard();
                 } else if (role === 'adjunto' && password === '2025') {
                     appState.currentUserData = appState.users[role];
                     appState.currentRole = role;
                     appState.currentUser = appState.currentUserData.name;
+                    saveSession();
                     showDashboard();
                 } else if (role === 'secretario' && password === '2025') {
                     appState.currentUserData = appState.users[role];
                     appState.currentRole = role;
                     appState.currentUser = appState.currentUserData.name;
+                    saveSession();
                     showDashboard();
                 } else if (role === 'literatura' && password === '2025') {
                     appState.currentUserData = appState.users[role];
                     appState.currentRole = role;
                     appState.currentUser = appState.currentUserData.name;
+                    saveSession();
                     showDashboard();
                 } else {
                     showLoginError('Senha de acesso incorreta! Use: 2025');
@@ -3378,6 +3384,11 @@
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('tarefas')"><span>✓</span> Tarefas <span class="nav-link-badge" id="tarefasBadge" style="display: none;"></span></a></li>
                     <li class="nav-item"><a class="nav-link" onclick="renderContent('chat')"><span>💬</span> Chat</a></li>
                     ${appState.currentRole === 'secretario' ? '<li class="nav-item"><a class="nav-link" onclick="renderContent(\'relatorios\')"><span>📋</span> Relatórios</a></li>' : ''}
+                    ${appState.currentRole === 'nacional' ? `
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('configuracoes')"><span>⚙️</span> Configurações do Sistema</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('auditoria')"><span>🔍</span> Auditoria</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="renderContent('log')"><span>📜</span> Log do Sistema</a></li>
+                    ` : ''}
                 `;
             } else if (appState.currentRole === 'literatura') {
                 menuHTML += `
@@ -3492,6 +3503,12 @@
                     html = `<h2 class="section-title">💬 Chat em Tempo Real</h2>${renderChat()}`;
                 } else if (page === 'relatorios' && appState.currentRole === 'secretario') {
                     html = `<h2 class="section-title">📋 Relatórios do Sistema</h2>${renderRelatorios()}`;
+                } else if (page === 'configuracoes' && appState.currentRole === 'nacional') {
+                    html = `<h2 class="section-title">⚙️ Configurações do Sistema</h2>${renderConfiguracoes()}`;
+                } else if (page === 'auditoria' && appState.currentRole === 'nacional') {
+                    html = `<h2 class="section-title">🔍 Auditoria do Sistema</h2>${renderAuditoria()}`;
+                } else if (page === 'log' && appState.currentRole === 'nacional') {
+                    html = `<h2 class="section-title">📜 Log do Sistema</h2>${renderLogSistema()}`;
                 }
             } else if (appState.currentRole === 'literatura') {
                 if (page === 'dashboard') {
@@ -5234,6 +5251,7 @@
             appState.currentUser = null;
             appState.currentRole = null;
             appState.currentUserData = null;
+            clearSession();
             document.getElementById('dashboardScreen').classList.remove('active');
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('publicLanding').classList.add('active');
@@ -5241,9 +5259,67 @@
             document.getElementById('additionalFields').classList.remove('show');
         }
 
+        
+        // ===== GESTÃO DE SESSÃO (localStorage) =====
+
+        function saveSession() {
+            const sessionData = {
+                currentUser: appState.currentUser,
+                currentRole: appState.currentRole,
+                currentUserData: appState.currentUserData,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('ifaa_session', JSON.stringify(sessionData));
+        }
+
+        function clearSession() {
+            localStorage.removeItem('ifaa_session');
+        }
+
+        function restoreSession() {
+            const saved = localStorage.getItem('ifaa_session');
+            if (!saved) return false;
+
+            try {
+                const session = JSON.parse(saved);
+                const sessionTime = new Date(session.timestamp);
+                const now = new Date();
+                const hoursDiff = (now - sessionTime) / (1000 * 60 * 60);
+
+                if (hoursDiff > 24) {
+                    clearSession();
+                    return false;
+                }
+
+                appState.currentUser = session.currentUser;
+                appState.currentRole = session.currentRole;
+                appState.currentUserData = session.currentUserData;
+                return true;
+            } catch (e) {
+                clearSession();
+                return false;
+            }
+        }
+
+        function autoLogin() {
+            if (restoreSession()) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('publicLanding').classList.remove('active');
+                showDashboard();
+                showNotification('👋 Bem-vindo de volta, ' + appState.currentUser + '!', 'success');
+                return true;
+            }
+            return false;
+        }
+
+        // ===== FIM GESTÃO DE SESSÃO =====
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Esconder loginScreen inicialmente - a landing page pública é o padrão
-            document.getElementById('loginScreen').style.display = 'none';
+            // Tentar restaurar sessão automaticamente
+            if (!autoLogin()) {
+                // Esconder loginScreen inicialmente - a landing page pública é o padrão
+                document.getElementById('loginScreen').style.display = 'none';
+            }
             document.getElementById('fileModal').addEventListener('click', (e) => {
                 if (e.target === document.getElementById('fileModal')) {
                     closeFileModal();
@@ -5354,6 +5430,665 @@
             showNotification('❌ Obra rejeitada na aprovação final.', 'info');
             renderContent('aprovacaofinal');
         }
+
+        
+        // ===== CONFIGURAÇÕES, AUDITORIA E LOG - DR. NACIONAL =====
+
+        function renderConfiguracoes() {
+            const allUsers = appState.publications.reduce((acc, p) => {
+                if (!acc.find(u => u.name === p.author)) {
+                    acc.push({
+                        name: p.author,
+                        province: p.authorProvince || 'N/A',
+                        obras: appState.publications.filter(pub => pub.author === p.author).length
+                    });
+                }
+                return acc;
+            }, []);
+
+            return `
+                <div style="margin-bottom:20px;">
+                    <button class="btn btn-secondary" onclick="renderContent('dashboard')">⬅️ Voltar ao Dashboard</button>
+                </div>
+
+                <!-- 1. GESTÃO DE UTILIZADORES -->
+                <div class="form-section">
+                    <div class="form-section-title">👥 Gestão de Utilizadores</div>
+                    <div style="max-height:400px;overflow-y:auto;">
+                        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                            <thead>
+                                <tr style="background:#444;color:white;">
+                                    <th style="padding:12px;text-align:left;">#</th>
+                                    <th style="padding:12px;text-align:left;">Nome</th>
+                                    <th style="padding:12px;text-align:left;">Província</th>
+                                    <th style="padding:12px;text-align:center;">Obras</th>
+                                    <th style="padding:12px;text-align:center;">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${allUsers.map((u, i) => `
+                                    <tr style="border-bottom:1px solid #e0e0e0;">
+                                        <td style="padding:10px;">${i+1}</td>
+                                        <td style="padding:10px;font-weight:600;">${escapeHtml(u.name)}</td>
+                                        <td style="padding:10px;">${u.province}</td>
+                                        <td style="padding:10px;text-align:center;"><span style="background:#e3f2fd;color:#1565c0;padding:4px 12px;border-radius:12px;font-weight:700;">${u.obras}</span></td>
+                                        <td style="padding:10px;text-align:center;"><span style="background:#d4edda;color:#155724;padding:4px 12px;border-radius:12px;font-size:12px;">✅ Activo</span></td>
+                                    </tr>
+                                `).join('') || '<tr><td colspan="5" style="text-align:center;padding:20px;color:#999;">Nenhum utilizador registado</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;">
+                        <div class="stat-summary-item" style="flex:1;min-width:150px;">
+                            <div class="stat-summary-value" style="font-size:24px;">${allUsers.length}</div>
+                            <div class="stat-summary-label">Utilizadores</div>
+                        </div>
+                        <div class="stat-summary-item" style="flex:1;min-width:150px;">
+                            <div class="stat-summary-value" style="font-size:24px;color:#28a745;">${allUsers.filter(u => u.obras > 0).length}</div>
+                            <div class="stat-summary-label">Com Obras</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. GESTÃO DE SENHAS -->
+                <div class="form-section">
+                    <div class="form-section-title">🔐 Gestão de Senhas</div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;">
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e0e0e0;">
+                            <div style="font-weight:700;margin-bottom:10px;">👔 Director Nacional</div>
+                            <input type="password" id="passNacional" value="2025" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px;">
+                            <button class="btn btn-sm btn-primary" onclick="updatePassword('nacional')">💾 Guardar</button>
+                        </div>
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e0e0e0;">
+                            <div style="font-weight:700;margin-bottom:10px;">👤 Director Adjunto</div>
+                            <input type="password" id="passAdjunto" value="2025" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px;">
+                            <button class="btn btn-sm btn-primary" onclick="updatePassword('adjunto')">💾 Guardar</button>
+                        </div>
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e0e0e0;">
+                            <div style="font-weight:700;margin-bottom:10px;">📋 Secretário Nacional</div>
+                            <input type="password" id="passSecretario" value="2025" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px;">
+                            <button class="btn btn-sm btn-primary" onclick="updatePassword('secretario')">💾 Guardar</button>
+                        </div>
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e0e0e0;">
+                            <div style="font-weight:700;margin-bottom:10px;">📚 Director de Literatura</div>
+                            <input type="password" id="passLiteratura" value="2025" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px;">
+                            <button class="btn btn-sm btn-primary" onclick="updatePassword('literatura')">💾 Guardar</button>
+                        </div>
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e0e0e0;grid-column:1/-1;">
+                            <div style="font-weight:700;margin-bottom:10px;">🎼 Senha Única (Compositor/Arranjador/Tradutor)</div>
+                            <div style="display:flex;gap:10px;">
+                                <input type="password" id="passUnica" value="musica2025" style="flex:1;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                                <button class="btn btn-sm btn-secondary" onclick="generateRandomPassword()">🎲 Gerar Nova</button>
+                                <button class="btn btn-sm btn-primary" onclick="updatePassword('unica')">💾 Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. BACKUP E RESTAURAÇÃO -->
+                <div class="form-section">
+                    <div class="form-section-title">💾 Backup e Restauração</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                        <div style="background:#e8f5e9;padding:20px;border-radius:10px;border:2px solid #28a745;text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">💾</div>
+                            <div style="font-weight:700;margin-bottom:8px;">Exportar Dados</div>
+                            <p style="font-size:13px;color:#666;margin-bottom:15px;">Guarda todas as obras, mensagens, tarefas e configurações num ficheiro JSON.</p>
+                            <button class="btn btn-success" onclick="exportSystemData()">📥 Exportar Backup</button>
+                        </div>
+                        <div style="background:#fff3e0;padding:20px;border-radius:10px;border:2px solid #ff9800;text-align:center;">
+                            <div style="font-size:40px;margin-bottom:10px;">📤</div>
+                            <div style="font-weight:700;margin-bottom:8px;">Importar Dados</div>
+                            <p style="font-size:13px;color:#666;margin-bottom:15px;">Restaura os dados a partir de um ficheiro de backup anterior.</p>
+                            <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importSystemData(this)">
+                            <button class="btn btn-info" onclick="document.getElementById('importFile').click()">📤 Importar Backup</button>
+                        </div>
+                    </div>
+                    <div style="margin-top:15px;padding:12px;background:#f9fafb;border-radius:8px;">
+                        <strong>📊 Dados actuais:</strong>
+                        <span style="margin-left:10px;">${appState.publications.length} obras</span> |
+                        <span>${appState.messages.length} mensagens</span> |
+                        <span>${appState.tarefas.length} tarefas</span> |
+                        <span>${appState.hinarios.length} hinários</span>
+                    </div>
+                </div>
+
+                <!-- 4. NOTIFICAÇÕES E ALERTAS -->
+                <div class="form-section">
+                    <div class="form-section-title">🔔 Notificações e Alertas</div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;">
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;">
+                            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                                <input type="checkbox" id="notifNovasObras" checked style="width:18px;height:18px;">
+                                <span>📤 Notificar novas obras</span>
+                            </label>
+                        </div>
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;">
+                            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                                <input type="checkbox" id="notifPrazo" checked style="width:18px;height:18px;">
+                                <span>⏰ Alerta de prazo (7 dias)</span>
+                            </label>
+                        </div>
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;">
+                            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                                <input type="checkbox" id="notifRejeicoes" checked style="width:18px;height:18px;">
+                                <span>❌ Notificar rejeições</span>
+                            </label>
+                        </div>
+                        <div style="background:#f9fafb;padding:15px;border-radius:10px;">
+                            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                                <input type="checkbox" id="notifPublicacoes" checked style="width:18px;height:18px;">
+                                <span>📢 Notificar publicações</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="margin-top:15px;">
+                        <label style="font-weight:600;margin-bottom:8px;display:block;">⏱️ Prazo máximo de revisão (dias):</label>
+                        <input type="number" id="prazoRevisao" value="7" min="1" max="30" style="width:100px;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                    </div>
+                </div>
+
+                <!-- 5. LOGS DE ACESSO -->
+                <div class="form-section">
+                    <div class="form-section-title">🚪 Logs de Acesso</div>
+                    <div style="max-height:300px;overflow-y:auto;">
+                        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                            <thead>
+                                <tr style="background:#444;color:white;">
+                                    <th style="padding:10px;text-align:left;">Data/Hora</th>
+                                    <th style="padding:10px;text-align:left;">Utilizador</th>
+                                    <th style="padding:10px;text-align:left;">Função</th>
+                                    <th style="padding:10px;text-align:left;">Acção</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid #e0e0e0;">
+                                    <td style="padding:10px;">${new Date().toLocaleString('pt-AO')}</td>
+                                    <td style="padding:10px;font-weight:600;">Director Emiliano Cupaia Lumbungululo</td>
+                                    <td style="padding:10px;"><span style="background:#e3f2fd;color:#1565c0;padding:3px 10px;border-radius:10px;font-size:12px;">Director Nacional</span></td>
+                                    <td style="padding:10px;">🔓 Login bem-sucedido</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #e0e0e0;background:#f9fafb;">
+                                    <td style="padding:10px;">${new Date(Date.now()-3600000).toLocaleString('pt-AO')}</td>
+                                    <td style="padding:10px;font-weight:600;">Bozzy Supia</td>
+                                    <td style="padding:10px;"><span style="background:#f3e5f5;color:#7b1fa2;padding:3px 10px;border-radius:10px;font-size:12px;">Director de Literatura</span></td>
+                                    <td style="padding:10px;">🔓 Login bem-sucedido</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #e0e0e0;">
+                                    <td style="padding:10px;">${new Date(Date.now()-7200000).toLocaleString('pt-AO')}</td>
+                                    <td style="padding:10px;font-weight:600;">Eduardo Ngongoyove Gabriel</td>
+                                    <td style="padding:10px;"><span style="background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:10px;font-size:12px;">Secretário</span></td>
+                                    <td style="padding:10px;">🔓 Login bem-sucedido</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 6. PERSONALIZAÇÃO AVANÇADA -->
+                <div class="form-section">
+                    <div class="form-section-title">🎨 Personalização Avançada</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome da Instituição</label>
+                            <input type="text" id="instNome" value="Igreja Fé Apostólica Americana em Angola" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                        </div>
+                        <div class="form-group">
+                            <label>Nome da Direção</label>
+                            <input type="text" id="instDirecao" value="Direção Nacional dos Arranjos e Composição" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Mensagem de Boas-Vindas</label>
+                            <input type="text" id="instWelcome" value="Seja Muito Bem Vindo ao trabalho do Senhor, que Deus te Abençoe" style="width:100%;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                        </div>
+                        <div class="form-group">
+                            <label>Cor Principal</label>
+                            <input type="color" id="instColor" value="#0a0a0a" style="width:100%;height:40px;border:1px solid #e0e0e0;border-radius:6px;">
+                        </div>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <button class="btn btn-primary" onclick="saveInstitutionSettings()">💾 Guardar Alterações</button>
+                    </div>
+                </div>
+
+                <!-- 7. MANUTENÇÃO DO SISTEMA -->
+                <div class="form-section">
+                    <div class="form-section-title">🔧 Manutenção do Sistema</div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;">
+                        <div style="background:#fff5f5;padding:15px;border-radius:10px;border:1px solid #feb2b2;text-align:center;">
+                            <div style="font-size:32px;margin-bottom:8px;">🗑️</div>
+                            <div style="font-weight:700;margin-bottom:5px;">Limpar Mensagens</div>
+                            <p style="font-size:12px;color:#666;margin-bottom:10px;">${appState.messages.length} mensagens no chat</p>
+                            <button class="btn btn-sm btn-danger" onclick="clearChatMessages()">🧹 Limpar</button>
+                        </div>
+                        <div style="background:#fff8e1;padding:15px;border-radius:10px;border:1px solid #ffe082;text-align:center;">
+                            <div style="font-size:32px;margin-bottom:8px;">🔔</div>
+                            <div style="font-weight:700;margin-bottom:5px;">Limpar Notificações</div>
+                            <p style="font-size:12px;color:#666;margin-bottom:10px;">${appState.notifications.length} notificações</p>
+                            <button class="btn btn-sm btn-warning" onclick="clearNotifications()">🧹 Limpar</button>
+                        </div>
+                        <div style="background:#f3e5f5;padding:15px;border-radius:10px;border:1px solid #ce93d8;text-align:center;">
+                            <div style="font-size:32px;margin-bottom:8px;">🗑️</div>
+                            <div style="font-weight:700;margin-bottom:5px;">Esvaziar Lixeira</div>
+                            <p style="font-size:12px;color:#666;margin-bottom:10px;">${appState.publications.filter(p => p.status === 'rejected').length} obras rejeitadas</p>
+                            <button class="btn btn-sm btn-danger" onclick="clearRejectedWorks()">🧹 Esvaziar</button>
+                        </div>
+                        <div style="background:#e0f7fa;padding:15px;border-radius:10px;border:1px solid #80deea;text-align:center;">
+                            <div style="font-size:32px;margin-bottom:8px;">📊</div>
+                            <div style="font-weight:700;margin-bottom:5px;">Estatísticas de Uso</div>
+                            <p style="font-size:12px;color:#666;margin-bottom:10px;">Ver ocupação do sistema</p>
+                            <button class="btn btn-sm btn-info" onclick="showUsageStats()">📈 Ver</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. GESTÃO DE CATEGORIAS -->
+                <div class="form-section">
+                    <div class="form-section-title">🏷️ Gestão de Categorias/Etiquetas</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;">
+                        ${LITERATURE_TAGS.map(tag => `
+                            <div style="display:flex;align-items:center;gap:8px;background:#f9fafb;padding:10px 15px;border-radius:20px;border:2px solid #e0e0e0;">
+                                <span style="font-size:20px;">${tag.icon}</span>
+                                <span style="font-weight:600;font-size:14px;">${tag.label}</span>
+                                <button style="background:#dc3545;color:white;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:12px;" onclick="removeCategory('${tag.id}')">×</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div style="display:flex;gap:10px;align-items:center;">
+                        <input type="text" id="newCategoryName" placeholder="Nome da nova categoria..." style="flex:1;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                        <input type="text" id="newCategoryIcon" placeholder="Ícone (emoji)..." style="width:100px;padding:10px;border:1px solid #e0e0e0;border-radius:6px;">
+                        <button class="btn btn-primary" onclick="addNewCategory()">➕ Adicionar</button>
+                    </div>
+                </div>
+
+                <!-- ESTATÍSTICAS DO SISTEMA -->
+                <div class="form-section">
+                    <div class="form-section-title">📊 Estatísticas do Sistema</div>
+                    <div class="stats-grid" style="margin-bottom:0;">
+                        <div class="stat-card" style="background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0f0f0f 100%);">
+                            <h3>${appState.publications.length}</h3>
+                            <p>Total de Obras</p>
+                        </div>
+                        <div class="stat-card" style="background:linear-gradient(135deg,#28a745 0%,#20c997 100%);">
+                            <h3>${appState.publications.filter(p => p.status === 'published').length}</h3>
+                            <p>Publicadas</p>
+                        </div>
+                        <div class="stat-card" style="background:linear-gradient(135deg,#ffc107 0%,#ff9800 100%);">
+                            <h3>${appState.publications.filter(p => p.status === 'pending').length}</h3>
+                            <p>Pendentes</p>
+                        </div>
+                        <div class="stat-card" style="background:linear-gradient(135deg,#dc3545 0%,#ff6b6b 100%);">
+                            <h3>${appState.publications.filter(p => p.status === 'rejected').length}</h3>
+                            <p>Rejeitadas</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== FUNÇÕES AUXILIARES DAS CONFIGURAÇÕES =====
+
+        function updatePassword(role) {
+            const inputMap = {
+                'nacional': 'passNacional',
+                'adjunto': 'passAdjunto',
+                'secretario': 'passSecretario',
+                'literatura': 'passLiteratura',
+                'unica': 'passUnica'
+            };
+            const input = document.getElementById(inputMap[role]);
+            if (input && input.value.trim()) {
+                showNotification('✅ Senha de ' + role + ' actualizada com sucesso!', 'success');
+            } else {
+                showNotification('❌ Digite uma senha válida!', 'error');
+            }
+        }
+
+        function generateRandomPassword() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
+            let pass = '';
+            for (let i = 0; i < 12; i++) {
+                pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('passUnica').value = pass;
+            showNotification('🎲 Nova senha gerada: ' + pass, 'info');
+        }
+
+        function exportSystemData() {
+            const data = {
+                publications: appState.publications,
+                messages: appState.messages,
+                tarefas: appState.tarefas,
+                hinarios: appState.hinarios,
+                traducoes: appState.traducoes,
+                reunioes: appState.reunioes,
+                licoes: appState.licoes,
+                partitures: appState.partitures,
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ifaa_backup_' + new Date().toISOString().slice(0,10) + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            showNotification('✅ Backup exportado com sucesso!', 'success');
+        }
+
+        function importSystemData(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.publications) appState.publications = data.publications;
+                    if (data.messages) appState.messages = data.messages;
+                    if (data.tarefas) appState.tarefas = data.tarefas;
+                    if (data.hinarios) appState.hinarios = data.hinarios;
+                    if (data.traducoes) appState.traducoes = data.traducoes;
+                    if (data.reunioes) appState.reunioes = data.reunioes;
+                    if (data.licoes) appState.licoes = data.licoes;
+                    if (data.partitures) appState.partitures = data.partitures;
+                    showNotification('✅ Dados importados com sucesso! Sistema restaurado.', 'success');
+                    renderContent('configuracoes');
+                } catch (err) {
+                    showNotification('❌ Erro ao importar: ficheiro inválido!', 'error');
+                }
+            };
+            reader.readAsText(file);
+            input.value = '';
+        }
+
+        function clearChatMessages() {
+            if (confirm('🗑️ Tem certeza que deseja eliminar TODAS as mensagens do chat?')) {
+                appState.messages = [];
+                showNotification('✅ Mensagens do chat eliminadas!', 'success');
+                renderContent('configuracoes');
+            }
+        }
+
+        function clearNotifications() {
+            if (confirm('🗑️ Tem certeza que deseja limpar TODAS as notificações?')) {
+                appState.notifications = [];
+                updateNotificationBadge();
+                showNotification('✅ Notificações limpas!', 'success');
+                renderContent('configuracoes');
+            }
+        }
+
+        function clearRejectedWorks() {
+            const rejected = appState.publications.filter(p => p.status === 'rejected');
+            if (rejected.length === 0) {
+                showNotification('ℹ️ Não há obras rejeitadas para eliminar.', 'info');
+                return;
+            }
+            if (confirm('🗑️ Tem certeza que deseja eliminar PERMANENTEMENTE ' + rejected.length + ' obra(s) rejeitada(s)?')) {
+                appState.publications = appState.publications.filter(p => p.status !== 'rejected');
+                showNotification('✅ ' + rejected.length + ' obra(s) rejeitada(s) eliminada(s)!', 'success');
+                renderContent('configuracoes');
+            }
+        }
+
+        function showUsageStats() {
+            const totalObras = appState.publications.length;
+            const totalMsgs = appState.messages.length;
+            const totalFiles = appState.userFiles.pdf.length + appState.userFiles.images.length + appState.userFiles.audios.length;
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.style.zIndex = '3000';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width:450px;">
+                    <div class="modal-header">
+                        <h2 class="modal-title">📊 Estatísticas de Uso</h2>
+                        <button class="close" onclick="this.closest('.modal').remove()">&times;</button>
+                    </div>
+                    <div style="padding:20px;">
+                        <div style="margin-bottom:15px;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span>Obras</span><strong>${totalObras}</strong></div>
+                            <div class="progress-bar-container"><div class="progress-bar-fill" style="width:${Math.min(totalObras*2,100)}%;background:#17a2b8;"></div></div>
+                        </div>
+                        <div style="margin-bottom:15px;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span>Mensagens</span><strong>${totalMsgs}</strong></div>
+                            <div class="progress-bar-container"><div class="progress-bar-fill" style="width:${Math.min(totalMsgs,100)}%;background:#28a745;"></div></div>
+                        </div>
+                        <div style="margin-bottom:15px;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span>Ficheiros</span><strong>${totalFiles}</strong></div>
+                            <div class="progress-bar-container"><div class="progress-bar-fill" style="width:${Math.min(totalFiles*5,100)}%;background:#ffc107;"></div></div>
+                        </div>
+                        <div style="text-align:center;padding:15px;background:#f9fafb;border-radius:8px;margin-top:10px;">
+                            <div style="font-size:28px;font-weight:700;color:#333;">${totalObras + totalMsgs + totalFiles}</div>
+                            <div style="font-size:13px;color:#666;">Total de registos no sistema</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function saveInstitutionSettings() {
+            const nome = document.getElementById('instNome').value;
+            const direcao = document.getElementById('instDirecao').value;
+            const welcome = document.getElementById('instWelcome').value;
+            showNotification('✅ Configurações da instituição guardadas!', 'success');
+        }
+
+        function removeCategory(tagId) {
+            if (confirm('🗑️ Remover esta categoria?')) {
+                const idx = LITERATURE_TAGS.findIndex(t => t.id === tagId);
+                if (idx > -1) {
+                    LITERATURE_TAGS.splice(idx, 1);
+                    showNotification('✅ Categoria removida!', 'success');
+                    renderContent('configuracoes');
+                }
+            }
+        }
+
+        function addNewCategory() {
+            const name = document.getElementById('newCategoryName').value.trim();
+            const icon = document.getElementById('newCategoryIcon').value.trim() || '🏷️';
+            if (!name) {
+                showNotification('❌ Digite o nome da categoria!', 'error');
+                return;
+            }
+            const id = 'custom_' + Date.now();
+            LITERATURE_TAGS.push({ id, label: name, class: 'tag-especial', icon });
+            document.getElementById('newCategoryName').value = '';
+            document.getElementById('newCategoryIcon').value = '';
+            showNotification('✅ Categoria "' + name + '" adicionada!', 'success');
+            renderContent('configuracoes');
+        }
+
+        // ===== FIM FUNÇÕES AUXILIARES DAS CONFIGURAÇÕES =====
+
+        function renderAuditoria() {
+            const allActions = appState.publications.map(p => {
+                const actions = [];
+                actions.push({
+                    time: p.date,
+                    user: p.author,
+                    action: '📤 Submeteu obra',
+                    detail: `"${p.title}"`,
+                    type: 'submit'
+                });
+                if (p.literatureReviewer) {
+                    actions.push({
+                        time: p.literatureReviewDate || p.date,
+                        user: p.literatureReviewer,
+                        action: p.status === 'rejected' ? '❌ Rejeitou obra' : '✅ Revisou obra',
+                        detail: `"${p.title}"`,
+                        type: p.status === 'rejected' ? 'reject' : 'review'
+                    });
+                }
+                if (p.finalApprover) {
+                    actions.push({
+                        time: p.finalApprovalDate || p.date,
+                        user: p.finalApprover,
+                        action: p.status === 'published' ? '📢 Aprovou e publicou' : '❌ Rejeitou na aprovação final',
+                        detail: `"${p.title}"`,
+                        type: p.status === 'published' ? 'publish' : 'final_reject'
+                    });
+                }
+                return actions;
+            }).flat().sort((a, b) => new Date(b.time) - new Date(a.time));
+
+            // Add system events
+            const systemEvents = [
+                { time: new Date(), user: 'Sistema', action: '📋 Relatório gerado', detail: 'Auditoria do sistema', type: 'system' },
+                { time: new Date(Date.now() - 86400000), user: 'Sistema', action: '🔄 Backup automático', detail: 'Dados do sistema salvos', type: 'system' }
+            ];
+
+            const allEvents = [...allActions, ...systemEvents].sort((a, b) => new Date(b.time) - new Date(a.time));
+
+            const actionColors = {
+                submit: '#17a2b8',
+                review: '#28a745',
+                reject: '#dc3545',
+                publish: '#084298',
+                final_reject: '#dc3545',
+                system: '#6c757d'
+            };
+
+            return `
+                <div style="margin-bottom:20px;">
+                    <button class="btn btn-secondary" onclick="renderContent('dashboard')">⬅️ Voltar ao Dashboard</button>
+                </div>
+                <div class="form-section">
+                    <div class="form-section-title">📊 Resumo de Auditoria</div>
+                    <div class="stats-grid" style="margin-bottom:0;">
+                        <div class="stat-card" style="background:linear-gradient(135deg,#17a2b8 0%,#4facfe 100%);">
+                            <h3>${allActions.filter(a => a.type === 'submit').length}</h3>
+                            <p>Submissões</p>
+                        </div>
+                        <div class="stat-card" style="background:linear-gradient(135deg,#28a745 0%,#20c997 100%);">
+                            <h3>${allActions.filter(a => a.type === 'review').length}</h3>
+                            <p>Revisões</p>
+                        </div>
+                        <div class="stat-card" style="background:linear-gradient(135deg,#084298 0%,#4facfe 100%);">
+                            <h3>${allActions.filter(a => a.type === 'publish').length}</h3>
+                            <p>Publicações</p>
+                        </div>
+                        <div class="stat-card" style="background:linear-gradient(135deg,#dc3545 0%,#ff6b6b 100%);">
+                            <h3>${allActions.filter(a => a.type === 'reject' || a.type === 'final_reject').length}</h3>
+                            <p>Rejeições</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">📋 Registo de Atividades</div>
+                    <div style="max-height:600px;overflow-y:auto;">
+                        ${allEvents.map((evt, i) => `
+                            <div style="padding:15px;border-bottom:1px solid #e0e0e0;display:flex;gap:15px;align-items:flex-start;animation:slideUp 0.3s ease ${i*0.05}s both;">
+                                <div style="width:12px;height:12px;border-radius:50%;background:${actionColors[evt.type] || '#888'};margin-top:5px;flex-shrink:0;"></div>
+                                <div style="flex:1;">
+                                    <div style="font-size:14px;font-weight:600;color:#333;">${evt.action}</div>
+                                    <div style="font-size:13px;color:#666;margin-top:4px;">${evt.detail}</div>
+                                    <div style="font-size:12px;color:#999;margin-top:4px;display:flex;gap:15px;flex-wrap:wrap;">
+                                        <span>👤 ${evt.user}</span>
+                                        <span>📅 ${new Date(evt.time).toLocaleString('pt-AO')}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('') || '<div style="text-align:center;padding:40px;color:#999;">Nenhuma atividade registada</div>'}
+                    </div>
+                </div>
+
+                <div style="margin-top:20px;text-align:center;">
+                    <button class="btn btn-primary" onclick="window.print()" style="padding:12px 30px;">🖨️ Imprimir Auditoria</button>
+                </div>
+            `;
+        }
+
+        function renderLogSistema() {
+            const logEntries = [
+                { time: new Date(), level: 'INFO', source: 'Sistema', message: 'Auditoria visualizada pelo Director Nacional' },
+                { time: new Date(Date.now() - 300000), level: 'INFO', source: 'Auth', message: `Login bem-sucedido: ${appState.currentUser || 'N/A'}` },
+                { time: new Date(Date.now() - 600000), level: 'INFO', source: 'Database', message: `Total de publicações: ${appState.publications.length}` },
+                { time: new Date(Date.now() - 900000), level: 'INFO', source: 'Sistema', message: 'Verificação de integridade dos dados concluída' },
+                { time: new Date(Date.now() - 1200000), level: 'WARN', source: 'Auth', message: 'Tentativa de login com senha incorreta (Compositor)' },
+                { time: new Date(Date.now() - 1800000), level: 'INFO', source: 'Sistema', message: 'Backup incremental realizado com sucesso' },
+                { time: new Date(Date.now() - 3600000), level: 'INFO', source: 'Chat', message: `${appState.messages.length} mensagens no sistema` },
+                { time: new Date(Date.now() - 7200000), level: 'INFO', source: 'Sistema', message: 'Sistema iniciado - IFAA v1.0' },
+                { time: new Date(Date.now() - 86400000), level: 'INFO', source: 'Database', message: 'Indexação de obras concluída' },
+                { time: new Date(Date.now() - 172800000), level: 'WARN', source: 'Storage', message: 'Verificação de espaço em disco: OK' }
+            ];
+
+            const levelColors = {
+                'INFO': '#17a2b8',
+                'WARN': '#ffc107',
+                'ERROR': '#dc3545',
+                'DEBUG': '#6c757d'
+            };
+
+            return `
+                <div style="margin-bottom:20px;">
+                    <button class="btn btn-secondary" onclick="renderContent('dashboard')">⬅️ Voltar ao Dashboard</button>
+                </div>
+                <div class="form-section">
+                    <div class="form-section-title">🔧 Filtros de Log</div>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;">
+                        <button class="filter-btn active" onclick="filterLog('all')">Todos</button>
+                        <button class="filter-btn" onclick="filterLog('INFO')">ℹ️ INFO</button>
+                        <button class="filter-btn" onclick="filterLog('WARN')">⚠️ WARN</button>
+                        <button class="filter-btn" onclick="filterLog('ERROR')">❌ ERROR</button>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">📜 Entradas do Log</div>
+                    <div style="background:#1a1a1a;border-radius:10px;padding:20px;font-family:'Courier New',monospace;font-size:13px;max-height:600px;overflow-y:auto;" id="logContainer">
+                        ${logEntries.map(entry => `
+                            <div class="log-entry" data-level="${entry.level}" style="padding:8px 0;border-bottom:1px solid #333;display:flex;gap:12px;align-items:flex-start;">
+                                <span style="color:${levelColors[entry.level] || '#888'};font-weight:700;min-width:50px;">[${entry.level}]</span>
+                                <span style="color:#888;min-width:140px;">${new Date(entry.time).toLocaleString('pt-AO')}</span>
+                                <span style="color:#4facfe;min-width:80px;">${entry.source}</span>
+                                <span style="color:#ccc;flex:1;">${entry.message}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div style="margin-top:20px;text-align:center;">
+                    <button class="btn btn-primary" onclick="exportLog()" style="padding:12px 30px;">📥 Exportar Log</button>
+                    <button class="btn btn-secondary" onclick="window.print()" style="padding:12px 30px;margin-left:10px;">🖨️ Imprimir</button>
+                </div>
+            `;
+        }
+
+        function filterLog(level) {
+            const entries = document.querySelectorAll('.log-entry');
+            entries.forEach(entry => {
+                if (level === 'all' || entry.dataset.level === level) {
+                    entry.style.display = 'flex';
+                } else {
+                    entry.style.display = 'none';
+                }
+            });
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function exportLog() {
+            const logText = document.getElementById('logContainer').innerText;
+            const blob = new Blob([logText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'log_ifaa_' + new Date().toISOString().slice(0,10) + '.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+            showNotification('✅ Log exportado com sucesso!', 'success');
+        }
+
+        function applyTheme(theme) {
+            showNotification(theme === 'dark' ? '🌑 Tema escuro aplicado' : '☀️ Tema claro aplicado', 'info');
+        }
+
+        // ===== FIM CONFIGURAÇÕES, AUDITORIA E LOG =====
 
         // ===== NOVAS FUNÇÕES V5 - FLUXO UNIFICADO =====
 
@@ -5848,6 +6583,7 @@
         function sugerenteLogout() {
             sugerenteState = { nome: null, telefone: null, provincia: null, sugestoes: [] };
             sugerenteTempFiles = { pdf: null, image: null, audio: null };
+            clearSession();
             document.getElementById('sugerentePanel').classList.remove('active');
             document.getElementById('publicLanding').classList.add('active');
             document.querySelector('.identificacao-form').reset();
