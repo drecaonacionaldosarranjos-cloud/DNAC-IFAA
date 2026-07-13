@@ -2801,15 +2801,32 @@
                 }
 
                 let directorActions = '';
-                if (isDirector && pub.status === 'literature_approved') {
-                    directorActions = `
-                        <div style="margin-top: 15px; padding: 15px; background: #e8f5e9; border-radius: 8px; border: 2px solid #28a745;">
-                            <p style="font-size: 13px; color: #155724; margin-bottom: 10px;"><strong>✅ Revisado por:</strong> ${pub.literatureReviewer || 'Director de Literatura'} em ${pub.literatureReviewDate ? new Date(pub.literatureReviewDate).toLocaleDateString('pt-AO') : 'N/A'}</p>
-                            <p style="font-size: 13px; color: #155724; margin-bottom: 10px;"><strong>📝 Comentário da Revisão:</strong> ${pub.literatureComment || 'Sem comentários.'}</p>
-                            <div style="display: flex; gap: 10px;">
-                                <button class="btn btn-success" style="flex: 1;" onclick="finalApprove(${idx})">✅ Aprovar Publicação Final</button>
-                                <button class="btn btn-danger" onclick="finalReject(${idx})">❌ Rejeitar</button>
+                let aprovacaoFinalPanel = '';
+
+                // Painel de Aprovação Final do Dr. Nacional - visível no Dashboard para obras pendentes
+                if (isDirector && (pub.status === 'pending' || pub.status === 'literature_review')) {
+                    aprovacaoFinalPanel = `
+                        <div class="aprovacao-panel" style="margin-top: 15px;">
+                            <div class="aprovacao-panel-title">👨‍⚖️ Aprovação Final do Dr. Nacional</div>
+                            <textarea id="finalObs_${idx}" class="aprovacao-observacoes" placeholder="Observações finais (opcional)..."></textarea>
+                            <div class="aprovacao-actions">
+                                <button class="btn-aprovar-publicar" onclick="finalApproveWithObs(${idx})">
+                                    ✅ Aprovar e Publicar
+                                </button>
+                                <button class="btn-rejeitar" onclick="finalRejectWithObs(${idx})">
+                                    ❌ Rejeitar
+                                </button>
                             </div>
+                        </div>
+                    `;
+                }
+
+                // Painel de info para obras já revisadas pela literatura
+                if (isDirector && pub.status === 'literature_review') {
+                    directorActions = `
+                        <div style="margin-top: 10px; padding: 12px; background: #e8f5e9; border-radius: 8px; border: 1px solid #28a745;">
+                            <p style="font-size: 12px; color: #155724; margin-bottom: 5px;"><strong>✅ Revisado por:</strong> ${pub.literatureReviewer || 'Director de Literatura'} em ${pub.literatureReviewDate ? new Date(pub.literatureReviewDate).toLocaleDateString('pt-AO') : 'N/A'}</p>
+                            ${pub.directorObservations ? `<p style="font-size: 12px; color: #155724;"><strong>📝 Comentário:</strong> ${pub.directorObservations}</p>` : ''}
                         </div>
                     `;
                 }
@@ -2841,6 +2858,7 @@
                     </div>` : ''}
 
                     ${directorActions}
+                    ${aprovacaoFinalPanel}
                 </div>
             `;
             }).join('');
